@@ -2,16 +2,10 @@
 
 connectivity:
   availabilityZoneUsageLimit: 3
-  bastion:
-    enabled: true
-    instanceType: t3.small
-    replicas: 1
   containerRegistries:
     docker.io:
       - endpoint: registry-1.docker.io
       - endpoint: giantswarm.azurecr.io
-  dns:
-    mode: public
   network:
     pods:
       cidrBlocks:
@@ -20,8 +14,6 @@ connectivity:
       cidrBlocks:
         - 172.31.0.0/16
     vpcCidr: 10.0.0.0/16
-  proxy: {}
-  sshSsoPublicKey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM4cvZ01fLmO9cJbWUj7sfF+NhECgy+Cl0bazSrZX7sU vault-ca@vault.operations.giantswarm.io
   subnets:
     - cidrBlocks:
         - availabilityZone: a
@@ -39,24 +31,8 @@ connectivity:
         - availabilityZone: c
           cidr: 10.0.192.0/18
       isPublic: false
-  topology:
-    mode: None
-  vpcEndpointMode: GiantSwarmManaged
-  vpcMode: public
 controlPlane:
   apiMode: public
-  containerdVolumeSizeGB: 100
-  etcdVolumeSizeGB: 100
-  instanceType: r6i.xlarge
-  kubeletVolumeSizeGB: 100
-  machineHealthCheck:
-    enabled: true
-    maxUnhealthy: 40%
-    nodeStartupTimeout: 8m0s
-    unhealthyNotReadyTimeout: 10m0s
-    unhealthyUnknownTimeout: 10m0s
-  oidc: {}
-  rootVolumeSizeGB: 120
 internal:
   kubernetesVersion: 1.24.10
   nodePools:
@@ -65,7 +41,6 @@ internal:
         - label=default
       instanceType: r6i.xlarge
       minSize: 3
-      maxSize: 5
   sandboxContainerImage:
     name: giantswarm/pause
     registry: quay.io
@@ -78,4 +53,3 @@ metadata:
   servicePriority: highest
 providerSpecific:
   awsClusterRoleIdentityName: default
-  flatcarAwsAccount: "706635527432"
