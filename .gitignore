@@ -1,2 +1,2 @@
-helm/cluster-aws/charts
+helm/cluster-eks/charts
 helm/rendered
