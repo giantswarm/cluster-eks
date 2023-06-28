@@ -11,6 +11,7 @@ workflows:
           name: "package and push cluster-eks chart"
           app_catalog: "cluster-catalog"
           app_catalog_test: "cluster-test-catalog"
+          ct_config: ".circleci/ct-config.yaml"
           chart: "cluster-eks"
           persist_chart_archive: true
           # Trigger job on git tag.
