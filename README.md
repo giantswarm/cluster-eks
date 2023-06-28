@@ -1,6 +1,6 @@
 # cluster-eks
 
-`cluster-eks` is an app that helps create a CRs for a Cluster API EKS cluster for Giant Swarm platform.
+`cluster-eks` is an app that helps create a CRs for a Cluster API EKS cluster for Giant Swarm platform. 
 
 ## Configuration
 
