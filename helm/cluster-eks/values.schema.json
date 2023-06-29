@@ -368,6 +368,7 @@
                                 "label=default"
                             ],
                             "instanceType": "r6i.xlarge",
+                            "maxSize": 4,
                             "minSize": 3
                         }
                     }

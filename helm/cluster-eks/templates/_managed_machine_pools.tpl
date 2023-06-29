@@ -43,6 +43,7 @@ spec:
   scaling:
     minSize: {{ $value.minSize | default 1 }}
     maxSize: {{ $value.maxSize | default 3 }}
+  instanceType:  {{ $value.instanceType }}
 ---
 {{ end }}
 {{- end -}}
