@@ -40,6 +40,11 @@ spec:
   values:
     ipam:
       mode: cluster
+      operator:
+        clusterPoolIPv4PodCIDRList:
+          {{- range $value := .Values.connectivity.network.pods.cidrBlocks }}
+          - {{ $value }}
+          {{- end }}
     k8sServicePort: '443'
     kubeProxyReplacement: strict
     hubble:
