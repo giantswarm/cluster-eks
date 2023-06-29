@@ -28,9 +28,10 @@ spec:
     - name: {{ include "resource.default.name" $ }}-cloud-provider-aws
       namespace: {{ $.Release.Namespace }}
   interval: 10m
+  timeout: 30m
   install:
     remediation:
-      retries: 30
+      retries: 200
   # Default values
   # https://github.com/giantswarm/cilium-app/blob/main/helm/cilium/values.yaml
   values:

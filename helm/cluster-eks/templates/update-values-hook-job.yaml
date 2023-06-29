@@ -146,7 +146,7 @@ spec:
                 control_plane_endpoint=$(kubectl get cluster -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} -o 'jsonpath={.spec.controlPlaneEndpoint.host}')
                 sleep 10
               done
-              kubectl patch helmrelease -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }}-cilium --type=merge -p '{"spec":{"suspend":false,"values":{"k8sServiceHost": "${control_plane_endpoint}"}}}'
+              kubectl patch helmrelease -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }}-cilium --type=merge -p '{"spec":{"suspend":false,"values":{"k8sServiceHost": "'${control_plane_endpoint}'"}}}'
           securityContext:
             readOnlyRootFilesystem: true
           resources:
