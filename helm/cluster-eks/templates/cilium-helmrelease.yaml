@@ -39,7 +39,7 @@ spec:
   # https://github.com/giantswarm/cilium-app/blob/main/helm/cilium/values.yaml
   values:
     ipam:
-      mode: cluster-pool-v2beta
+      mode: cluster-pool
       operator:
         clusterPoolIPv4PodCIDRList:
           {{- range $value := .Values.connectivity.network.pods.cidrBlocks }}
