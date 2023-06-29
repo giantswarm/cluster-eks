@@ -44,6 +44,8 @@ spec:
     kubeProxyReplacement: strict
     nodeinit:
       enabled: true
+      image:
+        tag: 62bfbe88c17778aad7bef9fa57ff9e2d4a9ba0d8
     hubble:
       relay:
         enabled: true
