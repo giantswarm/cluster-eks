@@ -31,7 +31,7 @@ spec:
     remediation:
       retries: 200
   valuesFrom:
-    kind: Configmap
+  - kind: Configmap
     name: {{ include "resource.default.name" $ }}-control-plane-endpoint
     valuesKey: control_plane_endpoint_host
     targetPath: "k8sServiceHost"
