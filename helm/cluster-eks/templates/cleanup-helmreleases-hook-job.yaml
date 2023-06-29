@@ -54,6 +54,11 @@ rules:
       - "{{ include "resource.default.name" $ }}-coredns"
       - "{{ include "resource.default.name" $ }}-vertical-pod-autoscaler-crd"
     verbs: ["patch"]
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    resourceNames:
+      - {{ include "resource.default.name" . }}-control-plane-endpoint
+    verbs: ["delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -110,6 +115,7 @@ spec:
               for r in $(kubectl get helmrelease -n {{ $.Release.Namespace }} -l "giantswarm.io/cluster={{ include "resource.default.name" . }}" -o name) ; do
                   kubectl patch -n {{ $.Release.Namespace }} "${r}" --type=merge -p '{"metadata": {"finalizers": []}}'
               done
+              kubectl -n  {{ $.Release.Namespace }} delete cm {{ include "resource.default.name" . }}-control-plane-endpoint
           securityContext:
             readOnlyRootFilesystem: true
           resources:

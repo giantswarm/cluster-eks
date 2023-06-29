@@ -8,7 +8,6 @@ metadata:
   labels:
     {{- include "labels.common" . | nindent 4 }}
 spec:
-  suspend: true # It will be unsuspended by the post-install/post-upgrade hook in update-values-hook-job.yaml.
   releaseName: cilium
   targetNamespace: kube-system
   storageNamespace: kube-system
@@ -28,16 +27,19 @@ spec:
     - name: {{ include "resource.default.name" $ }}-cloud-provider-aws
       namespace: {{ $.Release.Namespace }}
   interval: 10m
-  timeout: 30m
   install:
     remediation:
       retries: 200
+  valuesFrom:
+    kind: Configmap
+    name: {{ include "resource.default.name" $ }}-control-plane-endpoint
+    valuesKey: control_plane_endpoint_host
+    targetPath: "k8sServiceHost"
   # Default values
   # https://github.com/giantswarm/cilium-app/blob/main/helm/cilium/values.yaml
   values:
     ipam:
       mode: kubernetes
-    k8sServiceHost: WILL_BE_REPLACED
     k8sServicePort: '443'
     kubeProxyReplacement: strict
     hubble:
