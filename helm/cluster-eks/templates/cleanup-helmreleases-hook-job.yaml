@@ -115,7 +115,7 @@ spec:
               for r in $(kubectl get helmrelease -n {{ $.Release.Namespace }} -l "giantswarm.io/cluster={{ include "resource.default.name" . }}" -o name) ; do
                   kubectl patch -n {{ $.Release.Namespace }} "${r}" --type=merge -p '{"metadata": {"finalizers": []}}'
               done
-              kubectl -n  {{ $.Release.Namespace }} delete cm {{ include "resource.default.name" . }}-control-plane-endpoint
+              kubectl -n  {{ $.Release.Namespace }} delete cm {{ include "resource.default.name" . }}-control-plane-endpoint --ignore-not-found=true
           securityContext:
             readOnlyRootFilesystem: true
           resources:
