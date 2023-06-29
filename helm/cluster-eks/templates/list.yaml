@@ -1,0 +1,11 @@
+{{- include "validation" . }}
+---
+{{- include "psps" . }}
+---
+{{- include "cluster" . }}
+---
+{{- include "aws-cluster" . }}
+---
+{{- include "control-plane" . }}
+---
+{{- include "machine-pools" . }}
