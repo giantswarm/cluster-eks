@@ -7,8 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0] - 2023-06-29
+
 ### Added
 
 - Add EKS templates.
 
-[Unreleased]: https://github.com/giantswarm/cluster-eks/tree/main
+[Unreleased]: https://github.com/giantswarm/cluster-eks/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/giantswarm/cluster-eks/releases/tag/v0.1.0
