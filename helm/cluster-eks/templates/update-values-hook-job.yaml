@@ -120,7 +120,7 @@ metadata:
     {{- include "labels.common" $ | nindent 4 }}
   annotations:
     "helm.sh/hook": "post-install,post-upgrade"
-    "helm.sh/hook-delete-policy": "before-hook-creation"
+    "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
     "helm.sh/hook-weight": "0"
 spec:
   ttlSecondsAfterFinished: 86400 # 24h
