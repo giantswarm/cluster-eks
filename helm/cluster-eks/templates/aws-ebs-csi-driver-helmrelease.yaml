@@ -9,7 +9,7 @@ metadata:
     cluster-apps-operator.giantswarm.io/watching: ""
     {{- include "labels.common" . | nindent 4 }}
 spec:
-  suspend: false # It can be unsuspended by the post-install/post-upgrade hook. Useful if we need to populate some fields later on.
+  suspend: true # It can be unsuspended by the post-install/post-upgrade hook. Useful if we need to populate some fields later on.
   releaseName: aws-ebs-csi-driver
   targetNamespace: kube-system
   storageNamespace: kube-system
