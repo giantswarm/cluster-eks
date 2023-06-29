@@ -39,13 +39,9 @@ spec:
   # https://github.com/giantswarm/cilium-app/blob/main/helm/cilium/values.yaml
   values:
     ipam:
-      mode: kubernetes
+      mode: cluster
     k8sServicePort: '443'
     kubeProxyReplacement: strict
-    nodeinit:
-      enabled: true
-      image:
-        tag: 62bfbe88c17778aad7bef9fa57ff9e2d4a9ba0d8
     hubble:
       relay:
         enabled: true
