@@ -42,6 +42,8 @@ spec:
       mode: kubernetes
     k8sServicePort: '443'
     kubeProxyReplacement: strict
+    nodeinit:
+      enabled: true
     hubble:
       relay:
         enabled: true
