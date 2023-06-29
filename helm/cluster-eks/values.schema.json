@@ -230,6 +230,32 @@
                         }
                     }
                 },
+                "proxy": {
+                    "type": "object",
+                    "title": "Proxy",
+                    "description": "Whether/how outgoing traffic is routed through proxy servers.",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "title": "Enable"
+                        },
+                        "httpProxy": {
+                            "type": "string",
+                            "title": "HTTP proxy",
+                            "description": "To be passed to the HTTP_PROXY environment variable in all hosts."
+                        },
+                        "httpsProxy": {
+                            "type": "string",
+                            "title": "HTTPS proxy",
+                            "description": "To be passed to the HTTPS_PROXY environment variable in all hosts."
+                        },
+                        "noProxy": {
+                            "type": "string",
+                            "title": "No proxy",
+                            "description": "To be passed to the NO_PROXY environment variable in all hosts."
+                        }
+                    }
+                },
                 "subnets": {
                     "type": "array",
                     "title": "Subnets",
