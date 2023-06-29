@@ -76,7 +76,8 @@ metadata:
     {{- include "labels.common" $ | nindent 4 }}
   annotations:
     "helm.sh/hook": "pre-upgrade"
-    "helm.sh/hook-delete-policy": "before-hook-creation"
+    "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
+
     "helm.sh/hook-weight": "0"
 spec:
   ttlSecondsAfterFinished: 86400 # 24h
@@ -143,9 +144,10 @@ spec:
             - "-xc"
             - |
               while [ -z "${control_plane_endpoint}" ] ; do
-                control_plane_endpoint=$(kubectl get cluster -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} -o 'jsonpath={.spec.controlPlaneEndpoint.host}')
+                control_plane_endpoint=$(kubectl get cluster -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} -o 'jsonpath={.spec.controlPlaneEndpoint.host}' | cut -d \/ -f3)
                 sleep 10
               done
+
               kubectl patch helmrelease -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }}-cilium --type=merge -p '{"spec":{"suspend":false,"values":{"k8sServiceHost": "'${control_plane_endpoint}'"}}}'
           securityContext:
             readOnlyRootFilesystem: true
