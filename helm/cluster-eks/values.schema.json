@@ -210,6 +210,9 @@
                                         "type": "string",
                                         "title": "Service subnet",
                                         "description": "IPv4 address range for kubernetes services, in CIDR notation.",
+                                        "enum": [
+                                            "172.31.0.0/16"
+                                        ],
                                         "examples": [
                                             "172.31.0.0/16"
                                         ]
