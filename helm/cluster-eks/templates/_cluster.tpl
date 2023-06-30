@@ -18,8 +18,9 @@ metadata:
 spec:
   clusterNetwork:
     services:
+      # service CIDR cannot be changed as EKS do not allow configuration
       cidrBlocks:
-      {{- toYaml .Values.connectivity.network.services.cidrBlocks | nindent 8 }}
+      - 172.31.0.0/16
     pods:
       cidrBlocks:
       {{- toYaml .Values.connectivity.network.pods.cidrBlocks | nindent 8 }}

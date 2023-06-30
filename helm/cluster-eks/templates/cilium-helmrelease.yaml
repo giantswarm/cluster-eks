@@ -42,9 +42,7 @@ spec:
       mode: cluster-pool
       operator:
         clusterPoolIPv4PodCIDRList:
-          {{- range $value := .Values.connectivity.network.pods.cidrBlocks }}
-          - {{ $value }}
-          {{- end }}
+        {{- toYaml .Values.connectivity.network.pods.cidrBlocks | nindent 8 }}
     k8sServicePort: '443'
     kubeProxyReplacement: strict
     hubble:
