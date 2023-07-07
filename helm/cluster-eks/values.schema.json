@@ -210,6 +210,9 @@
                                         "type": "string",
                                         "title": "Service subnet",
                                         "description": "IPv4 address range for kubernetes services, in CIDR notation.",
+                                        "enum": [
+                                            "172.31.0.0/16"
+                                        ],
                                         "examples": [
                                             "172.31.0.0/16"
                                         ]
@@ -227,6 +230,32 @@
                             "title": "VPC subnet",
                             "description": "IPv4 address range to assign to this cluster's VPC, in CIDR notation.",
                             "default": "10.0.0.0/16"
+                        }
+                    }
+                },
+                "proxy": {
+                    "type": "object",
+                    "title": "Proxy",
+                    "description": "Whether/how outgoing traffic is routed through proxy servers.",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "title": "Enable"
+                        },
+                        "httpProxy": {
+                            "type": "string",
+                            "title": "HTTP proxy",
+                            "description": "To be passed to the HTTP_PROXY environment variable in all hosts."
+                        },
+                        "httpsProxy": {
+                            "type": "string",
+                            "title": "HTTPS proxy",
+                            "description": "To be passed to the HTTPS_PROXY environment variable in all hosts."
+                        },
+                        "noProxy": {
+                            "type": "string",
+                            "title": "No proxy",
+                            "description": "To be passed to the NO_PROXY environment variable in all hosts."
                         }
                     }
                 },
