@@ -43,4 +43,5 @@ spec:
           IP: {{ include "clusterDNS" $ | quote }}
     mastersInstance:
       nodeSelector:
+        "node-role.kubernetes.io/control-plane": null
         "node-role.kubernetes.io/worker": '""'
