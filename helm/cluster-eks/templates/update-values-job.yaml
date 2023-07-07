@@ -49,6 +49,9 @@ metadata:
 spec:
   ttlSecondsAfterFinished: 86400 # 24h
   activeDeadlineSeconds: 3600 # 1h
+  selector:
+    matchLabels:
+      {{- include "labels.selector" $ | nindent 6 }}
   template:
     metadata:
       name: "{{ include "resource.default.name" $ }}-update-values-job"
