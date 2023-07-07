@@ -41,3 +41,6 @@ spec:
           clusterIPRange: {{ .Values.connectivity.network.serviceCidr | quote }}
         DNS:
           IP: {{ include "clusterDNS" $ | quote }}
+    mastersInstance:
+      nodeSelector:
+        "node-role.kubernetes.io/worker": '""'
