@@ -4,6 +4,8 @@ kind: AWSManagedControlPlane
 metadata:
   annotations:
     "helm.sh/resource-policy": keep
+    aws.giantswarm.io/vpc-mode: "public"
+    aws.giantswarm.io/dns-mode: "public"
   labels:
     {{- include "labels.common" $ | nindent 4 }}
     app.kubernetes.io/version: {{ .Chart.Version | quote }}
