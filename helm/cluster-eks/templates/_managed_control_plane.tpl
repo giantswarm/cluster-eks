@@ -51,6 +51,6 @@ spec:
     mapRoles:
     - rolearn: arn:aws:iam::{{ include "aws-account" $ }}:role/GiantSwarmAdmin
       groups: 
-      - system:masters
+      - "system:masters"
       username: cluster-admin
 {{- end -}}
