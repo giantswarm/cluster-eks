@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add annotation to `AWSManagedControlPlane` to enabled garbage collection of  loadbalancers.
+
 ## [0.3.1] - 2023-07-20
 
 - Add annotation to `AWSManagedControlPlane` for vpc and dns mode.

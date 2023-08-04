@@ -6,6 +6,7 @@ metadata:
     "helm.sh/resource-policy": keep
     aws.giantswarm.io/vpc-mode: "public"
     aws.giantswarm.io/dns-mode: "public"
+    aws.cluster.x-k8s.io/external-resource-gc: "true"
   labels:
     {{- include "labels.common" $ | nindent 4 }}
     app.kubernetes.io/version: {{ .Chart.Version | quote }}
