@@ -13,9 +13,9 @@ Output: The AWS account ID
 
 {{- define "aws-account-id" -}}
 {{- $accountID :="*" -}}
-{{- $role :=  (lookup "infrastructure.cluster.x-k8s.io/v1beta2" "AWSClusterRoleIdentity" "" ".Values.providerSpecific.awsClusterRoleIdentityName" ) -}}
+{{- $role :=  (lookup "infrastructure.cluster.x-k8s.io/v1beta2" "AWSClusterRoleIdentity" "" "default2" ) -}}
 {{- if $role -}}
 {{- $accountID = (include "extractAWSAccountID" $role.spec.roleARN) -}}
 {{- end -}}
-{{- $accountID -}}
+{{- $role -}}
 {{- end -}}
