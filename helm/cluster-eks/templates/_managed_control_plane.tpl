@@ -49,7 +49,7 @@ spec:
     disable: true
   iamAuthenticatorConfig:
     mapRoles:
-    - rolearn: "arn:aws:iam::{{ include "aws-account-id" $ }}:role/GiantSwarmAdmin"
+    - rolearn: 'arn:aws:iam::{{ include "aws-account-id" $ }}:role/GiantSwarmAdmin'
       groups: 
       - "system:masters"
       username: cluster-admin
