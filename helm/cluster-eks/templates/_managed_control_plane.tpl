@@ -47,4 +47,10 @@ spec:
     disable: true
   kubeProxy:
     disable: true
+  iamAuthenticatorConfig:
+    mapRoles:
+    - rolearn: arn:aws:iam::{{ include "aws-account" $ }}:role/GiantSwarmAdmin
+      groups: 
+      - system:masters
+      username: cluster-admin
 {{- end -}}
