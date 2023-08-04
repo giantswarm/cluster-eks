@@ -7,7 +7,8 @@ Input: An ARN string
 Output: The AWS account ID
 */ -}}
 {{- define "extractAWSAccountID" -}}
-{{- (split ":" . )._4 -}}
+{{- $parts := (split ":" .)  -}}
+{{- if ge (len parts) "5" -}}{{- $parts._4 -}}{{- end -}}
 {{- end -}}
 
 {{- define "aws-account-id" -}}
