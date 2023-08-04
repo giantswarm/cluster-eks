@@ -8,7 +8,7 @@ Output: The AWS account ID
 */ -}}
 {{- define "extractAWSAccountID" -}}
 {{- $parts := (split ":" .)  -}}
-{{- if ge (len parts) "5" -}}{{- $parts._4 -}}{{- end -}}
+{{- if ge (len $parts) "5" -}}{{- $parts._4 -}}{{- end -}}
 {{- end -}}
 
 {{- define "aws-account-id" -}}
