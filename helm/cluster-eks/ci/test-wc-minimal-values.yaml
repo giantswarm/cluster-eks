@@ -3,3 +3,5 @@ metadata:
   organization: test
   servicePriority: lowest
 baseDomain: example.com
+providerSpecific:
+  awsAccountId: "123456789012"
