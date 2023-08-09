@@ -507,6 +507,15 @@
                     "title": "Amazon machine image (AMI)",
                     "description": "If specified, this image will be used to provision EC2 instances."
                 },
+                "awsAccountId": {
+                    "type": "string",
+                    "title": "AWS account ID",
+                    "description": "AWS Account ID of the AWSClusterRoleIdentity IAM role, recommendation is to leave this value empty as it will be automatically calculated. This value is needed for tests.",
+                    "default": "",
+                    "maxLength": 12,
+                    "minLength": 0,
+                    "pattern": "^[-0-9]{12}$"
+                },
                 "awsClusterRoleIdentityName": {
                     "type": "string",
                     "title": "Cluster role identity name",
