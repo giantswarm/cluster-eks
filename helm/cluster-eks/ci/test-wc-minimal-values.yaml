@@ -4,4 +4,4 @@ metadata:
   servicePriority: lowest
 baseDomain: example.com
 providerSpecific:
-  awsAccountId: "123456789012"
+  awsAccountId: "1234567890"
