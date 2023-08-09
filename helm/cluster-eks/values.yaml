@@ -54,4 +54,5 @@ kubectlImage:
 metadata:
   servicePriority: highest
 providerSpecific:
+  awsAccountId: ""
   awsClusterRoleIdentityName: default
