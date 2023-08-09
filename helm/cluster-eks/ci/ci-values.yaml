@@ -10,3 +10,5 @@ connectivity:
           username: giantswarmpull
           password: abcdef
       - endpoint: quay.io
+providerSpecific:
+  awsAccountId: "123456789012"

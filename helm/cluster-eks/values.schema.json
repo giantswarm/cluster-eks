@@ -514,7 +514,7 @@
                     "default": "",
                     "maxLength": 12,
                     "minLength": 0,
-                    "pattern": "^[-0-9]{12}$"
+                    "pattern": "^[0-9]{0,12}$"
                 },
                 "awsClusterRoleIdentityName": {
                     "type": "string",
