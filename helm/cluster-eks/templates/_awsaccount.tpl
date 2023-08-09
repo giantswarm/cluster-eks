@@ -18,7 +18,7 @@ Output: The AWS account ID
 {{- if $role -}}
 {{- $accountID = (include "extractAWSAccountID" $role.spec.roleARN) -}}
 {{- end -}}
-{{- if eq accountID "" -}}
+{{- if eq $accountID "" -}}
 {{- fail "failed to extract AWS Account ID from AWSClusterRoleIdentity $roleName" -}}
 {{- else -}}
 {{- $accountID -}}
