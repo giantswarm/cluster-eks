@@ -21,6 +21,7 @@ spec:
   eksClusterName: {{ include "resource.default.name" $ }}
   region: {{ include "aws-region" . }}
   sshKeyName: ssh-key
+  secondaryCidrBlock: {{- first .Values.connectivity.network.pods.cidrBlocks }}
   network:
     vpc:
       availabilityZoneUsageLimit: {{ .Values.connectivity.availabilityZoneUsageLimit }}

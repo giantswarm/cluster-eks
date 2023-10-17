@@ -186,9 +186,9 @@
                                     "items": {
                                         "type": "string",
                                         "title": "Pod subnet",
-                                        "description": "IPv4 address range for pods, in CIDR notation.",
+                                        "description": "IPv4 address range for pods, in CIDR notation. Must be within the 100.64.0.0/10 or 198.19.0.0/16 range.",
                                         "examples": [
-                                            "10.244.0.0/16"
+                                            "100.64.0.0/12"
                                         ]
                                     },
                                     "default": [
