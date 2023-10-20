@@ -362,6 +362,37 @@
                         "private"
                     ],
                     "default": "public"
+                },
+                "roleMapping": {
+                    "type": "array",
+                    "title": "Role mappings",
+                    "items": {
+                        "type": "object",
+                        "title": "Role mapping",
+                        "description": "AWS IAM role to kubernetes role.",
+                        "properties": {
+                            "groups": {
+                                "type": "array",
+                                "title": "Groups",
+                                "description": "Kuberentes groups.",
+                                "items": {
+                                    "type": "string",
+                                    "title": "Group",
+                                    "description": "Kubernetes group. ie: 'system:masters'."
+                                }
+                            },
+                            "rolearn": {
+                                "type": "string",
+                                "title": "AWS Role ARN",
+                                "description": "Full ARN of the AWS IAM role."
+                            },
+                            "username": {
+                                "type": "string",
+                                "title": "Kuberentes username",
+                                "description": "Kuberentes username. ie: 'cluster-admion'."
+                            }
+                        }
+                    }
                 }
             }
         },

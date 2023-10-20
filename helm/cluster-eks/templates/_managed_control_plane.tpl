@@ -53,4 +53,5 @@ spec:
       groups: 
       - "system:masters"
       username: cluster-admin
+    {{- toYaml $.Values.controlPlane.roleMapping | nident 4 }}
 {{- end -}}
