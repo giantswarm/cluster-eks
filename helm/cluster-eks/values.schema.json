@@ -362,6 +362,36 @@
                         "private"
                     ],
                     "default": "public"
+                },
+                "logging": {
+                    "type": "object",
+                    "title": "Logging",
+                    "properties": {
+                        "apiServer": {
+                            "type": "boolean",
+                            "title": "Api Server",
+                            "description": "Enable or disable Api server logging.",
+                            "default": true
+                        },
+                        "audit": {
+                            "type": "boolean",
+                            "title": "Audit",
+                            "description": "Enable or disable audit logging.",
+                            "default": true
+                        },
+                        "authenticator": {
+                            "type": "boolean",
+                            "title": "Authenticator",
+                            "description": "Enable or disable IAM Authenticator logging.",
+                            "default": true
+                        },
+                        "controllerManager": {
+                            "type": "boolean",
+                            "title": "Controller Manager",
+                            "description": "Enable or disable Controller Manager logging.",
+                            "default": true
+                        }
+                    }
                 }
             }
         },
