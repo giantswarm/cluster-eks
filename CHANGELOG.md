@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add option to map custom IAM roles to EKS roles.
+
 ## [0.4.0] - 2023-08-09
 
 ### Added
