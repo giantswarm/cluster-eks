@@ -43,8 +43,6 @@ spec:
     ipam:
       mode: eni
     eksMode: true
-    endpointRoutes:
-      enabled: true
     operator:
       extraArgs:
         - "--aws-release-excess-ips=true"
