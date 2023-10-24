@@ -16,7 +16,7 @@ spec:
       chart: cilium
       # used by renovate
       # repo: giantswarm/cilium-app
-      version: 0.14.0-08acac946f61929a6372c9a417d3bbb4cbad6eb6
+      version: 0.14.0-2c233645daf0c4fad59f5553cf41f96ddfcc54bc
       sourceRef:
         kind: HelmRepository
         name: {{ include "resource.default.name" $ }}-default-test
