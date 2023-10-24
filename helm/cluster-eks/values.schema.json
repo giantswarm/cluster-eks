@@ -362,6 +362,67 @@
                         "private"
                     ],
                     "default": "public"
+                },
+                "logging": {
+                    "type": "object",
+                    "title": "Logging",
+                    "properties": {
+                        "apiServer": {
+                            "type": "boolean",
+                            "title": "Api Server",
+                            "description": "Enable or disable Api server logging to CloudWatch (https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html).",
+                            "default": true
+                        },
+                        "audit": {
+                            "type": "boolean",
+                            "title": "Audit",
+                            "description": "Enable or disable audit logging to CloudWatch (https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html).",
+                            "default": true
+                        },
+                        "authenticator": {
+                            "type": "boolean",
+                            "title": "Authenticator",
+                            "description": "Enable or disable IAM Authenticator logging to CloudWatch (https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html).",
+                            "default": true
+                        },
+                        "controllerManager": {
+                            "type": "boolean",
+                            "title": "Controller Manager",
+                            "description": "Enable or disable Controller Manager logging to CloudWatch (https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html).",
+                            "default": true
+                        }
+                    }
+                },
+                "roleMapping": {
+                    "type": "array",
+                    "title": "Role mappings",
+                    "items": {
+                        "type": "object",
+                        "title": "Role mapping",
+                        "description": "Maps AWS IAM role to Kubernetes role.",
+                        "properties": {
+                            "groups": {
+                                "type": "array",
+                                "title": "Groups",
+                                "description": "Kubernetes groups.",
+                                "items": {
+                                    "type": "string",
+                                    "title": "Group",
+                                    "description": "Kubernetes group, for example `system:masters`."
+                                }
+                            },
+                            "rolearn": {
+                                "type": "string",
+                                "title": "AWS Role ARN",
+                                "description": "Full ARN of the AWS IAM role."
+                            },
+                            "username": {
+                                "type": "string",
+                                "title": "Kubernetes username",
+                                "description": "Kubernetes username, for example `cluster-admin`."
+                            }
+                        }
+                    }
                 }
             }
         },

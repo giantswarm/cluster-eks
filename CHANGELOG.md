@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Use Cilium ENI mode.
 
+### Added
+
+- Add option to map custom IAM roles to EKS roles.
+- Expose option to configure logging and enable logging by default.
+
 ## [0.4.0] - 2023-08-09
 
 ### Added
