@@ -38,11 +38,23 @@ spec:
   # Default values
   # https://github.com/giantswarm/cilium-app/blob/main/helm/cilium/values.yaml
   values:
+    eni:
+      enabled: true
     ipam:
-      mode: cluster-pool
-      operator:
-        clusterPoolIPv4PodCIDRList:
-        {{- toYaml .Values.connectivity.network.pods.cidrBlocks | nindent 8 }}
+      mode: eni
+    endpointRoutes:
+      enabled: true
+    operator:
+      extraArgs:
+        - "--aws-release-excess-ips=true"
+    enableIPv4Masquerade: false
+    tunnel: disabled
+    cluster:
+      name: {{ include "resource.default.name" $ }}
+    cni:
+      customConf: true
+      exclusive: true
+      configMap: cilium-cni-configuration
     k8sServicePort: '443'
     kubeProxyReplacement: strict
     hubble:
