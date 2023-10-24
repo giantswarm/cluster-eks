@@ -74,6 +74,11 @@ Properties within the `.controlPlane` top-level object
 | `controlPlane.roleMapping[*].groups[*]` | **Group** - Kubernetes group. ie: 'system:masters'.|**Type:** `string`<br/>|
 | `controlPlane.roleMapping[*].rolearn` | **AWS Role ARN** - Full ARN of the AWS IAM role.|**Type:** `string`<br/>|
 | `controlPlane.roleMapping[*].username` | **Kuberentes username** - Kuberentes username. ie: 'cluster-admion'.|**Type:** `string`<br/>|
+| `controlPlane.logging` | **Logging**|**Type:** `object`<br/>|
+| `controlPlane.logging.apiServer` | **Api Server** - Enable or disable Api server logging.|**Type:** `boolean`<br/>**Default:** `true`|
+| `controlPlane.logging.audit` | **Audit** - Enable or disable audit logging.|**Type:** `boolean`<br/>**Default:** `true`|
+| `controlPlane.logging.authenticator` | **Authenticator** - Enable or disable IAM Authenticator logging.|**Type:** `boolean`<br/>**Default:** `true`|
+| `controlPlane.logging.controllerManager` | **Controller Manager** - Enable or disable Controller Manager logging.|**Type:** `boolean`<br/>**Default:** `true`|
 
 ### Internal
 Properties within the `.internal` top-level object

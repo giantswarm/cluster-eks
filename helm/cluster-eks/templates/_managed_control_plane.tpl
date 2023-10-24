@@ -47,6 +47,11 @@ spec:
     disable: true
   kubeProxy:
     disable: true
+  logging:
+    apiServer: {{ $.Values.controlPlane.logging.apiServer }}
+    audit: {{ $.Values.controlPlane.logging.audit }}
+    authenticator: {{ $.Values.controlPlane.logging.authenticator }}
+    controllerManager: {{ $.Values.controlPlane.logging.controllerManager }}
   iamAuthenticatorConfig:
     mapRoles:
     - rolearn: 'arn:aws:iam::{{ include "aws-account-id" $ }}:role/GiantSwarmAdmin'

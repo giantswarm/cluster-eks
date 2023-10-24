@@ -34,6 +34,11 @@ connectivity:
       isPublic: false
 controlPlane:
   apiMode: public
+  logging:
+    apiServer: true
+    audit: true
+    authenticator: true
+    controllerManager: true
 internal:
   kubernetesVersion: 1.24.10
   nodePools:

@@ -391,6 +391,33 @@
                                 "title": "Kubernetes username",
                                 "description": "Kuberentes username, for example `cluster-admin`."
                             }
+                "logging": {
+                    "type": "object",
+                    "title": "Logging",
+                    "properties": {
+                        "apiServer": {
+                            "type": "boolean",
+                            "title": "Api Server",
+                            "description": "Enable or disable Api server logging to CloudWatch (https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html).",
+                            "default": true
+                        },
+                        "audit": {
+                            "type": "boolean",
+                            "title": "Audit",
+                            "description": "Enable or disable audit logging to CloudWatch (https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html).",
+                            "default": true
+                        },
+                        "authenticator": {
+                            "type": "boolean",
+                            "title": "Authenticator",
+                            "description": "Enable or disable IAM Authenticator logging to CloudWatch (https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html).",
+                            "default": true
+                        },
+                        "controllerManager": {
+                            "type": "boolean",
+                            "title": "Controller Manager",
+                            "description": "Enable or disable Controller Manager logging to CloudWatch (https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html).",
+                            "default": true
                         }
                     }
                 }
