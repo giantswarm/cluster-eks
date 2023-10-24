@@ -369,16 +369,16 @@
                     "items": {
                         "type": "object",
                         "title": "Role mapping",
-                        "description": "AWS IAM role to kubernetes role.",
+                        "description": "Maps AWS IAM role to Kubernetes role.",
                         "properties": {
                             "groups": {
                                 "type": "array",
                                 "title": "Groups",
-                                "description": "Kuberentes groups.",
+                                "description": "Kubernetes groups.",
                                 "items": {
                                     "type": "string",
                                     "title": "Group",
-                                    "description": "Kubernetes group. ie: 'system:masters'."
+                                    "description": "Kubernetes group, for example `system:masters`."
                                 }
                             },
                             "rolearn": {
@@ -388,8 +388,8 @@
                             },
                             "username": {
                                 "type": "string",
-                                "title": "Kuberentes username",
-                                "description": "Kuberentes username. ie: 'cluster-admion'."
+                                "title": "Kubernetes username",
+                                "description": "Kuberentes username, for example `cluster-admin`."
                             }
                         }
                     }
