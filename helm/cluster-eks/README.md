@@ -68,17 +68,17 @@ Properties within the `.controlPlane` top-level object
 | **Property** | **Description** | **More Details** |
 | :----------- | :-------------- | :--------------- |
 | `controlPlane.apiMode` | **API mode** - Whether the Kubernetes API server load balancer should be reachable from the internet (public) or internal only (private).|**Type:** `string`<br/>**Default:** `"public"`|
-| `controlPlane.roleMapping` | **Role mappings**|**Type:** `array`<br/>|
-| `controlPlane.roleMapping[*]` | **Role mapping** - AWS IAM role to kubernetes role.|**Type:** `object`<br/>|
-| `controlPlane.roleMapping[*].groups` | **Groups** - Kuberentes groups.|**Type:** `array`<br/>|
-| `controlPlane.roleMapping[*].groups[*]` | **Group** - Kubernetes group. ie: 'system:masters'.|**Type:** `string`<br/>|
-| `controlPlane.roleMapping[*].rolearn` | **AWS Role ARN** - Full ARN of the AWS IAM role.|**Type:** `string`<br/>|
-| `controlPlane.roleMapping[*].username` | **Kuberentes username** - Kuberentes username. ie: 'cluster-admion'.|**Type:** `string`<br/>|
 | `controlPlane.logging` | **Logging**|**Type:** `object`<br/>|
-| `controlPlane.logging.apiServer` | **Api Server** - Enable or disable Api server logging.|**Type:** `boolean`<br/>**Default:** `true`|
-| `controlPlane.logging.audit` | **Audit** - Enable or disable audit logging.|**Type:** `boolean`<br/>**Default:** `true`|
-| `controlPlane.logging.authenticator` | **Authenticator** - Enable or disable IAM Authenticator logging.|**Type:** `boolean`<br/>**Default:** `true`|
-| `controlPlane.logging.controllerManager` | **Controller Manager** - Enable or disable Controller Manager logging.|**Type:** `boolean`<br/>**Default:** `true`|
+| `controlPlane.logging.apiServer` | **Api Server** - Enable or disable Api server logging to CloudWatch (https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html).|**Type:** `boolean`<br/>**Default:** `true`|
+| `controlPlane.logging.audit` | **Audit** - Enable or disable audit logging to CloudWatch (https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html).|**Type:** `boolean`<br/>**Default:** `true`|
+| `controlPlane.logging.authenticator` | **Authenticator** - Enable or disable IAM Authenticator logging to CloudWatch (https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html).|**Type:** `boolean`<br/>**Default:** `true`|
+| `controlPlane.logging.controllerManager` | **Controller Manager** - Enable or disable Controller Manager logging to CloudWatch (https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html).|**Type:** `boolean`<br/>**Default:** `true`|
+| `controlPlane.roleMapping` | **Role mappings**|**Type:** `array`<br/>|
+| `controlPlane.roleMapping[*]` | **Role mapping** - Maps AWS IAM role to Kubernetes role.|**Type:** `object`<br/>|
+| `controlPlane.roleMapping[*].groups` | **Groups** - Kubernetes groups.|**Type:** `array`<br/>|
+| `controlPlane.roleMapping[*].groups[*]` | **Group** - Kubernetes group, for example `system:masters`.|**Type:** `string`<br/>|
+| `controlPlane.roleMapping[*].rolearn` | **AWS Role ARN** - Full ARN of the AWS IAM role.|**Type:** `string`<br/>|
+| `controlPlane.roleMapping[*].username` | **Kubernetes username** - Kubernetes username, for example `cluster-admin`.|**Type:** `string`<br/>|
 
 ### Internal
 Properties within the `.internal` top-level object
