@@ -39,8 +39,8 @@ Properties within the `.connectivity` top-level object
 | `connectivity.containerRegistries.*[*].endpoint` | **Endpoint** - Endpoint for the container registry.|**Type:** `string`<br/>|
 | `connectivity.network` | **Network**|**Type:** `object`<br/>|
 | `connectivity.network.pods` | **Pods**|**Type:** `object`<br/>|
-| `connectivity.network.pods.cidrBlocks` | **Pod subnets**|**Type:** `array`<br/>**Default:** `["100.64.0.0/12"]`|
-| `connectivity.network.pods.cidrBlocks[*]` | **Pod subnet** - IPv4 address range for pods, in CIDR notation.|**Type:** `string`<br/>**Example:** `"10.244.0.0/16"`<br/>|
+| `connectivity.network.pods.cidrBlocks` | **Pod subnets**|**Type:** `array`<br/>**Default:** `["100.64.0.0/16"]`|
+| `connectivity.network.pods.cidrBlocks[*]` | **Pod subnet** - IPv4 address range for pods, in CIDR notation. Must be within the 100.64.0.0/10 or 198.19.0.0/16 range. The CIDR block size must be betwen /16 and /28.|**Type:** `string`<br/>**Example:** `"100.64.0.0/16"`<br/>|
 | `connectivity.network.services` | **Services**|**Type:** `object`<br/>|
 | `connectivity.network.services.cidrBlocks` | **K8s Service subnets**|**Type:** `array`<br/>**Default:** `["172.31.0.0/16"]`|
 | `connectivity.network.services.cidrBlocks[*]` | **Service subnet** - IPv4 address range for kubernetes services, in CIDR notation.|**Type:** `string`<br/>**Example:** `"172.31.0.0/16"`<br/>|
