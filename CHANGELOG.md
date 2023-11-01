@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Allow configuration of `AWSCluster.spec.AdditionalTags` value and add a default giantswarm tag.
+- Allow configuration of `AWSManagedControlPlane.spec.AdditionalTags` value and add a default giantswarm tag.
 
 ## [0.5.2] - 2023-10-27
 
