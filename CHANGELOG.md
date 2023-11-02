@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Enable `ebs-csi-driver` addon.
+
 ## [0.5.2] - 2023-10-27
 
 ### Changed
