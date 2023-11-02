@@ -13,6 +13,9 @@ metadata:
   name: {{ include "resource.default.name" $ }}
   namespace: {{ $.Release.Namespace }}
 spec:
+  additionalTags:
+    giantswarm.io/cluster: {{ include "resource.default.name" $ }}
+    {{- if .Values.providerSpecific.additionalResourceTags -}}{{- toYaml .Values.providerSpecific.additionalResourceTags | nindent 4 }}{{- end}}
   identityRef:
     kind: AWSClusterRoleIdentity
     {{- with .Values.providerSpecific.awsClusterRoleIdentityName }}
