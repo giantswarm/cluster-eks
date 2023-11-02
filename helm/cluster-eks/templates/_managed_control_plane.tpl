@@ -24,7 +24,6 @@ spec:
   eksClusterName: {{ include "resource.default.name" $ }}
   addons:
     - name: aws-ebs-csi-driver
-      version: 
       serviceAccountRoleARN: arn:aws:iam::{{ include "aws-account-id" $ }}:role/{{ include "resource.default.name" $  }}-ebs-csi-driver-role
   region: {{ include "aws-region" . }}
   secondaryCidrBlock: {{ first .Values.connectivity.network.pods.cidrBlocks }}
