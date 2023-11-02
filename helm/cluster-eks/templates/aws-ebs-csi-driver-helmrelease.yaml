@@ -34,9 +34,10 @@ spec:
       retries: 30
   values:
     controller:
+      hostNetwork: false
       nodeSelector:
         "node-role.kubernetes.io/control-plane": null
-        "node-role.kubernetes.io/worker": '""'
+        "node-role.kubernetes.io/worker": ""
     serviceAccount:
       controller:
         annotations:

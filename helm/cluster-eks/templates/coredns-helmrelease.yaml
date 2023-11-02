@@ -44,4 +44,4 @@ spec:
     mastersInstance:
       nodeSelector:
         "node-role.kubernetes.io/control-plane": null
-        "node-role.kubernetes.io/worker": '""'
+        "node-role.kubernetes.io/worker": ""
