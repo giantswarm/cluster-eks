@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Allow configuration of `AWSManagedControlPlane.spec.AdditionalTags` value and add a default giantswarm tag.
+- Add `aws-ebs-csi-driver-app` via `HelmRelease` CR.
 
 ## [0.5.2] - 2023-10-27
 
