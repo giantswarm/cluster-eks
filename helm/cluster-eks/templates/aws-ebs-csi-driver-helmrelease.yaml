@@ -18,10 +18,10 @@ spec:
       chart: aws-ebs-csi-driver-app
       # used by renovate
       # repo: giantswarm/aws-ebs-csi-driver-app
-      version: 2.27.0-495025ffe47fa875117621d2815d24c10fb32306
+      version: 2.28.0
       sourceRef:
         kind: HelmRepository
-        name: {{ include "resource.default.name" $ }}-default-test
+        name: {{ include "resource.default.name" $ }}-default
   dependsOn:
       - name: {{ include "resource.default.name" $ }}-vertical-pod-autoscaler-crd
         namespace: {{ $.Release.Namespace }}
