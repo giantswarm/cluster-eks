@@ -18,10 +18,10 @@ spec:
       chart: aws-ebs-csi-driver-app
       # used by renovate
       # repo: giantswarm/aws-ebs-csi-driver-app
-      version: 2.24.0
+      version: 2.27.0-495025ffe47fa875117621d2815d24c10fb32306
       sourceRef:
         kind: HelmRepository
-        name: {{ include "resource.default.name" $ }}-default
+        name: {{ include "resource.default.name" $ }}-default-test
   dependsOn:
       - name: {{ include "resource.default.name" $ }}-vertical-pod-autoscaler-crd
         namespace: {{ $.Release.Namespace }}
@@ -33,11 +33,16 @@ spec:
     remediation:
       retries: 30
   values:
+    ciliumNetworkPolicy:
+      enabled: true
     controller:
       hostNetwork: false
       nodeSelector:
         "node-role.kubernetes.io/control-plane": null
         "node-role.kubernetes.io/worker": ""
+    removeStorageClassJob:
+      enabled: true
+      storageClassName: gp2
     serviceAccount:
       controller:
         annotations:
