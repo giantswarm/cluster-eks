@@ -1,0 +1,58 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: {{ include "resource.default.name" $ }}-aws-ebs-csi-driver
+  namespace: {{ $.Release.Namespace }}
+  annotations:
+    cluster.giantswarm.io/description: "{{ .Values.metadata.description }}"
+  labels:
+    cluster-apps-operator.giantswarm.io/watching: ""
+    {{- include "labels.common" . | nindent 4 }}
+spec:
+  suspend: false # It can be unsuspended by the post-install/post-upgrade hook. Useful if we need to populate some fields later on.
+  releaseName: aws-ebs-csi-driver
+  targetNamespace: kube-system
+  storageNamespace: kube-system
+  chart:
+    spec:
+      chart: aws-ebs-csi-driver-app
+      # used by renovate
+      # repo: giantswarm/aws-ebs-csi-driver-app
+      version: 2.28.0
+      sourceRef:
+        kind: HelmRepository
+        name: {{ include "resource.default.name" $ }}-default
+  dependsOn:
+      - name: {{ include "resource.default.name" $ }}-vertical-pod-autoscaler-crd
+        namespace: {{ $.Release.Namespace }}
+  kubeConfig:
+    secretRef:
+      name: {{ include "resource.default.name" $ }}-kubeconfig
+  interval: 5m
+  install:
+    remediation:
+      retries: 30
+  values:
+    ciliumNetworkPolicy:
+      enabled: true
+    controller:
+      hostNetwork: false
+      nodeSelector:
+        "node-role.kubernetes.io/control-plane": null
+        "node-role.kubernetes.io/worker": ""
+    removeStorageClassJob:
+      enabled: true
+      storageClassName: gp2
+    serviceAccount:
+      controller:
+        annotations:
+          eks.amazonaws.com/role-arn: arn:aws:iam::{{ include "aws-account-id" $ }}:role/{{ include "resource.default.name" $  }}-ebs-csi-driver-role
+      snapshot:
+        annotations:
+          eks.amazonaws.com/role-arn: arn:aws:iam::{{ include "aws-account-id" $ }}:role/{{ include "resource.default.name" $  }}-ebs-csi-driver-role
+  {{- if .Values.connectivity.proxy.enabled }}
+    proxy:
+      noProxy: "{{ include "noProxyList" $ }}"
+      http: {{ .Values.connectivity.proxy.httpProxy | quote }}
+      https: {{ .Values.connectivity.proxy.httpsProxy | quote }}
+  {{ end }}
