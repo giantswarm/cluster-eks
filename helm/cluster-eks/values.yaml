@@ -45,7 +45,7 @@ internal:
     def00:
       customNodeLabels:
         - label=default
-      instanceType: r6i.xlarge
+      instanceType: r6i.2xlarge
       maxSize: 4
       minSize: 3
   sandboxContainerImage:
