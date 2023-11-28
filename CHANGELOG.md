@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Fill `AWSManagedControlPlane.spec.network.subnets[*].id` field for managed subnets for compatibility with CAPA v2.3.0
+
 ## [0.6.2] - 2023-11-08
 
 ### Changed
