@@ -25,6 +25,13 @@ Properties within the `.providerSpecific` top-level object
 | `providerSpecific.region` | **Region**|**Type:** `string`<br/>|
 
 ### Connectivity
+Properties within the `.global.connectivity` object
+
+| **Property** | **Description** | **More Details** |
+| :----------- | :-------------- | :--------------- |
+| `global.connectivity.baseDomain` | **Base DNS domain**|**Type:** `string`<br/>|
+
+### Connectivity
 Properties within the `.connectivity` top-level object
 
 | **Property** | **Description** | **More Details** |
@@ -63,13 +70,6 @@ Properties within the `.connectivity` top-level object
 | `connectivity.subnets[*].isPublic` | **Public**|**Type:** `boolean`<br/>|
 | `connectivity.subnets[*].tags` | **Tags** - AWS resource tags to assign to this CIDR block.|**Type:** `object`<br/>|
 | `connectivity.subnets[*].tags.*` | **Tag value**|**Type:** `string`<br/>**Value pattern:** `^[ a-zA-Z0-9\._:/=+-@]+$`<br/>|
-
-### Connectivity
-Properties within the `.global.connectivity` object
-
-| **Property** | **Description** | **More Details** |
-| :----------- | :-------------- | :--------------- |
-| `global.connectivity.baseDomain` | **Base DNS domain**|**Type:** `string`<br/>|
 
 ### Control plane
 Properties within the `.controlPlane` top-level object
@@ -130,6 +130,13 @@ Properties within the `.kubectlImage` top-level object
 | `kubectlImage.tag` | **Tag**|**Type:** `string`<br/>**Default:** `"1.23.5"`|
 
 ### Metadata
+Properties within the `.global.metadata` object
+
+| **Property** | **Description** | **More Details** |
+| :----------- | :-------------- | :--------------- |
+| `global.metadata.preventDeletion` | **Prevent cluster deletion**|**Type:** `boolean`<br/>**Default:** `false`|
+
+### Metadata
 Properties within the `.metadata` top-level object
 
 | **Property** | **Description** | **More Details** |
@@ -138,13 +145,6 @@ Properties within the `.metadata` top-level object
 | `metadata.name` | **Cluster name** - Unique identifier, cannot be changed after creation.|**Type:** `string`<br/>|
 | `metadata.organization` | **Organization**|**Type:** `string`<br/>|
 | `metadata.servicePriority` | **Service priority** - The relative importance of this cluster.|**Type:** `string`<br/>**Default:** `"highest"`|
-
-### Metadata
-Properties within the `.global.metadata` object
-
-| **Property** | **Description** | **More Details** |
-| :----------- | :-------------- | :--------------- |
-| `global.metadata.preventDeletion` | **Prevent cluster deletion**|**Type:** `boolean`<br/>**Default:** `false`|
 
 ### Node pools
 Properties within the `.nodePools` top-level object
