@@ -40,6 +40,7 @@ controlPlane:
     authenticator: true
     controllerManager: true
 global:
+  connectivity: {}
   metadata:
     preventDeletion: false
 internal:
