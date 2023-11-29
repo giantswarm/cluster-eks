@@ -39,6 +39,9 @@ controlPlane:
     audit: true
     authenticator: true
     controllerManager: true
+global:
+  metadata:
+    preventDeletion: false
 internal:
   kubernetesVersion: 1.24.10
   nodePools:
