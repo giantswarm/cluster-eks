@@ -430,6 +430,41 @@
                 }
             }
         },
+        "global": {
+            "type": "object",
+            "title": "Global properties",
+            "description": "Properties that are available to all charts and subcharts.",
+            "additionalProperties": true,
+            "properties": {
+                "connectivity": {
+                    "type": "object",
+                    "title": "Connectivity",
+                    "properties": {
+                        "baseDomain": {
+                            "type": "string",
+                            "title": "Base DNS domain"
+                        }
+                    }
+                },
+                "managementCluster": {
+                    "type": "string",
+                    "title": "Management cluster",
+                    "description": "Name of the Cluster API cluster managing this workload cluster."
+                },
+                "metadata": {
+                    "type": "object",
+                    "title": "Metadata",
+                    "additionalProperties": true,
+                    "properties": {
+                        "preventDeletion": {
+                            "type": "boolean",
+                            "title": "Prevent cluster deletion",
+                            "default": false
+                        }
+                    }
+                }
+            }
+        },
         "internal": {
             "type": "object",
             "title": "Internal",
