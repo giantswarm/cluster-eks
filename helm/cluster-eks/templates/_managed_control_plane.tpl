@@ -31,19 +31,23 @@ spec:
       cidrBlock: {{ .Values.connectivity.network.vpcCidr }}
     subnets:
     {{- range $j, $subnet := .Values.connectivity.subnets }}
-    {{- range $i, $cidr := $subnet.cidrBlocks }}
-    - cidrBlock: "{{ $cidr.cidr }}"
+    {{- range $i, $cidr := $subnet.cidrBlocks -}}
+    {{/* CAPA v2.3.0 defaults to using the `id` field as subnet name unless it's an unmanaged one (`id` starts with `subnet-`), so use CAPA's previous standard subnet naming scheme */}}
+    - id: "{{ include "resource.default.name" $ }}-subnet-{{ $subnet.isPublic | default false | ternary "public" "private" }}-{{ if eq (len $cidr.availabilityZone) 1 }}{{ include "aws-region" $ }}{{ end }}{{ $cidr.availabilityZone }}"
+      cidrBlock: "{{ $cidr.cidr }}"
       {{- if eq (len $cidr.availabilityZone) 1 }}
       availabilityZone: "{{ include "aws-region" $ }}{{ $cidr.availabilityZone }}"
       {{- else }}
       availabilityZone: "{{ $cidr.availabilityZone }}"
       {{- end }}
       isPublic: {{ $subnet.isPublic | default false }}
+      {{- if or $subnet.tags $cidr.tags }}
       tags:
         {{- toYaml $subnet.tags | nindent 8 }}
         {{- if $cidr.tags }}
         {{- toYaml $cidr.tags | nindent 8 }}
         {{- end }}
+      {{- end }}
     {{- end }}
     {{- end }}
   version: {{ $.Values.internal.kubernetesVersion }}
@@ -59,7 +63,7 @@ spec:
   iamAuthenticatorConfig:
     mapRoles:
     - rolearn: 'arn:aws:iam::{{ include "aws-account-id" $ }}:role/GiantSwarmAdmin'
-      groups: 
+      groups:
       - "system:masters"
       username: cluster-admin
 {{- if $.Values.controlPlane.roleMapping }}
