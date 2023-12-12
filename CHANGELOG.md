@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Add option to configure OIDC Provider Config.
+
+## [0.9.0] - 2023-12-12
+
+### Changed
+
 - Move values under `.global`.
 
 ## [0.8.0] - 2023-12-12
@@ -107,7 +112,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add EKS templates.
 
-[Unreleased]: https://github.com/giantswarm/cluster-eks/compare/v0.8.0...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-eks/compare/v0.9.0...HEAD
+[0.9.0]: https://github.com/giantswarm/cluster-eks/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/giantswarm/cluster-eks/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/giantswarm/cluster-eks/compare/v0.6.3...v0.7.0
 [0.6.3]: https://github.com/giantswarm/cluster-eks/compare/v0.6.2...v0.6.3
