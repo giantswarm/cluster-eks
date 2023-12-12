@@ -480,7 +480,8 @@
                             ],
                             "default": "highest"
                         }
-                    }
+                    },
+                    "default": null
                 },
                 "nodePools": {
                     "type": "object",
