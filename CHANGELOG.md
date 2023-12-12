@@ -7,11 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Move values under `.global`.
+
 ## [0.8.0] - 2023-12-12
 
 ### Changed
 
-* Move values under `.global`.
 - Support longer node pool names and allow dashes.
 
 ## [0.7.0] - 2023-12-06
