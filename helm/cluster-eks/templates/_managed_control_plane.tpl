@@ -15,22 +15,22 @@ metadata:
 spec:
   additionalTags:
     giantswarm.io/cluster: {{ include "resource.default.name" $ }}
-    {{- if .Values.providerSpecific.additionalResourceTags -}}{{- toYaml .Values.providerSpecific.additionalResourceTags | nindent 4 }}{{- end}}
+    {{- if .Values.global.providerSpecific.additionalResourceTags -}}{{- toYaml .Values.global.providerSpecific.additionalResourceTags | nindent 4 }}{{- end}}
   identityRef:
     kind: AWSClusterRoleIdentity
-    {{- with .Values.providerSpecific.awsClusterRoleIdentityName }}
+    {{- with .Values.global.providerSpecific.awsClusterRoleIdentityName }}
     name: {{ . | quote }}
     {{- end }}
   eksClusterName: {{ include "resource.default.name" $ }}
   region: {{ include "aws-region" . }}
-  secondaryCidrBlock: {{ first .Values.connectivity.network.pods.cidrBlocks }}
+  secondaryCidrBlock: {{ first .Values.global.connectivity.network.pods.cidrBlocks }}
   sshKeyName: ssh-key
   network:
     vpc:
-      availabilityZoneUsageLimit: {{ .Values.connectivity.availabilityZoneUsageLimit }}
-      cidrBlock: {{ .Values.connectivity.network.vpcCidr }}
+      availabilityZoneUsageLimit: {{ .Values.global.connectivity.availabilityZoneUsageLimit }}
+      cidrBlock: {{ .Values.global.connectivity.network.vpcCidr }}
     subnets:
-    {{- range $j, $subnet := .Values.connectivity.subnets }}
+    {{- range $j, $subnet := .Values.global.connectivity.subnets }}
     {{- range $i, $cidr := $subnet.cidrBlocks -}}
     {{/* CAPA v2.3.0 defaults to using the `id` field as subnet name unless it's an unmanaged one (`id` starts with `subnet-`), so use CAPA's previous standard subnet naming scheme */}}
     - id: "{{ include "resource.default.name" $ }}-subnet-{{ $subnet.isPublic | default false | ternary "public" "private" }}-{{ if eq (len $cidr.availabilityZone) 1 }}{{ include "aws-region" $ }}{{ end }}{{ $cidr.availabilityZone }}"
@@ -56,17 +56,17 @@ spec:
   kubeProxy:
     disable: true
   logging:
-    apiServer: {{ $.Values.controlPlane.logging.apiServer }}
-    audit: {{ $.Values.controlPlane.logging.audit }}
-    authenticator: {{ $.Values.controlPlane.logging.authenticator }}
-    controllerManager: {{ $.Values.controlPlane.logging.controllerManager }}
+    apiServer: {{ $.Values.global.controlPlane.logging.apiServer }}
+    audit: {{ $.Values.global.controlPlane.logging.audit }}
+    authenticator: {{ $.Values.global.controlPlane.logging.authenticator }}
+    controllerManager: {{ $.Values.global.controlPlane.logging.controllerManager }}
   iamAuthenticatorConfig:
     mapRoles:
     - rolearn: 'arn:aws:iam::{{ include "aws-account-id" $ }}:role/GiantSwarmAdmin'
       groups:
       - "system:masters"
       username: cluster-admin
-{{- if $.Values.controlPlane.roleMapping }}
-{{- toYaml $.Values.controlPlane.roleMapping | nindent 4 }}
+{{- if $.Values.global.controlPlane.roleMapping }}
+{{- toYaml $.Values.global.controlPlane.roleMapping | nindent 4 }}
 {{- end }}
 {{- end -}}
