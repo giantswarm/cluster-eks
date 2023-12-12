@@ -3,10 +3,6 @@
 global:
   connectivity:
     availabilityZoneUsageLimit: 3
-    containerRegistries:
-      docker.io:
-        - endpoint: registry-1.docker.io
-        - endpoint: giantswarm.azurecr.io
     network:
       pods:
         cidrBlocks:
