@@ -9,8 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
- * Move values under `.global`.
- * Add option to configure OIDC Provider Config.
+- Add option to configure OIDC Provider Config.
+- Move values under `.global`.
+- Support longer node pool names and allow dashes.
 
 ## [0.7.0] - 2023-12-06
 
