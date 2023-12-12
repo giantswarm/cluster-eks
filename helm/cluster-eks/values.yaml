@@ -36,6 +36,7 @@ global:
       audit: true
       authenticator: true
       controllerManager: true
+    oidcIdentityProviderConfig: {}
   metadata:
     preventDeletion: false
     servicePriority: highest
