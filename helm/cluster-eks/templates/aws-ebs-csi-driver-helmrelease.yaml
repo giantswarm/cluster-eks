@@ -4,7 +4,7 @@ metadata:
   name: {{ include "resource.default.name" $ }}-aws-ebs-csi-driver
   namespace: {{ $.Release.Namespace }}
   annotations:
-    cluster.giantswarm.io/description: "{{ .Values.metadata.description }}"
+    cluster.giantswarm.io/description: "{{ .Values.global.metadata.description }}"
   labels:
     cluster-apps-operator.giantswarm.io/watching: ""
     {{- include "labels.common" . | nindent 4 }}
@@ -50,9 +50,9 @@ spec:
       snapshot:
         annotations:
           eks.amazonaws.com/role-arn: arn:aws:iam::{{ include "aws-account-id" $ }}:role/{{ include "resource.default.name" $  }}-ebs-csi-driver-role
-  {{- if .Values.connectivity.proxy.enabled }}
+  {{- if .Values.global.connectivity.proxy.enabled }}
     proxy:
       noProxy: "{{ include "noProxyList" $ }}"
-      http: {{ .Values.connectivity.proxy.httpProxy | quote }}
-      https: {{ .Values.connectivity.proxy.httpsProxy | quote }}
+      http: {{ .Values.global.connectivity.proxy.httpProxy | quote }}
+      https: {{ .Values.global.connectivity.proxy.httpsProxy | quote }}
   {{ end }}

@@ -31,7 +31,7 @@ app: {{ include "name" . | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
 cluster.x-k8s.io/cluster-name: {{ include "resource.default.name" . | quote }}
 giantswarm.io/cluster: {{ include "resource.default.name" . | quote }}
-giantswarm.io/organization: {{ required "You must provide an existing organization name in .metadata.organization" .Values.metadata.organization | quote }}
+giantswarm.io/organization: {{ required "You must provide an existing organization name in .metadata.organization" .Values.global.metadata.organization | quote }}
 cluster.x-k8s.io/watch-filter: capi
 {{- end -}}
 
@@ -42,19 +42,7 @@ Given that Kubernetes allows 63 characters for resource names, the stem is trunc
 room for such suffix.
 */}}
 {{- define "resource.default.name" -}}
-{{- .Values.metadata.name | default (.Release.Name | replace "." "-" | trunc 47 | trimSuffix "-") -}}
-{{- end -}}
-
-{{- define "ami" }}
-{{- with .Values.providerSpecific.ami }}
-ami:
-  id: {{ . | quote }}
-{{- else -}}
-ami: {}
-imageLookupBaseOS: "ubuntu-20.04"
-imageLookupFormat: {{ "capa-ami-{{.BaseOS}}-v{{.K8sVersion}}-gs" }}
-imageLookupOrg: "706635527432"
-{{- end }}
+{{- .Values.global.metadata.name | default (.Release.Name | replace "." "-" | trunc 47 | trimSuffix "-") -}}
 {{- end -}}
 
 {{/*

@@ -1,14 +1,10 @@
-metadata:
-  organization: "test"
-baseDomain: example.com
+global:
+  metadata:
+    organization: "test"
+    description: "test description"
 
-connectivity:
-  containerRegistries:
-    with-auth.example.com:
-      - endpoint: with-auth.example.com
-        credentials:
-          username: giantswarmpull
-          password: abcdef
-      - endpoint: quay.io
-providerSpecific:
-  awsAccountId: "1234567890"
+  connectivity:
+    baseDomain: example.com
+
+  providerSpecific:
+    awsAccountId: "1234567890"

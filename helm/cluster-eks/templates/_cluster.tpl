@@ -3,13 +3,13 @@ apiVersion: cluster.x-k8s.io/v1beta1
 kind: Cluster
 metadata:
   annotations:
-    {{- with .Values.metadata.description }}
+    {{- with .Values.global.metadata.description }}
     cluster.giantswarm.io/description: "{{ . }}"
     {{- end }}
   labels:
     cluster-apps-operator.giantswarm.io/watching: ""
-    {{- if .Values.metadata.servicePriority }}
-    giantswarm.io/service-priority: {{ .Values.metadata.servicePriority }}
+    {{- if .Values.global.metadata.servicePriority }}
+    giantswarm.io/service-priority: {{ .Values.global.metadata.servicePriority }}
     {{- end }}
     {{- include "labels.common" $ | nindent 4 }}
     app.kubernetes.io/version: {{ .Chart.Version | quote }}
@@ -19,10 +19,10 @@ spec:
   clusterNetwork:
     services:
       cidrBlocks:
-      {{- toYaml .Values.connectivity.network.services.cidrBlocks | nindent 8 }}
+      {{- toYaml .Values.global.connectivity.network.services.cidrBlocks | nindent 8 }}
     pods:
       cidrBlocks:
-      {{- toYaml .Values.connectivity.network.pods.cidrBlocks | nindent 8 }}
+      {{- toYaml .Values.global.connectivity.network.pods.cidrBlocks | nindent 8 }}
   controlPlaneRef:
     apiVersion: controlplane.cluster.x-k8s.io/v1beta2
     kind: AWSManagedControlPlane
