@@ -347,6 +347,65 @@
                                 }
                             }
                         },
+                        "oidcIdentityProviderConfig": {
+                            "type": "object",
+                            "title": "OIDC identity provider config",
+                            "description": "OIDC identity provider configuration for the Kubernetes API server.",
+                            "properties": {
+                                "clientId": {
+                                    "type": "string",
+                                    "title": "Client ID",
+                                    "description": "Client ID of the OIDC identity provider."
+                                },
+                                "groupsClaim": {
+                                    "type": "string",
+                                    "title": "Groups claim",
+                                    "description": "Claim to use for mapping groups."
+                                },
+                                "groupsPrefix": {
+                                    "type": "string",
+                                    "title": "Groups prefix",
+                                    "description": "Prefix to use for mapping groups."
+                                },
+                                "identityProviderConfigName": {
+                                    "type": "string",
+                                    "title": "Identity provider config name",
+                                    "description": "Name of the OIDC identity provider config."
+                                },
+                                "issuerUrl": {
+                                    "type": "string",
+                                    "title": "Issuer URL",
+                                    "description": "URL of the OIDC identity provider."
+                                },
+                                "requiredClaims": {
+                                    "type": "object",
+                                    "title": "Required claims",
+                                    "description": "Required claims for the OIDC identity provider.",
+                                    "additionalProperties": {
+                                        "type": "string",
+                                        "title": "Claim"
+                                    }
+                                },
+                                "tags": {
+                                    "type": "object",
+                                    "title": "Tags",
+                                    "description": "AWS resource tags to assign to the IAM OIDC provider.",
+                                    "additionalProperties": {
+                                        "$ref": "#/$defs/awsResourceTagValue"
+                                    }
+                                },
+                                "usernameClaim": {
+                                    "type": "string",
+                                    "title": "Username claim",
+                                    "description": "Claim to use for mapping usernames."
+                                },
+                                "usernamePrefix": {
+                                    "type": "string",
+                                    "title": "Username prefix",
+                                    "description": "Prefix to use for mapping usernames."
+                                }
+                            }
+                        },
                         "roleMapping": {
                             "type": "array",
                             "title": "Role mappings",
@@ -421,7 +480,8 @@
                             ],
                             "default": "highest"
                         }
-                    }
+                    },
+                    "default": null
                 },
                 "nodePools": {
                     "type": "object",
