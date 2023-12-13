@@ -66,7 +66,7 @@ spec:
       groups:
       - "system:masters"
       username: cluster-admin
-   {{- if $.Values.global.controlPlane.oidcIdentityProviderConfig }}
+   {{- if $.Values.global.controlPlane.oidcIdentityProviderConfig.issuerUrl }}
    oidcIdentityProviderConfig:
    {{- toYaml $.Values.global.controlPlane.oidcIdentityProviderConfig | nindent 4 }}
    {{- end }}
