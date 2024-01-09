@@ -49,7 +49,6 @@ spec:
     k8s.io/cluster-autoscaler/enabled: "true"
     k8s.io/cluster-autoscaler/{{ include "resource.default.name" $ }}: "true"
     giantswarm.io/cluster: {{ include "resource.default.name" $ }}
-    {{- if .Values.global.providerSpecific.additionalResourceTags -}}{{- toYaml .Values.global.providerSpecific.additionalResourceTags | nindent 4 }}{{- end}}
 ---
 {{ end }}
 {{- end -}}
