@@ -6,6 +6,7 @@ metadata:
   annotations:
     "helm.sh/resource-policy": keep
     machine-pool.giantswarm.io/name: {{ include "resource.default.name" $ }}-{{ $name }}
+    cluster.x-k8s.io/replicas-managed-by: "external-autoscaler"
   labels:
     giantswarm.io/machine-pool: {{ include "resource.default.name" $ }}-{{ $name }}
     {{- include "labels.common" $ | nindent 4 }}
@@ -44,6 +45,11 @@ spec:
     minSize: {{ $value.minSize | default 1 }}
     maxSize: {{ $value.maxSize | default 3 }}
   instanceType:  {{ $value.instanceType }}
+  additionalTags: 
+    k8s.io/cluster-autoscaler/enabled: "true"
+    k8s.io/cluster-autoscaler/{{ include "resource.default.name" $ }}: "true"
+    giantswarm.io/cluster: {{ include "resource.default.name" $ }}
+    {{- if .Values.global.providerSpecific.additionalResourceTags -}}{{- toYaml .Values.global.providerSpecific.additionalResourceTags | nindent 4 }}{{- end}}
 ---
 {{ end }}
 {{- end -}}
