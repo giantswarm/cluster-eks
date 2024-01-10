@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Added additionalTags and annotation in managed machine pool template to support cluster-autoscaler in EKS.
+
 ## [0.10.0] - 2023-12-13
 
 ### Changed
