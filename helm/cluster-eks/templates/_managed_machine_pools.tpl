@@ -40,7 +40,7 @@ metadata:
 spec:
   additionalTags:
     k8s.io/cluster-autoscaler/enabled: "true"
-    k8s.io/cluster-autoscaler/{{ include "resource.default.name" $ }}: "true"
+    sigs.k8s.io/cluster-api-provider-aws/cluster/{{ include "resource.default.name" $ }}: "owned"
   availabilityZones: {{ include "aws-availability-zones" $value | nindent 2 }}
   eksNodegroupName: nodes-{{ include "resource.default.name" $ }}-{{ $name }}
   instanceType:  {{ $value.instanceType }}
