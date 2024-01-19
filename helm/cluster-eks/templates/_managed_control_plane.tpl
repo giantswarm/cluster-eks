@@ -62,7 +62,6 @@ spec:
       isPublic: false
       {{- if or $subnet.tags $cidr.tags }}
       tags:
-        {{- toYaml $subnet.tags | nindent 8 }}
         {{- if $cidr.tags }}
         {{- toYaml $cidr.tags | nindent 8 }}
         {{- end }}
