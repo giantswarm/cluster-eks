@@ -51,7 +51,7 @@ spec:
     {{- end }}
     {{- end }}
     {{- range $j, $subnet := .Values.global.connectivity.podSubnets }}
-    {{- range $i, $cidr := $subnet.cidrBlocks -}}
+    {{- range $i, $cidr := $subnet.cidrBlocks }}
     - id: "{{ include "resource.default.name" $ }}-subnet-secondary-{{ if eq (len $cidr.availabilityZone) 1 }}{{ include "aws-region" $ }}{{ end }}{{ $cidr.availabilityZone }}"
       cidrBlock: "{{ $cidr.cidr }}"
       {{- if eq (len $cidr.availabilityZone) 1 }}
