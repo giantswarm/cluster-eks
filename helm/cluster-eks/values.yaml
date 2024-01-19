@@ -15,10 +15,16 @@ global:
       - cidrBlocks:
           - availabilityZone: a
             cidr: 100.64.0.0/18
+            tags:
+              sigs.k8s.io/cluster-api-provider-aws/association: secondary
           - availabilityZone: b
             cidr: 100.64.64.0/18
+            tags:
+              sigs.k8s.io/cluster-api-provider-aws/association: secondary
           - availabilityZone: c
             cidr: 100.64.128.0/18
+            tags:
+              sigs.k8s.io/cluster-api-provider-aws/association: secondary
     proxy: {}
     subnets:
       - cidrBlocks:
