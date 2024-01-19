@@ -39,6 +39,16 @@ Properties within the `.global.connectivity` object
 | `global.connectivity.network.services.cidrBlocks` | **K8s Service subnets**|**Type:** `array`<br/>**Default:** `["172.31.0.0/16"]`|
 | `global.connectivity.network.services.cidrBlocks[*]` | **Service subnet** - IPv4 address range for kubernetes services, in CIDR notation.|**Type:** `string`<br/>**Example:** `"172.31.0.0/16"`<br/>|
 | `global.connectivity.network.vpcCidr` | **VPC subnet** - IPv4 address range to assign to this cluster's VPC, in CIDR notation.|**Type:** `string`<br/>**Default:** `"10.0.0.0/16"`|
+| `global.connectivity.podSubnets` | **Pod Subnets** - Pod Subnets are created and tagged based on this definition.|**Type:** `array`<br/>**Default:** `[{"cidrBlocks":[{"availabilityZone":"a","cidr":"100.64.0.0/18"},{"availabilityZone":"b","cidr":"100.64.64.0/18"},{"availabilityZone":"c","cidr":"100.64.128.0/18"}]}]`|
+| `global.connectivity.podSubnets[*]` | **Subnet**|**Type:** `object`<br/>|
+| `global.connectivity.podSubnets[*].cidrBlocks` | **Network**|**Type:** `array`<br/>|
+| `global.connectivity.podSubnets[*].cidrBlocks[*]` |**None**|**Type:** `object`<br/>|
+| `global.connectivity.podSubnets[*].cidrBlocks[*].availabilityZone` | **Availability zone**|**Type:** `string`<br/>**Example:** `"a"`<br/>|
+| `global.connectivity.podSubnets[*].cidrBlocks[*].cidr` | **Address range** - IPv4 address range, in CIDR notation.|**Type:** `string`<br/>|
+| `global.connectivity.podSubnets[*].cidrBlocks[*].tags` | **Tags** - AWS resource tags to assign to this subnet.|**Type:** `object`<br/>|
+| `global.connectivity.podSubnets[*].cidrBlocks[*].tags.*` | **Tag value**|**Type:** `string`<br/>**Value pattern:** `^[ a-zA-Z0-9\._:/=+-@]+$`<br/>|
+| `global.connectivity.podSubnets[*].tags` | **Tags** - AWS resource tags to assign to this CIDR block.|**Type:** `object`<br/>|
+| `global.connectivity.podSubnets[*].tags.*` | **Tag value**|**Type:** `string`<br/>**Value pattern:** `^[ a-zA-Z0-9\._:/=+-@]+$`<br/>|
 | `global.connectivity.proxy` | **Proxy** - Whether/how outgoing traffic is routed through proxy servers.|**Type:** `object`<br/>|
 | `global.connectivity.proxy.enabled` | **Enable**|**Type:** `boolean`<br/>|
 | `global.connectivity.proxy.httpProxy` | **HTTP proxy** - To be passed to the HTTP_PROXY environment variable in all hosts.|**Type:** `string`<br/>|

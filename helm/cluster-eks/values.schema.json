@@ -183,6 +183,76 @@
                                 }
                             }
                         },
+                        "podSubnets": {
+                            "type": "array",
+                            "title": "Pod Subnets",
+                            "description": "Pod Subnets are created and tagged based on this definition.",
+                            "items": {
+                                "type": "object",
+                                "title": "Subnet",
+                                "properties": {
+                                    "cidrBlocks": {
+                                        "type": "array",
+                                        "title": "Network",
+                                        "items": {
+                                            "type": "object",
+                                            "required": [
+                                                "availabilityZone",
+                                                "cidr"
+                                            ],
+                                            "properties": {
+                                                "availabilityZone": {
+                                                    "type": "string",
+                                                    "title": "Availability zone",
+                                                    "examples": [
+                                                        "a"
+                                                    ]
+                                                },
+                                                "cidr": {
+                                                    "type": "string",
+                                                    "title": "Address range",
+                                                    "description": "IPv4 address range, in CIDR notation."
+                                                },
+                                                "tags": {
+                                                    "type": "object",
+                                                    "title": "Tags",
+                                                    "description": "AWS resource tags to assign to this subnet.",
+                                                    "additionalProperties": {
+                                                        "$ref": "#/$defs/awsResourceTagValue"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "tags": {
+                                        "type": "object",
+                                        "title": "Tags",
+                                        "description": "AWS resource tags to assign to this CIDR block.",
+                                        "additionalProperties": {
+                                            "$ref": "#/$defs/awsResourceTagValue"
+                                        }
+                                    }
+                                }
+                            },
+                            "default": [
+                                {
+                                    "cidrBlocks": [
+                                        {
+                                            "availabilityZone": "a",
+                                            "cidr": "100.64.0.0/18"
+                                        },
+                                        {
+                                            "availabilityZone": "b",
+                                            "cidr": "100.64.64.0/18"
+                                        },
+                                        {
+                                            "availabilityZone": "c",
+                                            "cidr": "100.64.128.0/18"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
                         "proxy": {
                             "type": "object",
                             "title": "Proxy",

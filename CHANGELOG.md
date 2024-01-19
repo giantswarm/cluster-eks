@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Added additionalTags and annotation in managed machine pool template to support cluster-autoscaler in EKS.
+- Render secondary subnets used for pods to the `AWSManagedControlPlane.spec.network.subnets` field.
 
 ## [0.10.0] - 2023-12-13
 
