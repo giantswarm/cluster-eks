@@ -9,7 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Remove ingress and egress rules from the security group that AWS creates by default when creating a new VPC.
+
+## [0.11.0] - 2024-01-19
+
+### Changed
+
 - Added additionalTags and annotation in managed machine pool template to support cluster-autoscaler in EKS.
+- Render secondary subnets used for pods to the `AWSManagedControlPlane.spec.network.subnets` field.
 
 ## [0.10.0] - 2023-12-13
 
@@ -118,7 +125,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add EKS templates.
 
-[Unreleased]: https://github.com/giantswarm/cluster-eks/compare/v0.10.0...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-eks/compare/v0.11.0...HEAD
+[0.11.0]: https://github.com/giantswarm/cluster-eks/compare/v0.10.0...v0.11.0
 [0.10.0]: https://github.com/giantswarm/cluster-eks/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/giantswarm/cluster-eks/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/giantswarm/cluster-eks/compare/v0.7.0...v0.8.0

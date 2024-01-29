@@ -29,6 +29,7 @@ spec:
     vpc:
       availabilityZoneUsageLimit: {{ .Values.global.connectivity.availabilityZoneUsageLimit }}
       cidrBlock: {{ .Values.global.connectivity.network.vpcCidr }}
+      emptyRoutesDefaultVPCSecurityGroup: true
     subnets:
     {{- range $j, $subnet := .Values.global.connectivity.subnets }}
     {{- range $i, $cidr := $subnet.cidrBlocks -}}
@@ -44,6 +45,24 @@ spec:
       {{- if or $subnet.tags $cidr.tags }}
       tags:
         {{- toYaml $subnet.tags | nindent 8 }}
+        {{- if $cidr.tags }}
+        {{- toYaml $cidr.tags | nindent 8 }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+    {{- end }}
+    {{- range $j, $subnet := .Values.global.connectivity.podSubnets }}
+    {{- range $i, $cidr := $subnet.cidrBlocks }}
+    - id: "{{ include "resource.default.name" $ }}-subnet-secondary-{{ if eq (len $cidr.availabilityZone) 1 }}{{ include "aws-region" $ }}{{ end }}{{ $cidr.availabilityZone }}"
+      cidrBlock: "{{ $cidr.cidr }}"
+      {{- if eq (len $cidr.availabilityZone) 1 }}
+      availabilityZone: "{{ include "aws-region" $ }}{{ $cidr.availabilityZone }}"
+      {{- else }}
+      availabilityZone: "{{ $cidr.availabilityZone }}"
+      {{- end }}
+      isPublic: false
+      {{- if or $subnet.tags $cidr.tags }}
+      tags:
         {{- if $cidr.tags }}
         {{- toYaml $cidr.tags | nindent 8 }}
         {{- end }}
