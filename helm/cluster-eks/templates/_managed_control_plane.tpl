@@ -29,6 +29,7 @@ spec:
     vpc:
       availabilityZoneUsageLimit: {{ .Values.global.connectivity.availabilityZoneUsageLimit }}
       cidrBlock: {{ .Values.global.connectivity.network.vpcCidr }}
+      emptyRoutesDefaultVPCSecurityGroup: true
     subnets:
     {{- range $j, $subnet := .Values.global.connectivity.subnets }}
     {{- range $i, $cidr := $subnet.cidrBlocks -}}
