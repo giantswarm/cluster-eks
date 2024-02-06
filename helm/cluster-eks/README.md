@@ -72,6 +72,10 @@ Properties within the `.global.controlPlane` object
 | **Property** | **Description** | **More Details** |
 | :----------- | :-------------- | :--------------- |
 | `global.controlPlane.apiMode` | **API mode** - Whether the Kubernetes API server load balancer should be reachable from the internet (public) or internal only (private).|**Type:** `string`<br/>**Default:** `"public"`|
+| `global.controlPlane.encryptionConfig` | **Encryption config** - Encryption configuration for the Kubernetes API server.|**Type:** `object`<br/>|
+| `global.controlPlane.encryptionConfig.keyARN` | **Key ARN** - AWS KMS key ARN. To enable encryption when creating a cluster you need to create a new KMS key that has an alias name starting with cluster-api-provider-aws-. For example, arn:aws:kms:eu-north-1:12345678901:alias/cluster-api-provider-aws-key1.|**Type:** `string`<br/>**Example:** `"arn:aws:kms:eu-west-1:123456789012:key/1234abcd-12ab-34cd-56ef-1234567890ab"`<br/>|
+| `global.controlPlane.encryptionConfig.resources` | **Resources** - AWS resources to encrypt.|**Type:** `array`<br/>|
+| `global.controlPlane.encryptionConfig.resources[*]` | **Resource** - AWS resource to encrypt, for example `secrets`.|**Type:** `string`<br/>|
 | `global.controlPlane.logging` | **Logging**|**Type:** `object`<br/>|
 | `global.controlPlane.logging.apiServer` | **Api Server** - Enable or disable Api server logging to CloudWatch (https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html).|**Type:** `boolean`<br/>**Default:** `true`|
 | `global.controlPlane.logging.audit` | **Audit** - Enable or disable audit logging to CloudWatch (https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html).|**Type:** `boolean`<br/>**Default:** `true`|

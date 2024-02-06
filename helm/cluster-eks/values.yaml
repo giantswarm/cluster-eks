@@ -45,6 +45,7 @@ global:
         isPublic: false
   controlPlane:
     apiMode: public
+    encryptionConfig: {}
     logging:
       apiServer: true
       audit: true

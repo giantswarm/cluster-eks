@@ -74,6 +74,19 @@ spec:
     disable: true
   kubeProxy:
     disable: true
+  {{ if .Values.global.controlPlane.encryptionConfig.keyARN }}
+  encryptionConfig:
+    resources:
+    - resources:
+      {{- if .Values.global.controlPlane.encryptionConfig.resources }}
+      {{- toYaml .Values.global.controlPlane.encryptionConfig.resources | nindent 8 }}
+      {{- else }}
+      - secrets
+      {{- end }}
+      provider:
+        aws:
+          keyARN: {{ $.Values.global.controlPlane.encryptionConfig.keyARN }}
+  {{- end }}
   logging:
     apiServer: {{ $.Values.global.controlPlane.logging.apiServer }}
     audit: {{ $.Values.global.controlPlane.logging.audit }}
