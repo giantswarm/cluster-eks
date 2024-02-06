@@ -412,7 +412,7 @@
                                 "resources": {
                                     "type": "array",
                                     "title": "Resources",
-                                    "description": "AWS resources to encrypt.",
+                                    "description": "AWS resources to encrypt. Default to secrets if not specified.",
                                     "items": {
                                         "type": "string",
                                         "title": "Resource",
