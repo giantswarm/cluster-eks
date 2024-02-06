@@ -78,7 +78,7 @@ spec:
   encryptionConfig:
     resources:
     - resources:
-      {{- if .Values.global.controlPlane.encryptionConfig.resources }}
+      {{- if  gt (len .Values.global.controlPlane.encryptionConfig.resources) 0 }}
       {{- toYaml .Values.global.controlPlane.encryptionConfig.resources | nindent 8 }}
       {{- else }}
       - secrets
