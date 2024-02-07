@@ -412,11 +412,11 @@
                                 "resources": {
                                     "type": "array",
                                     "title": "Resources",
-                                    "description": "K8s resources to encrypt. Default to secrets if not specified.",
+                                    "description": "Specifies the resources to be encrypted. The only supported value is secrets.",
                                     "items": {
                                         "type": "string",
                                         "title": "Resource",
-                                        "description": "K8s resource to encrypt, for example `secrets`."
+                                        "description": "Specifies the resources to be encrypted. The only supported value is secrets."
                                     }
                                 }
                             }
