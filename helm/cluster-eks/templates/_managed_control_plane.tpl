@@ -74,9 +74,9 @@ spec:
     disable: true
   kubeProxy:
     disable: true
-  {{ if .Values.global.controlPlane.encryptionConfig.keyARN -}}
+  {{ if .Values.global.controlPlane.encryptionConfig.keyArn -}}
   encryptionConfig:
-    provider: {{ $.Values.global.controlPlane.encryptionConfig.keyARN }}
+    provider: {{ $.Values.global.controlPlane.encryptionConfig.keyArn }}
     resources:
       {{- if and (.Values.global.controlPlane.encryptionConfig.resources) (gt (len .Values.global.controlPlane.encryptionConfig.resources) 0) }}
       {{- toYaml .Values.global.controlPlane.encryptionConfig.resources | nindent 4 }}
