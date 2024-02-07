@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add option to specify encryption config for the `AWSManagedControlPlane` to encrypt certain  kubernetes resources.
+- Add option to specify encryption config for the `AWSManagedControlPlane` to encrypt certain Kubernetes resources.
 
 ## [0.12.0] - 2024-01-30
 
