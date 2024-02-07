@@ -90,7 +90,7 @@
                 },
                 "updateConfig": {
                     "type": "object",
-                    "title": "Update configuration of the nodegroup",
+                    "title": "Update configuration of the nodegroup. Only one of maxUnavailable or maxUnavailablePercentage can be set. The maxUnavailable take precedence over maxUnavailablePercentage.",
                     "properties": {
                         "maxUnavailable": {
                             "type": "integer",

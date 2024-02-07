@@ -52,8 +52,7 @@ spec:
   updateConfig:
     {{- if $value.maxUnavailable }}
     maxUnavailable: {{ $value.maxUnavailable }}
-    {{- end }}
-    {{- if $value.maxUnavailablePercentage }}
+    {{- else if $value.maxUnavailablePercentage }}
     maxUnavailablePrecentage: {{ $value.maxUnavailablePercentage }}
     {{- end }}
   {{- end }}
