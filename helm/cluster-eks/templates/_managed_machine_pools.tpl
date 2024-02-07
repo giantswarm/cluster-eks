@@ -53,7 +53,7 @@ spec:
     {{- if $value.maxUnavailable }}
     maxUnavailable: {{ $value.maxUnavailable }}
     {{- else if $value.maxUnavailablePercentage }}
-    maxUnavailablePrecentage: {{ $value.maxUnavailablePercentage }}
+    maxUnavailablePercentage: {{ $value.maxUnavailablePercentage }}
     {{- end }}
   {{- end }}
 ---
