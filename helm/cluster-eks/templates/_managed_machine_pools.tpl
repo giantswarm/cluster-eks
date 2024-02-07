@@ -48,6 +48,15 @@ spec:
   scaling:
     minSize: {{ $value.minSize | default 1 }}
     maxSize: {{ $value.maxSize | default 3 }}
+  {{- if or $value.maxUnavailable $value.maxUnavailablePercentage }}
+  updateConfig:
+    {{- if $value.maxUnavailable }}
+    maxUnavailable: {{ $value.maxUnavailable }}
+    {{- end }}
+    {{- if $value.maxUnavailablePercentage }}
+    maxUnavailablePrecentage: {{ $value.maxUnavailablePercentage }}
+    {{- end }}
+  {{- end }}
 ---
 {{ end }}
 {{- end -}}
