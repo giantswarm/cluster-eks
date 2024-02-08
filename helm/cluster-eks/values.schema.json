@@ -87,6 +87,26 @@
                             "$ref": "#/$defs/awsResourceTagValue"
                         }
                     }
+                },
+                "updateConfig": {
+                    "type": "object",
+                    "title": "Update configuration of the nodegroup. Only one of maxUnavailable or maxUnavailablePercentage can be set. The maxUnavailable take precedence over maxUnavailablePercentage.",
+                    "properties": {
+                        "maxUnavailable": {
+                            "type": "integer",
+                            "title": "Max unavailable",
+                            "description": "MaxUnavailable is the maximum number of nodes unavailable at once during a version update. Nodes will be updated in parallel. The maximum number is 100.",
+                            "maximum": 100,
+                            "minimum": 1
+                        },
+                        "maxUnavailablePercentage": {
+                            "type": "integer",
+                            "title": "Max unavailable percentage",
+                            "description": "MaxUnavailablePercentage is the maximum percentage of nodes unavailable during a version update. This percentage of nodes will be updated in parallel, up to 100 nodes at once.",
+                            "maximum": 100,
+                            "minimum": 1
+                        }
+                    }
                 }
             }
         }
