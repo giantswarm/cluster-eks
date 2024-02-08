@@ -51,6 +51,14 @@ spec:
   {{- if and $value.subnetIds (gt (len $value.subnetIds) 0) }}
   subnetIDs: {{ $value.subnetIds | toYaml | nindent 2 }}
   {{- end }}
+  {{- if or $value.maxUnavailable $value.maxUnavailablePercentage }}
+  updateConfig:
+    {{- if $value.maxUnavailable }}
+    maxUnavailable: {{ $value.maxUnavailable }}
+    {{- else if $value.maxUnavailablePercentage }}
+    maxUnavailablePercentage: {{ $value.maxUnavailablePercentage }}
+    {{- end }}
+  {{- end }}
 ---
 {{ end }}
 {{- end -}}
