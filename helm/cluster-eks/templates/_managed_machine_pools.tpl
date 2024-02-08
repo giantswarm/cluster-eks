@@ -45,6 +45,9 @@ spec:
   scaling:
     minSize: {{ $value.minSize | default 1 }}
     maxSize: {{ $value.maxSize | default 3 }}
+  {{- if and $value.subnetIds (gt (len $value.subnetIds) 0) }}
+  subnetIDs: {{ $value.subnetIds | toYaml | nindent 2 }}
+  {{- end }}
   {{- if or $value.maxUnavailable $value.maxUnavailablePercentage }}
   updateConfig:
     {{- if $value.maxUnavailable }}

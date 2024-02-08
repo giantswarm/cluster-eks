@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Allow configuration of `subnetIDs` for node pool.
 - Add option to configure `updateConfig` for node pool.
 
 ## [0.12.0] - 2024-01-30
