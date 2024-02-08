@@ -79,6 +79,7 @@
                 "subnetIds": {
                     "type": "array",
                     "title": "Subnet IDs",
+                    "description": "Subnet IDs to use for this node pool. This field is immutable and cannot be changed.",
                     "items": {
                         "type": "string",
                         "title": "Subnet ID"
