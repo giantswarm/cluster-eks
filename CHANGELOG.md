@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Remove `"helm.sh/resource-policy": keep` annotation from node pool resources to properly deleted them when it is removed from helm values.
+
 ### Added
 
 - Allow configuration of `subnetIDs` for node pool.
