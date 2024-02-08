@@ -33,6 +33,7 @@ spec:
     remediation:
       retries: 30
   values:
+    extraVolumeTags: {{ include "resource.default.additionalTags" . | nindent 6 }} 
     ciliumNetworkPolicy:
       enabled: true
     controller:
