@@ -4,7 +4,6 @@ apiVersion: cluster.x-k8s.io/v1beta1
 kind: MachinePool
 metadata:
   annotations:
-    "helm.sh/resource-policy": keep
     machine-pool.giantswarm.io/name: {{ include "resource.default.name" $ }}-{{ $name }}
     cluster.x-k8s.io/replicas-managed-by: "external-autoscaler"
   labels:
@@ -30,8 +29,6 @@ spec:
 apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
 kind: AWSManagedMachinePool
 metadata:
-  annotations:
-    "helm.sh/resource-policy": keep
   labels:
     giantswarm.io/machine-pool: {{ include "resource.default.name" $ }}-{{ $name }}
     {{- include "labels.common" $ | nindent 4 }}
@@ -48,6 +45,17 @@ spec:
   scaling:
     minSize: {{ $value.minSize | default 1 }}
     maxSize: {{ $value.maxSize | default 3 }}
+  {{- if and $value.subnetIds (gt (len $value.subnetIds) 0) }}
+  subnetIDs: {{ $value.subnetIds | toYaml | nindent 2 }}
+  {{- end }}
+  {{- if or $value.maxUnavailable $value.maxUnavailablePercentage }}
+  updateConfig:
+    {{- if $value.maxUnavailable }}
+    maxUnavailable: {{ $value.maxUnavailable }}
+    {{- else if $value.maxUnavailablePercentage }}
+    maxUnavailablePercentage: {{ $value.maxUnavailablePercentage }}
+    {{- end }}
+  {{- end }}
 ---
 {{ end }}
 {{- end -}}
