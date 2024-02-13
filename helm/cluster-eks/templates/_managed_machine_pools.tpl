@@ -39,6 +39,7 @@ spec:
     k8s.io/cluster-autoscaler/enabled: "true"
     sigs.k8s.io/cluster-api-provider-aws/cluster/{{ include "resource.default.name" $ }}: "owned"
   availabilityZones: {{ include "aws-availability-zones" $value | nindent 2 }}
+  availabilityZoneSubnetType: private
   eksNodegroupName: nodes-{{ include "resource.default.name" $ }}-{{ $name }}
   instanceType:  {{ $value.instanceType }}
   roleName: nodes-{{ include "resource.default.name" $ }}-{{ $name }}
