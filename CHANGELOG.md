@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add option to specify encryption config for the `AWSManagedControlPlane` to encrypt certain Kubernetes resources.
 - Add propagating tags from `cluster-eks` to resources managed my `ebs-csi-driver`.
 - Allow configuration of `subnetIDs` for node pool.
 - Add option to configure `updateConfig` for node pool.

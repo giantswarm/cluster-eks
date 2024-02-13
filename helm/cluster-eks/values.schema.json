@@ -425,6 +425,31 @@
                             ],
                             "default": "public"
                         },
+                        "encryptionConfig": {
+                            "type": "object",
+                            "title": "Encryption config",
+                            "description": "Encryption configuration for the Kubernetes API server.",
+                            "properties": {
+                                "keyArn": {
+                                    "type": "string",
+                                    "title": "Key ARN",
+                                    "description": "AWS KMS key ARN. To enable encryption when creating a cluster, you need to create a new KMS key that has an alias name starting with `cluster-api-provider-aws-`. For example: `arn:aws:kms:eu-north-1:12345678901:alias/cluster-api-provider-aws-key1`.",
+                                    "examples": [
+                                        "arn:aws:kms:eu-west-1:123456789012:key/1234abcd-12ab-34cd-56ef-1234567890ab"
+                                    ]
+                                },
+                                "resources": {
+                                    "type": "array",
+                                    "title": "Resources",
+                                    "description": "Specifies the resources to be encrypted. The only supported value is secrets.",
+                                    "items": {
+                                        "type": "string",
+                                        "title": "Resource",
+                                        "description": "Specifies the resources to be encrypted. The only supported value is secrets."
+                                    }
+                                }
+                            }
+                        },
                         "logging": {
                             "type": "object",
                             "title": "Logging",
