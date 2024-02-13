@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.13.0] - 2024-02-12
+
 ### Changed
 
 - Remove `"helm.sh/resource-policy": keep` annotation from node pool resources to properly deleted them when it is removed from helm values.
@@ -14,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add option to specify encryption config for the `AWSManagedControlPlane` to encrypt certain Kubernetes resources.
+- Add propagating tags from `cluster-eks` to resources managed my `ebs-csi-driver`.
 - Allow configuration of `subnetIDs` for node pool.
 - Add option to configure `updateConfig` for node pool.
 
@@ -137,7 +140,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add EKS templates.
 
-[Unreleased]: https://github.com/giantswarm/cluster-eks/compare/v0.12.0...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-eks/compare/v0.13.0...HEAD
+[0.13.0]: https://github.com/giantswarm/cluster-eks/compare/v0.12.0...v0.13.0
 [0.12.0]: https://github.com/giantswarm/cluster-eks/compare/v0.11.0...v0.12.0
 [0.11.0]: https://github.com/giantswarm/cluster-eks/compare/v0.10.0...v0.11.0
 [0.10.0]: https://github.com/giantswarm/cluster-eks/compare/v0.9.0...v0.10.0
