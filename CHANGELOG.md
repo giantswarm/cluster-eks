@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Set `availabilityZoneSubnetType` to `private` for machine pools. This prevents nodes from landing on public subnets.
+
 ## [0.14.0] - 2024-02-13
 
 ### Added
