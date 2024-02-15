@@ -9,7 +9,6 @@ additionalTags:
   sigs.k8s.io/cluster-api-provider-aws/cluster/{{ include "resource.default.name" $ }}: "owned"
 availabilityZones: {{ include "aws-availability-zones" $.nodePoolObject | nindent 2 }}
 availabilityZoneSubnetType: private
-eksNodegroupName: nodes-{{ include "resource.default.name" $ }}-{{ $.nodePoolName }}
 instanceType:  {{ $.nodePoolObject.instanceType }}
 roleName: nodes-{{ include "resource.default.name" $ }}-{{ $.nodePoolName }}
 scaling:
@@ -65,7 +64,9 @@ metadata:
     {{- include "labels.common" $ | nindent 4 }}
   name: {{ include "resource.default.name" $ }}-{{ $name }}-{{ include "managed-machine-pool-spec-hash" $ }}
   namespace: {{ $.Release.Namespace }}
-spec: {{- include "managed-machine-pool-spec" $ | nindent 2 }}
+spec:
+    eksNodegroupName: nodes-{{ include "resource.default.name" $ }}-{{ $name }}-{{ include "managed-machine-pool-spec-hash" $ }}
+    {{- include "managed-machine-pool-spec" $ | nindent 2 }}
 ---
 {{ end }}
 {{- end -}}
