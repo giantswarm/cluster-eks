@@ -64,9 +64,8 @@ metadata:
     {{- include "labels.common" $ | nindent 4 }}
   name: {{ include "resource.default.name" $ }}-{{ $name }}-{{ include "managed-machine-pool-spec-hash" $ }}
   namespace: {{ $.Release.Namespace }}
-spec:
+spec: {{- include "managed-machine-pool-spec" $ | nindent 2 }}
     eksNodegroupName: nodes-{{ include "resource.default.name" $ }}-{{ $name }}-{{ include "managed-machine-pool-spec-hash" $ }}
-    {{- include "managed-machine-pool-spec" $ | nindent 2 }}
 ---
 {{ end }}
 {{- end -}}
