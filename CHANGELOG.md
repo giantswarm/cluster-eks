@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.15.0] - 2024-02-21
+
 ### Breaking Changes
 
 - Set `availabilityZoneSubnetType` to `private` for machine pools. This prevents nodes from landing on public subnets. As this is an immutable field, upgrading will cause the existing machine pool will be deleted and replaced with a new one.
@@ -149,7 +151,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add EKS templates.
 
-[Unreleased]: https://github.com/giantswarm/cluster-eks/compare/v0.14.0...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-eks/compare/v0.15.0...HEAD
+[0.15.0]: https://github.com/giantswarm/cluster-eks/compare/v0.14.0...v0.15.0
 [0.14.0]: https://github.com/giantswarm/cluster-eks/compare/v0.13.0...v0.14.0
 [0.13.0]: https://github.com/giantswarm/cluster-eks/compare/v0.12.0...v0.13.0
 [0.12.0]: https://github.com/giantswarm/cluster-eks/compare/v0.11.0...v0.12.0
