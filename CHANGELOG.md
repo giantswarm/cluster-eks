@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Breaking Changes
 
-- Set `availabilityZoneSubnetType` to `private` for machine pools. This prevents nodes from landing on public subnets. As this is an immutable field, upgrading will cause the existing NodePools will be deleted and replaced with a new one.
+- Set `availabilityZoneSubnetType` to `private` for machine pools. This prevents nodes from landing on public subnets. As this is an immutable field, upgrading will cause the existing machine pool will be deleted and replaced with a new one.
 
 ## [0.14.0] - 2024-02-13
 
