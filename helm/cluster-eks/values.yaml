@@ -55,11 +55,13 @@ global:
   metadata:
     preventDeletion: false
     servicePriority: highest
+  podSecurityStandards:
+    enforced: true
   providerSpecific:
     awsAccountId: ""
     awsClusterRoleIdentityName: default
 internal:
-  kubernetesVersion: 1.24.10
+  kubernetesVersion: 1.25.16
   nodePools:
     def00:
       customNodeLabels:
