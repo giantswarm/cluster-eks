@@ -33,6 +33,9 @@ spec:
   # Default values
   # https://github.com/giantswarm/coredns-app/blob/main/helm/coredns-app/values.yaml
   values:
+    global:
+      podSecurityStandards:
+        enforced: {{ .Values.global.podSecurityStandards.enforced }}
     cluster:
       calico:
         CIDR: {{ first .Values.global.connectivity.network.pods.cidrBlocks | quote }}

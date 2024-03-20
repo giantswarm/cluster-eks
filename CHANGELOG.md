@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Update kubernets version to `1.25.16` and remove use of PSPs.
+
 ## [0.15.0] - 2024-02-21
 
 ### Breaking Changes

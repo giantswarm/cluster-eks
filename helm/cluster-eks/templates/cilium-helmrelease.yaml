@@ -38,6 +38,9 @@ spec:
   # Default values
   # https://github.com/giantswarm/cilium-app/blob/main/helm/cilium/values.yaml
   values:
+    global:
+      podSecurityStandards:
+        enforced: {{ .Values.global.podSecurityStandards.enforced }}
     eni:
       enabled: true
     ipam:

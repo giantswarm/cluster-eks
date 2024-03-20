@@ -627,6 +627,17 @@
                         }
                     }
                 },
+                "podSecurityStandards": {
+                    "type": "object",
+                    "title": "Pod Security Standards",
+                    "properties": {
+                        "enforced": {
+                            "type": "boolean",
+                            "title": "Enforced",
+                            "default": true
+                        }
+                    }
+                },
                 "providerSpecific": {
                     "type": "object",
                     "title": "AWS settings",
@@ -685,9 +696,9 @@
                     "type": "string",
                     "title": "Kubernetes version",
                     "examples": [
-                        "1.24.7"
+                        "1.25.7"
                     ],
-                    "default": "1.24.10"
+                    "default": "1.25.16"
                 },
                 "nodePools": {
                     "type": "object",

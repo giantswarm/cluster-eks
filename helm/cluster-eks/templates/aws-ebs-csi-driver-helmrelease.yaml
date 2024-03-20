@@ -33,6 +33,9 @@ spec:
     remediation:
       retries: 30
   values:
+    global:
+      podSecurityStandards:
+        enforced: {{ .Values.global.podSecurityStandards.enforced }}
     extraVolumeTags: {{ include "resource.default.additionalTags" . | nindent 6 }} 
     ciliumNetworkPolicy:
       enabled: true

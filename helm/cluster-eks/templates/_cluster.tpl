@@ -11,6 +11,9 @@ metadata:
     {{- if .Values.global.metadata.servicePriority }}
     giantswarm.io/service-priority: {{ .Values.global.metadata.servicePriority }}
     {{- end }}
+    {{- if .Values.global.podSecurityStandards.enforced }}
+    policy.giantswarm.io/psp-status: disabled
+    {{- end }}
     {{- include "labels.common" $ | nindent 4 }}
     app.kubernetes.io/version: {{ .Chart.Version | quote }}
   name: {{ include "resource.default.name" $ }}
