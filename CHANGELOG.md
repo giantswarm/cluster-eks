@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add network-policies-app with DNS policies enabled. This makes `kube-system` and `giantswarm` namespaces to be `deny` by default.
+- Add `cluster-catalog` and `cluster-test-catalog` HelmRepositories.
+
+### Changed
+
+- Disable and remove permisive policies from cilium-app.
+
 ## [0.16.0] - 2024-03-20
 
 ### Changed
