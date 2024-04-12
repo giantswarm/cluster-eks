@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Disable and remove permisive policies from cilium-app.
+- Disable and remove permissive policies from cilium-app.
 
 ## [0.16.0] - 2024-03-20
 
