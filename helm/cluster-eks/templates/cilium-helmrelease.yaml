@@ -16,10 +16,10 @@ spec:
       chart: cilium
       # used by renovate
       # repo: giantswarm/cilium-app
-      version: 0.19.2
+      version: 0.24.0-d953dde692bd543bc1bbb95a4ab2e69183cb2813
       sourceRef:
         kind: HelmRepository
-        name: {{ include "resource.default.name" $ }}-default
+        name: {{ include "resource.default.name" $ }}-default-test
   kubeConfig:
     secretRef:
       name: {{ include "resource.default.name" $ }}-kubeconfig
@@ -38,6 +38,8 @@ spec:
   # Default values
   # https://github.com/giantswarm/cilium-app/blob/main/helm/cilium/values.yaml
   values:
+    gatewayAPI:
+      enabled: true
     global:
       podSecurityStandards:
         enforced: {{ .Values.global.podSecurityStandards.enforced }}
