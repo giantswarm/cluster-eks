@@ -10,6 +10,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Bump `cluster-shared` to `0.7.1`.
+- Bump `cilium-app` to version 0.24.0 (cilium v1.15.4).
+
+### Added
+
+- Add network-policies-app with DNS policies enabled. This makes `kube-system` and `giantswarm` namespaces to be `deny` by default.
+- Add `cluster-catalog` and `cluster-test-catalog` HelmRepositories.
+
+### Changed
+
+- Disable and remove permissive policies from cilium-app.
 
 ## [0.16.0] - 2024-03-20
 
