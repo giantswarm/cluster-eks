@@ -1,6 +1,34 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
+  name: {{ include "resource.default.name" $ }}-gateway-api
+  namespace: {{ $.Release.Namespace }}
+  annotations:
+    cluster.giantswarm.io/description: "{{ .Values.global.metadata.description }}"
+  labels:
+    {{- include "labels.common" . | nindent 4 }}
+spec:
+  releaseName: gateway-api
+  targetNamespace: kube-system
+  storageNamespace: kube-system
+  chart:
+    spec:
+      chart: gateway-api
+      version: 1.0.0
+      sourceRef:
+        kind: HelmRepository
+        name: {{ include "resource.default.name" $ }}-default
+  kubeConfig:
+    secretRef:
+      name: {{ include "resource.default.name" $ }}-kubeconfig
+  interval: 4m
+  install:
+    remediation:
+      retries: 200
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
   name: {{ include "resource.default.name" $ }}-cilium
   namespace: {{ $.Release.Namespace }}
   annotations:
@@ -24,6 +52,8 @@ spec:
     secretRef:
       name: {{ include "resource.default.name" $ }}-kubeconfig
   dependsOn:
+    - name: {{ include "resource.default.name" $ }}-gateway-api
+      namespace: {{ $.Release.Namespace }}
     - name: {{ include "resource.default.name" $ }}-vertical-pod-autoscaler-crd
       namespace: {{ $.Release.Namespace }}
   interval: 4m
