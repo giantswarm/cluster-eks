@@ -23,3 +23,16 @@ metadata:
 spec:
   interval: 10m
   url: https://giantswarm.github.io/default-test-catalog
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: {{ include "resource.default.name" $ }}-giantswarm
+  namespace: {{ $.Release.Namespace }}
+  annotations:
+    cluster.giantswarm.io/description: "{{ .Values.global.metadata.description }}"
+  labels:
+    {{- include "labels.common" . | nindent 4 }}
+spec:
+  interval: 10m
+  url: https://giantswarm.github.io/giantswarm-catalog

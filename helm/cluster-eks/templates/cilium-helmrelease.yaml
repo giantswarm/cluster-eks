@@ -17,7 +17,7 @@ spec:
       version: 1.0.0
       sourceRef:
         kind: HelmRepository
-        name: {{ include "resource.default.name" $ }}-default
+        name: {{ include "resource.default.name" $ }}-giantswarm
   kubeConfig:
     secretRef:
       name: {{ include "resource.default.name" $ }}-kubeconfig
