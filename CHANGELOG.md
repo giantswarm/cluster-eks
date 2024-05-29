@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Bump `cilium-app` to version 0.24.0 (cilium v1.15.4).
+
 ### Added
 
 - Add network-policies-app with DNS policies enabled. This makes `kube-system` and `giantswarm` namespaces to be `deny` by default.
