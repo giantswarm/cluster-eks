@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Bump `cluster-shared` to `0.7.1`.
+
 ## [0.16.0] - 2024-03-20
 
 ### Changed
