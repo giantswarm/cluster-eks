@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Fix rendering of control-plane role mapping values.
+
 ## [0.17.0] - 2024-06-04
 
 ### Changed
