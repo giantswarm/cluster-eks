@@ -95,11 +95,11 @@ spec:
       groups:
       - "system:masters"
       username: cluster-admin
+{{- if $.Values.global.controlPlane.roleMapping }}
+{{- toYaml $.Values.global.controlPlane.roleMapping | nindent 4 }}
+{{- end }}
   {{- if $.Values.global.controlPlane.oidcIdentityProviderConfig.issuerUrl }}
   oidcIdentityProviderConfig:
   {{- toYaml $.Values.global.controlPlane.oidcIdentityProviderConfig | nindent 4 }}
   {{- end }}
-{{- if $.Values.global.controlPlane.roleMapping }}
-{{- toYaml $.Values.global.controlPlane.roleMapping | nindent 4 }}
-{{- end }}
 {{- end -}}
