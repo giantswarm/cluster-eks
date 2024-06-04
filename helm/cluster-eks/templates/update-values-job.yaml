@@ -72,7 +72,7 @@ spec:
             - "-xc"
             - |
               while [ -z "${control_plane_endpoint}" ] ; do
-                control_plane_endpoint=$(kubectl get cluster -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} -o 'jsonpath={.spec.controlPlaneEndpoint.host}')
+                control_plane_endpoint=$(kubectl get cluster.cluster.x-k8s.io -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} -o 'jsonpath={.spec.controlPlaneEndpoint.host}')
                 sleep 10
               done
               control_plane_endpoint_host=$(echo $control_plane_endpoint | cut -d\/ -f 3 )

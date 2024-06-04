@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Bump `cilium-app` to version 0.24.0 (cilium v1.15.4).
 - Bump `cluster-shared` to version `0.7.1`.
+- Fix `update-values-job` to include full CR name for `clusters.cluster.x-k8s.io`.
 
 ### Added
 
