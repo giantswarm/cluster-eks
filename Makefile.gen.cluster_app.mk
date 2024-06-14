@@ -1,6 +1,8 @@
 # DO NOT EDIT. Generated with:
 #
-#    devctl@6.17.1
+#    devctl
+#
+#    https://github.com/giantswarm/devctl/blob/cbdb6d5fa8756316d0c43e5945e3d3078c9e617e/pkg/gen/input/makefile/internal/file/Makefile.gen.cluster_app.mk.template
 #
 
 ##@ Schema
