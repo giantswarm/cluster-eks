@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+
+- Remove permissive policies removal from cilium-app. There shouldn't be any clusters with those policies installed anymore.
+
 ## [0.17.1] - 2024-06-04
 
 ### Changed

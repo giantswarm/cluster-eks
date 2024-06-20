@@ -62,13 +62,3 @@ spec:
     hubble:
       relay:
         enabled: true
-    defaultPolicies:
-      remove: true
-      enabled: false
-      tolerations:
-        - effect: NoSchedule
-          operator: Exists
-        - effect: NoExecute
-          operator: Exists
-        - key: CriticalAddonsOnly
-          operator: Exists
