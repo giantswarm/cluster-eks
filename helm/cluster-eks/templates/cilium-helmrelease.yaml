@@ -45,7 +45,6 @@ spec:
       enabled: true
     ipam:
       mode: eni
-    eksMode: true
     operator:
       extraArgs:
         - "--aws-release-excess-ips=true"
@@ -57,6 +56,16 @@ spec:
       customConf: true
       exclusive: true
       configMap: cilium-cni-configuration
+    cniCustomConf:
+      eni:
+        firstInterfaceIndex: 1
+        securityGroupTags:
+          "kubernetes.io/cluster/{{ include "resource.default.name" $ }}": "owned"
+          "aws:eks:cluster-name": "{{ include "resource.default.name" $ }}"
+        subnetTags:
+          "sigs.k8s.io/cluster-api-provider-aws/cluster/{{ include "resource.default.name" $ }}": "owned"
+          "sigs.k8s.io/cluster-api-provider-aws/association": "secondary"
+          "sigs.k8s.io/cluster-api-provider-aws/role": "private"
     k8sServicePort: '443'
     kubeProxyReplacement: strict
     hubble:
