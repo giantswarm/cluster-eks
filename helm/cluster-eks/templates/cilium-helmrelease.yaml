@@ -67,7 +67,7 @@ spec:
           "sigs.k8s.io/cluster-api-provider-aws/association": "secondary"
           "sigs.k8s.io/cluster-api-provider-aws/role": "private"
     k8sServicePort: '443'
-    kubeProxyReplacement: strict
+    kubeProxyReplacement: 'true'
     hubble:
       relay:
         enabled: true
