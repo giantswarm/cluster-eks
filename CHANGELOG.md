@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Fix rendering of control-plane role mapping values.
+- Set `kubeProxyReplacement` to `'true'` instead of deprecated value `strict` in cilium values.
+- Set provider specific configuration for cilium CNI ENI values.
 
 ## [0.17.0] - 2024-06-04
 
