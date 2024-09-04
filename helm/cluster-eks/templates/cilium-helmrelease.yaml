@@ -45,6 +45,7 @@ spec:
       enabled: true
     ipam:
       mode: eni
+    eksMode: true
     operator:
       extraArgs:
         - "--aws-release-excess-ips=true"
