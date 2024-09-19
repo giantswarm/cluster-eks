@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Give permissions to clean up all used `HelmReleases` to the cleanup job.
+
+### Changed
+
+- Don't delete `HelmRelease` clean up job if it failed.
+
 ## [0.18.0] - 2024-09-09
 
 ### Removed
