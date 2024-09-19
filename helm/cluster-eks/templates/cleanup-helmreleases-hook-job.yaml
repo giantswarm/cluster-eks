@@ -117,7 +117,14 @@ spec:
               done
               kubectl -n  {{ $.Release.Namespace }} delete cm {{ include "resource.default.name" . }}-control-plane-endpoint --ignore-not-found=true
           securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
             readOnlyRootFilesystem: true
+            seccompProfile:
+              type: RuntimeDefault
+            capabilities:
+              drop:
+                - ALL
           resources:
             requests:
               memory: "64Mi"
