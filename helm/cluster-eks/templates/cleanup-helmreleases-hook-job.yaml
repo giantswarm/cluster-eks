@@ -49,7 +49,7 @@ rules:
     resources: ["helmreleases"]
     resourceNames:
       - "{{ include "resource.default.name" $ }}-cilium"
-      - "{{ include "resource.default.name" $ }}-cloud-provider-aws"
+      - "{{ include "resource.default.name" $ }}-network-policies"
       - "{{ include "resource.default.name" $ }}-aws-ebs-csi-driver"
       - "{{ include "resource.default.name" $ }}-coredns"
       - "{{ include "resource.default.name" $ }}-vertical-pod-autoscaler-crd"
