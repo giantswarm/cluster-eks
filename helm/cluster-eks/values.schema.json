@@ -13,6 +13,10 @@
             "type": "object",
             "title": "Node pool",
             "properties": {
+                "amiType": {
+                    "type": "string",
+                    "title": "AMI type"
+                },
                 "availabilityZones": {
                     "type": "array",
                     "title": "Availability zones",
@@ -710,6 +714,7 @@
                     },
                     "default": {
                         "def00": {
+                            "amiType": "AL2023_x86_64_STANDARD",
                             "customNodeLabels": [
                                 "label=default"
                             ],
