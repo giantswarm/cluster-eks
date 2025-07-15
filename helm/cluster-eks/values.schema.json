@@ -15,7 +15,12 @@
             "properties": {
                 "amiType": {
                     "type": "string",
-                    "title": "AMI type"
+                    "title": "AMI type",
+                    "enum": [
+                        "AL2023_x86_64_STANDARD",
+                        "AL2023_ARM_64_STANDARD",
+                        "CUSTOM"
+                    ]
                 },
                 "availabilityZones": {
                     "type": "array",
