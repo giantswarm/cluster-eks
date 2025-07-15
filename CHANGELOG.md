@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Expose `amiType` for node pools and default to `AL2023_x86_64_STANDARD`.
+
 ## [0.19.0] - 2024-09-19
 
 ### Fixed

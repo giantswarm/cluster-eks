@@ -7,6 +7,7 @@
 additionalTags:
   k8s.io/cluster-autoscaler/enabled: "true"
   sigs.k8s.io/cluster-api-provider-aws/cluster/{{ include "resource.default.name" $ }}: "owned"
+amiType: {{ $.nodePoolObject.amiType }}
 availabilityZones: {{ include "aws-availability-zones" $.nodePoolObject | nindent 2 }}
 availabilityZoneSubnetType: private
 instanceType:  {{ $.nodePoolObject.instanceType }}
