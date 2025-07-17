@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Expose `amiType` for node pools and default to `AL2023_x86_64_STANDARD`.
 
+### Changed
+
+- Update API version for HelmReleases to `helm.toolkit.fluxcd.io/v2beta2`.
+
 ## [0.19.0] - 2024-09-19
 
 ### Fixed
