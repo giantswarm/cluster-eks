@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Update API version for HelmReleases to `helm.toolkit.fluxcd.io/v2beta2`.
+- Disable privilege escalation for helmrelease cleanup job.
 
 ## [0.19.0] - 2024-09-19
 

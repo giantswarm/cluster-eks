@@ -117,6 +117,7 @@ spec:
               done
               kubectl -n  {{ $.Release.Namespace }} delete cm {{ include "resource.default.name" . }}-control-plane-endpoint --ignore-not-found=true
           securityContext:
+            allowPrivilegeEscalation: false
             runAsNonRoot: true
             runAsUser: 1000
             readOnlyRootFilesystem: true
