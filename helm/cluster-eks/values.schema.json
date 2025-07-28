@@ -159,7 +159,7 @@
                             "infrastructureMachineTemplateSpecTemplateName": "not-used"
                         }
                     },
-                    "provider": "aws",
+                    "provider": "aks",
                     "resourcesApi": {
                         "bastionResourceEnabled": false,
                         "cleanupHelmReleaseResourcesEnabled": false,

@@ -14,7 +14,7 @@ cluster:
           kind: AWSManagedControlPlane
           version: v1beta2
         infrastructureMachineTemplateSpecTemplateName: not-used
-    provider: aws
+    provider: aks
     resourcesApi:
       bastionResourceEnabled: false
       cleanupHelmReleaseResourcesEnabled: false
