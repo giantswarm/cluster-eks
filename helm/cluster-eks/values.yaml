@@ -4,6 +4,11 @@ cluster:
   providerIntegration:
     controlPlane:
       resources:
+        controlPlane:
+          api:
+            group: controlplane.cluster.x-k8s.io
+            kind: AWSManagedControlPlane
+            version: v1beta2
         infrastructureMachineTemplate:
           group: controlplane.cluster.x-k8s.io
           kind: AWSManagedControlPlane
