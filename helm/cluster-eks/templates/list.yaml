@@ -6,8 +6,6 @@
 {{- end }}
 {{- include "coredns" . }}
 ---
-{{- include "cluster" . }}
----
 {{- include "aws-cluster" . }}
 ---
 {{- include "control-plane" . }}
