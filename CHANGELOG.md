@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update API version for HelmReleases to `helm.toolkit.fluxcd.io/v2beta2`.
 - Disable privilege escalation for helmrelease cleanup job.
 - Use `giantswarm/cluster` to render the `Cluster` object.
+- Fix ManagedMachinePool spec.
 
 ## [0.19.0] - 2024-09-19
 
