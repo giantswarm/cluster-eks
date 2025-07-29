@@ -81,18 +81,18 @@ Properties within the `.global.controlPlane` object
 | `global.controlPlane.logging.audit` | **Audit** - Enable or disable audit logging to CloudWatch (https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html).|**Type:** `boolean`<br/>**Default:** `true`|
 | `global.controlPlane.logging.authenticator` | **Authenticator** - Enable or disable IAM Authenticator logging to CloudWatch (https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html).|**Type:** `boolean`<br/>**Default:** `true`|
 | `global.controlPlane.logging.controllerManager` | **Controller Manager** - Enable or disable Controller Manager logging to CloudWatch (https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html).|**Type:** `boolean`<br/>**Default:** `true`|
-| `global.controlPlane.oidcIdentityProviderConfig` | **OIDC identity provider config** - OIDC identity provider configuration for the Kubernetes API server.|**Type:** `object`<br/>|
-| `global.controlPlane.oidcIdentityProviderConfig.clientId` | **Client ID** - Client ID of the OIDC identity provider.|**Type:** `string`<br/>|
-| `global.controlPlane.oidcIdentityProviderConfig.groupsClaim` | **Groups claim** - Claim to use for mapping groups.|**Type:** `string`<br/>|
-| `global.controlPlane.oidcIdentityProviderConfig.groupsPrefix` | **Groups prefix** - Prefix to use for mapping groups.|**Type:** `string`<br/>|
-| `global.controlPlane.oidcIdentityProviderConfig.identityProviderConfigName` | **Identity provider config name** - Name of the OIDC identity provider config.|**Type:** `string`<br/>|
-| `global.controlPlane.oidcIdentityProviderConfig.issuerUrl` | **Issuer URL** - URL of the OIDC identity provider.|**Type:** `string`<br/>|
-| `global.controlPlane.oidcIdentityProviderConfig.requiredClaims` | **Required claims** - Required claims for the OIDC identity provider.|**Type:** `object`<br/>|
-| `global.controlPlane.oidcIdentityProviderConfig.requiredClaims.*` | **Claim**|**Type:** `string`<br/>|
-| `global.controlPlane.oidcIdentityProviderConfig.tags` | **Tags** - AWS resource tags to assign to the IAM OIDC provider.|**Type:** `object`<br/>|
-| `global.controlPlane.oidcIdentityProviderConfig.tags.*` | **Tag value**|**Type:** `string`<br/>**Value pattern:** `^[ a-zA-Z0-9\._:/=+-@]+$`<br/>|
-| `global.controlPlane.oidcIdentityProviderConfig.usernameClaim` | **Username claim** - Claim to use for mapping usernames.|**Type:** `string`<br/>|
-| `global.controlPlane.oidcIdentityProviderConfig.usernamePrefix` | **Username prefix** - Prefix to use for mapping usernames.|**Type:** `string`<br/>|
+| `global.controlPlane.oidc` | **OIDC identity provider config** - OIDC identity provider configuration for the Kubernetes API server.|**Type:** `object`<br/>|
+| `global.controlPlane.oidc.clientId` | **Client ID** - Client ID of the OIDC identity provider.|**Type:** `string`<br/>|
+| `global.controlPlane.oidc.groupsClaim` | **Groups claim** - Claim to use for mapping groups.|**Type:** `string`<br/>|
+| `global.controlPlane.oidc.groupsPrefix` | **Groups prefix** - Prefix to use for mapping groups.|**Type:** `string`<br/>|
+| `global.controlPlane.oidc.identityProviderConfigName` | **Identity provider config name** - Name of the OIDC identity provider config.|**Type:** `string`<br/>|
+| `global.controlPlane.oidc.issuerUrl` | **Issuer URL** - URL of the OIDC identity provider.|**Type:** `string`<br/>|
+| `global.controlPlane.oidc.requiredClaims` | **Required claims** - Required claims for the OIDC identity provider.|**Type:** `object`<br/>|
+| `global.controlPlane.oidc.requiredClaims.*` | **Claim**|**Type:** `string`<br/>|
+| `global.controlPlane.oidc.tags` | **Tags** - AWS resource tags to assign to the IAM OIDC provider.|**Type:** `object`<br/>|
+| `global.controlPlane.oidc.tags.*` | **Tag value**|**Type:** `string`<br/>**Value pattern:** `^[ a-zA-Z0-9\._:/=+-@]+$`<br/>|
+| `global.controlPlane.oidc.usernameClaim` | **Username claim** - Claim to use for mapping usernames.|**Type:** `string`<br/>|
+| `global.controlPlane.oidc.usernamePrefix` | **Username prefix** - Prefix to use for mapping usernames.|**Type:** `string`<br/>|
 | `global.controlPlane.roleMapping` | **Role mappings**|**Type:** `array`<br/>|
 | `global.controlPlane.roleMapping[*]` | **Role mapping** - Maps AWS IAM role to Kubernetes role.|**Type:** `object`<br/>|
 | `global.controlPlane.roleMapping[*].groups` | **Groups** - Kubernetes groups.|**Type:** `array`<br/>|

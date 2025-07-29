@@ -559,7 +559,7 @@
                                 }
                             }
                         },
-                        "oidcIdentityProviderConfig": {
+                        "oidc": {
                             "type": "object",
                             "title": "OIDC identity provider config",
                             "description": "OIDC identity provider configuration for the Kubernetes API server.",

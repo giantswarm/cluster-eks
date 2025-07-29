@@ -101,7 +101,7 @@ global:
       audit: true
       authenticator: true
       controllerManager: true
-    oidcIdentityProviderConfig: {}
+    oidc: {}
   metadata:
     preventDeletion: false
     servicePriority: highest

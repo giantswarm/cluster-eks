@@ -98,8 +98,8 @@ spec:
 {{- if $.Values.global.controlPlane.roleMapping }}
 {{- toYaml $.Values.global.controlPlane.roleMapping | nindent 4 }}
 {{- end }}
-  {{- if $.Values.global.controlPlane.oidcIdentityProviderConfig.issuerUrl }}
+  {{- if $.Values.global.controlPlane.oidc.issuerUrl }}
   oidcIdentityProviderConfig:
-  {{- toYaml $.Values.global.controlPlane.oidcIdentityProviderConfig | nindent 4 }}
+  {{- toYaml $.Values.global.controlPlane.oidc | nindent 4 }}
   {{- end }}
 {{- end -}}
