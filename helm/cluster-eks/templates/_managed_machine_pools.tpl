@@ -66,7 +66,7 @@ metadata:
   name: {{ include "resource.default.name" $ }}-{{ $name }}-{{ include "managed-machine-pool-spec-hash" $ }}
   namespace: {{ $.Release.Namespace }}
 spec: {{- include "managed-machine-pool-spec" $ | nindent 2 }}
-eksNodegroupName: nodes-{{ include "resource.default.name" $ }}-{{ $name }}-{{ include "managed-machine-pool-spec-hash" $ }}
+  eksNodegroupName: nodes-{{ include "resource.default.name" $ }}-{{ $name }}-{{ include "managed-machine-pool-spec-hash" $ }}
 ---
 {{ end }}
 {{- end -}}
