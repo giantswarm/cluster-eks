@@ -156,10 +156,10 @@
                                 "kind": "AWSManagedControlPlane",
                                 "version": "v1beta2"
                             },
-                            "infrastructureMachineTemplateSpecTemplateName": "not-used"
+                            "infrastructureMachineTemplateSpecTemplateName": "template-not-implemented"
                         }
                     },
-                    "provider": "aks",
+                    "provider": "eks",
                     "resourcesApi": {
                         "bastionResourceEnabled": false,
                         "cleanupHelmReleaseResourcesEnabled": false,
@@ -554,7 +554,7 @@
                                 }
                             }
                         },
-                        "oidcIdentityProviderConfig": {
+                        "oidc": {
                             "type": "object",
                             "title": "OIDC identity provider config",
                             "description": "OIDC identity provider configuration for the Kubernetes API server.",
