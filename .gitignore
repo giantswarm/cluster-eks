@@ -1,2 +1,3 @@
 helm/cluster-eks/charts
 helm/rendered
+helm/cluster-eks/tmp

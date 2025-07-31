@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Move `MachinePool` to be rendered by `giantswarm/cluster` chart.
 - Expose `amiType` for node pools and default to `AL2023_x86_64_STANDARD`.
 - Add `giantswarm/cluster` as a chart dependency.
 
