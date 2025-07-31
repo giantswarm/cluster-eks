@@ -159,7 +159,7 @@
                             "infrastructureMachineTemplateSpecTemplateName": "not-used"
                         }
                     },
-                    "provider": "aks",
+                    "provider": "eks",
                     "resourcesApi": {
                         "bastionResourceEnabled": false,
                         "cleanupHelmReleaseResourcesEnabled": false,
@@ -171,9 +171,14 @@
                             "kind": "AWSManagedCluster",
                             "version": "v1beta2"
                         },
+                        "infrastructureMachinePool": {
+                            "group": "infrastructure.cluster.x-k8s.io",
+                            "kind": "AWSManagedMachinePool",
+                            "version": "v1beta2"
+                        },
                         "machineHealthCheckResourceEnabled": false,
-                        "machinePoolResourcesEnabled": false,
-                        "nodePoolKind": "AWSManagedMachinePool"
+                        "machinePoolResourcesEnabled": true,
+                        "nodePoolKind": "MachinePool"
                     },
                     "workers": {
                         "defaultNodePools": {
