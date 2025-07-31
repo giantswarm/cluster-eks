@@ -9,7 +9,11 @@ metadata:
     aws.cluster.x-k8s.io/external-resource-gc: "true"
   labels:
     {{- include "labels.common" $ | nindent 4 }}
+    app.kubernetes.io/instance: {{ .Release.Name | quote }}
+    app.kubernetes.io/name: {{ .Values.global.metadata.name | default (.Release.Name | replace "." "-" | trunc 47 | trimSuffix "-") | quote }}
+    app.kubernetes.io/part-of: "cluster-{{ .Values.cluster.providerIntegration.provider }}"
     app.kubernetes.io/version: {{ .Chart.Version | quote }}
+    giantswarm.io/service-priority: {{ .Values.global.metadata.servicePriority }}
   name: {{ include "resource.default.name" $ }}
   namespace: {{ $.Release.Namespace }}
 spec:

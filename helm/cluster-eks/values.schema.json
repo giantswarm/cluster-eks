@@ -156,7 +156,7 @@
                                 "kind": "AWSManagedControlPlane",
                                 "version": "v1beta2"
                             },
-                            "infrastructureMachineTemplateSpecTemplateName": "not-used"
+                            "infrastructureMachineTemplateSpecTemplateName": "template-not-implemented"
                         }
                     },
                     "provider": "eks",
