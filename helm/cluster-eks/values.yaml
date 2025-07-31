@@ -13,8 +13,8 @@ cluster:
           group: controlplane.cluster.x-k8s.io
           kind: AWSManagedControlPlane
           version: v1beta2
-        infrastructureMachineTemplateSpecTemplateName: not-used
-    provider: aks
+        infrastructureMachineTemplateSpecTemplateName: template-not-implemented
+    provider: eks
     resourcesApi:
       bastionResourceEnabled: false
       cleanupHelmReleaseResourcesEnabled: false
