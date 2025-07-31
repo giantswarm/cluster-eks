@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Disable privilege escalation for helmrelease cleanup job.
 - Use `giantswarm/cluster` to render the `Cluster` object.
 - Fix ManagedMachinePool spec.
+- Update AWSManagedControlPlane resource to align with the Cluster chart.
 
 ## [0.19.0] - 2024-09-19
 
