@@ -13,7 +13,7 @@ cluster:
           group: controlplane.cluster.x-k8s.io
           kind: AWSManagedControlPlane
           version: v1beta2
-        infrastructureMachineTemplateSpecTemplateName: not-used
+        infrastructureMachineTemplateSpecTemplateName: template-not-implemented
     provider: eks
     resourcesApi:
       bastionResourceEnabled: false
@@ -101,7 +101,7 @@ global:
       audit: true
       authenticator: true
       controllerManager: true
-    oidcIdentityProviderConfig: {}
+    oidc: {}
   metadata:
     preventDeletion: false
     servicePriority: highest

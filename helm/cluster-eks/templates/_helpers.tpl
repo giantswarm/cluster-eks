@@ -71,3 +71,9 @@ Where `data` is the data to has on and `global` is the top level scope.
 {{- end }}
 giantswarm.io/cluster: {{ include "resource.default.name" $ }}
 {{- end -}}
+
+{{- define "template-not-implemented" }}
+{{/*
+This template is present to ensure the chart renders successfully, it is not actually used.
+*/}}
+{{- end -}}
