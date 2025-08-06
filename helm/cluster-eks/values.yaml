@@ -30,6 +30,9 @@ cluster:
         kind: AWSManagedMachinePool
         version: v1beta2
       machineHealthCheckResourceEnabled: false
+      machinePool:
+        bootstrap:
+          templateName: machine-pool-bootstrap-config
       machinePoolResourcesEnabled: true
       nodePoolKind: MachinePool
     workers:

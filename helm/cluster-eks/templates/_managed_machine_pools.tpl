@@ -44,3 +44,6 @@ spec: {{- include "managed-machine-pool-spec" $ | nindent 2 }}
 ---
 {{ end }}
 {{- end -}}
+{{- define "machine-pool-bootstrap-config" }}
+dataSecretName: ""
+{{- end }}
