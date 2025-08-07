@@ -142,6 +142,74 @@
             "description": "Helm values for the provider-independent cluster chart.",
             "default": {
                 "providerIntegration": {
+                    "apps": {
+                        "capiNodeLabeler": {
+                            "enable": true
+                        },
+                        "certExporter": {
+                            "enable": true
+                        },
+                        "certManager": {
+                            "enable": true
+                        },
+                        "chartOperatorExtensions": {
+                            "enable": true
+                        },
+                        "cilium": {
+                            "configTemplateName": "EKSCiliumHelmValues",
+                            "enable": true
+                        },
+                        "ciliumServiceMonitors": {
+                            "enable": true
+                        },
+                        "coreDns": {
+                            "enable": true
+                        },
+                        "coreDnsExtensions": {
+                            "configTemplateName": "EKSCorednsHelmValues",
+                            "enable": true
+                        },
+                        "etcdDefrag": {
+                            "enable": true
+                        },
+                        "etcdKubernetesResourcesCountExporter": {
+                            "enable": true
+                        },
+                        "k8sDnsNodeCache": {
+                            "enable": true
+                        },
+                        "metricsServer": {
+                            "enable": true
+                        },
+                        "netExporter": {
+                            "enable": true
+                        },
+                        "networkPolicies": {
+                            "configTemplateName": "EKSNetworkPoliciesHelmValues",
+                            "enable": true
+                        },
+                        "nodeExporter": {
+                            "enable": true
+                        },
+                        "observabilityBundle": {
+                            "enable": true
+                        },
+                        "observabilityPolicies": {
+                            "enable": true
+                        },
+                        "securityBundle": {
+                            "enable": true
+                        },
+                        "teleportKubeAgent": {
+                            "enable": true
+                        },
+                        "verticalPodAutoscaler": {
+                            "enable": true
+                        },
+                        "verticalPodAutoscalerCrd": {
+                            "enable": true
+                        }
+                    },
                     "controlPlane": {
                         "resources": {
                             "controlPlane": {
