@@ -1,0 +1,16 @@
+{{/* EKS-specific coredns Helm values*/}}
+{{/* https://github.com/giantswarm/coredns-app/blob/main/helm/coredns/values.yaml*/}}
+{{- define "EKSCorednsHelmValues" }}
+cluster:
+  calico:
+    CIDR: {{ first .Values.global.connectivity.network.pods.cidrBlocks | quote }}
+  kubernetes:
+    API:
+      clusterIPRange: {{ first .Values.global.connectivity.network.services.cidrBlocks | quote }}
+    DNS:
+      IP: {{ include "clusterDNS" $ | quote }}
+mastersInstance:
+  nodeSelector:
+    "node-role.kubernetes.io/control-plane": null
+    "node-role.kubernetes.io/worker": '""'
+{{- end }}

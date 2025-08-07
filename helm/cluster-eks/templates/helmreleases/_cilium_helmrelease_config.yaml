@@ -1,0 +1,32 @@
+{{/* EKS-specific Cilium Helm values*/}}
+{{/* https://github.com/giantswarm/cilium-app/blob/main/helm/cilium/values.yaml */}}
+{{- define "EKSCiliumHelmValues" }}
+global:
+  podSecurityStandards:
+    enforced: {{ .Values.global.podSecurityStandards.enforced }}
+eni:
+  enabled: true
+ipam:
+  mode: eni
+operator:
+  extraArgs:
+    - "--aws-release-excess-ips=true"
+enableIPv4Masquerade: false
+cluster:
+  name: {{ include "resource.default.name" $ }}
+cni:
+  customConf: true
+  configMap: cilium-cni-configuration
+cniCustomConf:
+  eni:
+    firstInterfaceIndex: 1
+    securityGroupTags:
+      "kubernetes.io/cluster/{{ include "resource.default.name" $ }}": "owned"
+      "aws:eks:cluster-name": "{{ include "resource.default.name" $ }}"
+    subnetTags:
+      "sigs.k8s.io/cluster-api-provider-aws/cluster/{{ include "resource.default.name" $ }}": "owned"
+      "sigs.k8s.io/cluster-api-provider-aws/association": "secondary"
+      "sigs.k8s.io/cluster-api-provider-aws/role": "private"
+k8sServicePort: '443'
+kubeProxyReplacement: 'true'
+{{- end }}
