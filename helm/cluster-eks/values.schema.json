@@ -169,12 +169,6 @@
                             "configTemplateName": "EKSCorednsHelmValues",
                             "enable": true
                         },
-                        "etcdDefrag": {
-                            "enable": true
-                        },
-                        "etcdKubernetesResourcesCountExporter": {
-                            "enable": true
-                        },
                         "k8sDnsNodeCache": {
                             "enable": true
                         },
