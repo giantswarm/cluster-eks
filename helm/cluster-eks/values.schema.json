@@ -162,11 +162,17 @@
                         "ciliumServiceMonitors": {
                             "enable": true
                         },
+                        "clusterAutoscaler": {
+                            "enable": true
+                        },
                         "coreDns": {
                             "enable": true
                         },
                         "coreDnsExtensions": {
                             "configTemplateName": "EKSCorednsHelmValues",
+                            "enable": true
+                        },
+                        "externalDns": {
                             "enable": true
                         },
                         "k8sDnsNodeCache": {
