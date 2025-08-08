@@ -17,6 +17,7 @@ cluster:
       ciliumServiceMonitors:
         enable: true
       clusterAutoscaler:
+        configTemplateName: EKSClusterAutoscalerHelmValues
         enable: true
       coreDns:
         enable: true
@@ -24,12 +25,14 @@ cluster:
         configTemplateName: EKSCorednsHelmValues
         enable: true
       externalDns:
+        configTemplateName: EKSExternalDNSHelmValues
         enable: true
       k8sDnsNodeCache:
         enable: true
       metricsServer:
         enable: true
       netExporter:
+        configTemplateName: EKSNetExporterHelmValues
         enable: true
       networkPolicies:
         configTemplateName: EKSNetworkPoliciesHelmValues
@@ -41,6 +44,7 @@ cluster:
       observabilityPolicies:
         enable: true
       securityBundle:
+        configTemplateName: EKSSecurityBundleHelmValues
         enable: true
       teleportKubeAgent:
         enable: true
