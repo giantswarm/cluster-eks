@@ -142,6 +142,78 @@
             "description": "Helm values for the provider-independent cluster chart.",
             "default": {
                 "providerIntegration": {
+                    "apps": {
+                        "capiNodeLabeler": {
+                            "enable": true
+                        },
+                        "certExporter": {
+                            "enable": true
+                        },
+                        "certManager": {
+                            "enable": true
+                        },
+                        "chartOperatorExtensions": {
+                            "enable": true
+                        },
+                        "cilium": {
+                            "configTemplateName": "EKSCiliumHelmValues",
+                            "enable": true
+                        },
+                        "ciliumServiceMonitors": {
+                            "enable": true
+                        },
+                        "clusterAutoscaler": {
+                            "configTemplateName": "EKSClusterAutoscalerHelmValues",
+                            "enable": true
+                        },
+                        "coreDns": {
+                            "enable": true
+                        },
+                        "coreDnsExtensions": {
+                            "configTemplateName": "EKSCorednsHelmValues",
+                            "enable": true
+                        },
+                        "externalDns": {
+                            "configTemplateName": "EKSExternalDNSHelmValues",
+                            "enable": true
+                        },
+                        "k8sDnsNodeCache": {
+                            "enable": true
+                        },
+                        "metricsServer": {
+                            "enable": true
+                        },
+                        "netExporter": {
+                            "configTemplateName": "EKSNetExporterHelmValues",
+                            "enable": true
+                        },
+                        "networkPolicies": {
+                            "configTemplateName": "EKSNetworkPoliciesHelmValues",
+                            "enable": true
+                        },
+                        "nodeExporter": {
+                            "enable": true
+                        },
+                        "observabilityBundle": {
+                            "enable": true
+                        },
+                        "observabilityPolicies": {
+                            "enable": true
+                        },
+                        "securityBundle": {
+                            "configTemplateName": "EKSSecurityBundleHelmValues",
+                            "enable": true
+                        },
+                        "teleportKubeAgent": {
+                            "enable": true
+                        },
+                        "verticalPodAutoscaler": {
+                            "enable": true
+                        },
+                        "verticalPodAutoscalerCrd": {
+                            "enable": true
+                        }
+                    },
                     "controlPlane": {
                         "resources": {
                             "controlPlane": {
@@ -180,6 +252,7 @@
                         "machinePoolResourcesEnabled": true,
                         "nodePoolKind": "MachinePool"
                     },
+                    "useReleases": true,
                     "workers": {
                         "defaultNodePools": {
                             "def00": {
@@ -770,14 +843,6 @@
                     "type": "string",
                     "title": "Hash salt",
                     "description": "If specified, this token is used as a salt to the hash suffix of some resource names. Can be used to force-recreate some resources."
-                },
-                "kubernetesVersion": {
-                    "type": "string",
-                    "title": "Kubernetes version",
-                    "examples": [
-                        "1.25.7"
-                    ],
-                    "default": "1.25.16"
                 },
                 "nodePools": {
                     "type": "object",

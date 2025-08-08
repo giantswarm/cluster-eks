@@ -1,0 +1,13 @@
+{{/* EKS-specific external-dns Helm values*/}}
+{{- define "EKSExternalDNSHelmValues" }}
+provider: aws
+serviceAccount:
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::{{ include "aws-account-id" $ }}:role/{{ .Values.global.metadata.name }}-Route53Manager-Role
+txtOwnerId: giantswarm-io-external-dns
+txtPrefix: "{{ .Values.global.metadata.name }}"
+sources:
+  - service
+extraArgs:
+  - "--aws-batch-change-interval=10s"
+{{- end }}

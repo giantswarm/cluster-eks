@@ -2,6 +2,56 @@
 
 cluster:
   providerIntegration:
+    apps:
+      capiNodeLabeler:
+        enable: true
+      certExporter:
+        enable: true
+      certManager:
+        enable: true
+      chartOperatorExtensions:
+        enable: true
+      cilium:
+        configTemplateName: EKSCiliumHelmValues
+        enable: true
+      ciliumServiceMonitors:
+        enable: true
+      clusterAutoscaler:
+        configTemplateName: EKSClusterAutoscalerHelmValues
+        enable: true
+      coreDns:
+        enable: true
+      coreDnsExtensions:
+        configTemplateName: EKSCorednsHelmValues
+        enable: true
+      externalDns:
+        configTemplateName: EKSExternalDNSHelmValues
+        enable: true
+      k8sDnsNodeCache:
+        enable: true
+      metricsServer:
+        enable: true
+      netExporter:
+        configTemplateName: EKSNetExporterHelmValues
+        enable: true
+      networkPolicies:
+        configTemplateName: EKSNetworkPoliciesHelmValues
+        enable: true
+      nodeExporter:
+        enable: true
+      observabilityBundle:
+        enable: true
+      observabilityPolicies:
+        enable: true
+      securityBundle:
+        configTemplateName: EKSSecurityBundleHelmValues
+        enable: true
+      teleportKubeAgent:
+        enable: true
+      verticalPodAutoscaler:
+        enable: true
+      verticalPodAutoscalerCrd:
+        enable: true
     controlPlane:
       resources:
         controlPlane:
@@ -32,6 +82,7 @@ cluster:
       machineHealthCheckResourceEnabled: false
       machinePoolResourcesEnabled: true
       nodePoolKind: MachinePool
+    useReleases: true
     workers:
       defaultNodePools:
         def00:
@@ -111,7 +162,6 @@ global:
     awsAccountId: ""
     awsClusterRoleIdentityName: default
 internal:
-  kubernetesVersion: 1.25.16
   nodePools:
     def00:
       amiType: AL2023_x86_64_STANDARD
