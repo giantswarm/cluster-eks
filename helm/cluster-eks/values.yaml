@@ -157,7 +157,6 @@ global:
     awsAccountId: ""
     awsClusterRoleIdentityName: default
 internal:
-  kubernetesVersion: 1.25.16
   nodePools:
     def00:
       amiType: AL2023_x86_64_STANDARD

@@ -839,14 +839,6 @@
                     "title": "Hash salt",
                     "description": "If specified, this token is used as a salt to the hash suffix of some resource names. Can be used to force-recreate some resources."
                 },
-                "kubernetesVersion": {
-                    "type": "string",
-                    "title": "Kubernetes version",
-                    "examples": [
-                        "1.25.7"
-                    ],
-                    "default": "1.25.16"
-                },
                 "nodePools": {
                     "type": "object",
                     "title": "Default node pool",
