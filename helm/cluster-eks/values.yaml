@@ -51,6 +51,8 @@ cluster:
           replicas: 2
           resourcePool: '*/Resources'
           template: ""
+      kubeadmConfig:
+        disable: true
       resources:
         infrastructureMachineTemplateSpecTemplateName: worker-eksmachinetemplate-spec
 global:
