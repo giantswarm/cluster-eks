@@ -52,7 +52,7 @@ cluster:
           resourcePool: '*/Resources'
           template: ""
       kubeadmConfig:
-        disable: true
+        enabled: false
       resources:
         infrastructureMachineTemplateSpecTemplateName: worker-eksmachinetemplate-spec
 global:
