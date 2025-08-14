@@ -30,6 +30,9 @@ cluster:
         kind: AWSManagedMachinePool
         version: v1beta2
       machineHealthCheckResourceEnabled: false
+      machinePool:
+        bootstrap:
+          templateName: machine-pool-bootstrap-config
       machinePoolResourcesEnabled: true
       nodePoolKind: MachinePool
     workers:
@@ -48,6 +51,8 @@ cluster:
           replicas: 2
           resourcePool: '*/Resources'
           template: ""
+      kubeadmConfig:
+        enabled: false
       resources:
         infrastructureMachineTemplateSpecTemplateName: worker-eksmachinetemplate-spec
 global:
