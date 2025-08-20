@@ -105,7 +105,7 @@ cluster:
       kubeadmConfig:
         enabled: false
       resources:
-        infrastructureMachineTemplateSpecTemplateName: worker-eksmachinetemplate-spec
+        infrastructureMachineTemplateSpecTemplateName: managed-machine-pool-spec
 global:
   connectivity:
     availabilityZoneUsageLimit: 3

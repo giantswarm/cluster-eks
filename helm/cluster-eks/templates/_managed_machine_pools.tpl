@@ -37,10 +37,10 @@ metadata:
   labels:
     giantswarm.io/machine-pool: {{ include "resource.default.name" $ }}-{{ $name }}
     {{- include "labels.common" $ | nindent 4 }}
-  name: {{ include "resource.default.name" $ }}-{{ $name }}-{{ include "managed-machine-pool-spec-hash" $ }}
+  name: {{ include "resource.default.name" $ }}-{{ $name }}
   namespace: {{ $.Release.Namespace }}
 spec: {{- include "managed-machine-pool-spec" $ | nindent 2 }}
-  eksNodegroupName: nodes-{{ include "resource.default.name" $ }}-{{ $name }}-{{ include "managed-machine-pool-spec-hash" $ }}
+  eksNodegroupName: nodes-{{ include "resource.default.name" $ }}-{{ $name }}
 ---
 {{ end }}
 {{- end -}}
