@@ -208,7 +208,7 @@
                             "enabled": false
                         },
                         "resources": {
-                            "infrastructureMachineTemplateSpecTemplateName": "worker-eksmachinetemplate-spec"
+                            "infrastructureMachineTemplateSpecTemplateName": "managed-machine-pool-spec"
                         }
                     }
                 }
