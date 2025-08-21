@@ -29,4 +29,7 @@ cniCustomConf:
       "sigs.k8s.io/cluster-api-provider-aws/role": "private"
 k8sServicePort: '443'
 kubeProxyReplacement: 'true'
+# we cannot use the API server address autodiscovery mechanism because the cluster-vars configmap does
+# not exist on EKS clusters (see https://github.com/giantswarm/cluster/pull/553/files)
+k8sServiceHost: api.{{ include "cluster.resource.name" $ }}.{{ .Values.global.connectivity.baseDomain }}
 {{- end }}
