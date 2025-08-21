@@ -70,7 +70,7 @@ cluster:
       cleanupHelmReleaseResourcesEnabled: false
       clusterResourceEnabled: true
       controlPlaneResourceEnabled: false
-      helmRepositoryResourcesEnabled: false
+      helmRepositoryResourcesEnabled: true
       infrastructureCluster:
         group: infrastructure.cluster.x-k8s.io
         kind: AWSManagedCluster
