@@ -1,0 +1,106 @@
+---
+# This hook job waits for the control plane loadbalancer endpoint configMap to be
+# created and then patches the Cilium HelmRelease to inject the loadbalancer address
+# into the HelmRelease values. It then unsuspends the HelmRelease to allow
+# installation into the workload cluster. It has a higher hook-weight value than
+# the pause hook so it will always run after that one has completed.
+#
+# Initial install:
+#
+# On initial install the job below waits for the control plane loadbalancer endpoint
+# configMap to be created. Once it has extracted the adddress it patches the Cilium
+# HelmRelease and also unsuspends the HelmRelease. This is not created as a Helm hook
+# because it takes too long to run (10+ minutes) and Helm will timeout whilst waiting.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ include "resource.default.name" . }}-install-cilium-values-update-job"
+  namespace: "{{ .Release.Namespace }}"
+  labels:
+    {{- include "labels.common" . | nindent 4 }}
+spec:
+  ttlSecondsAfterFinished: 86400 # 24h
+  template:
+    metadata:
+      name: "{{ include "resource.default.name" . }}-install-cilium-values-update-job"
+      namespace: "{{ $.Release.Namespace }}"
+      labels:
+        {{- include "labels.common" . | nindent 8 }}
+    spec:
+      restartPolicy: Never
+      serviceAccountName: "{{- include "ciliumJobServiceAccount" . }}"
+      securityContext:
+        runAsUser: {{ include "securityContext.runAsUser" . }}
+        runAsGroup: {{ include "securityContext.runAsGroup" . }}
+      containers:
+        - name: get-control-plane-endpoint-address
+          {{- include "jobContainerCommon" . | nindent 10 }}
+          command:
+            - "/bin/bash"
+            - "-c"
+            - |
+              set -o errexit
+              set -o pipefail
+              set -o nounset
+              controlplane_endpoint=""
+              while [ -z "${controlplane_endpoint}" ] ; do
+                echo "waiting for cluster controlplane endpoint address.."
+                controlplane_endpoint=$(kubectl get cluster.cluster.x-k8s.io -n {{ .Release.Namespace }} {{ include "resource.default.name" . }} -o 'jsonpath={.spec.controlPlaneEndpoint.host}')
+                sleep 10
+              done
+              controlplane_endpoint_trimmed=$(echo $controlplane_endpoint | sed s/'http[s]\?:\/\/'//)
+              echo "Got the endpoint address: ${controlplane_endpoint_trimmed}"
+              # patch the cilium helmrelease.spec.values.k8sServiceHost and unsuspend the helmrelease
+              kubectl patch helmreleases.helm.toolkit.fluxcd.io -n {{ .Release.Namespace }} {{ include "resource.default.name" . }}-cilium --type=merge -p '{"spec":{"suspend":false,"values":{"k8sServiceHost": "'${controlplane_endpoint_trimmed}'"}}}'
+---
+# Upgrade/Rollback:
+#
+# When upgrading the chart, Helm should perform a three-way merge of the values
+# so the control plane endpoint address should be preserved. But to be on the safe
+# side we still patch the HelmRelease just in case. This job can be safely run as
+# a Helm hook though as it won't be waiting for a long time like on initial install.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ include "resource.default.name" . }}-upgrade-cilium-values-update-job"
+  namespace: "{{ .Release.Namespace }}"
+  labels:
+    {{- include "labels.common" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": "post-upgrade,post-rollback"
+    "helm.sh/hook-delete-policy": "before-hook-creation"
+    "helm.sh/hook-weight": "10"
+spec:
+  ttlSecondsAfterFinished: 86400 # 24h
+  template:
+    metadata:
+      name: "{{ include "resource.default.name" . }}-upgrade-cilium-values-update-job"
+      namespace: "{{ .Release.Namespace }}"
+      labels:
+        {{- include "labels.common" . | nindent 8 }}
+    spec:
+      restartPolicy: Never
+      serviceAccountName: "{{- include "ciliumJobServiceAccount" . }}"
+      securityContext:
+        runAsUser: {{ include "securityContext.runAsUser" . }}
+        runAsGroup: {{ include "securityContext.runAsGroup" . }}
+      containers:
+        - name: get-control-plane-endpoint-address
+          {{- include "jobContainerCommon" . | nindent 10 }}
+          command:
+            - "/bin/bash"
+            - "-c"
+            - |
+              set -o errexit
+              set -o pipefail
+              set -o nounset
+              controlplane_endpoint=""
+              while [ -z "${controlplane_endpoint}" ] ; do
+                echo "waiting for cluster controlplane endpoint address.."
+                controlplane_endpoint=$(kubectl get cluster.cluster.x-k8s.io -n {{ .Release.Namespace }} {{ include "resource.default.name" . }} -o 'jsonpath={.spec.controlPlaneEndpoint.host}')
+                sleep 10
+              done
+              controlplane_endpoint_trimmed=$(echo $controlplane_endpoint | sed s/'http[s]\?:\/\/'//)
+              echo "Got the endpoint address: ${controlplane_endpoint_trimmed}"
+              # patch the cilium helmrelease.spec.values.k8sServiceHost and unsuspend the helmrelease
+              kubectl patch helmreleases.helm.toolkit.fluxcd.io -n {{ .Release.Namespace }} {{ include "resource.default.name" . }}-cilium --type=merge -p '{"spec":{"suspend":false,"values":{"k8sServiceHost": "'${controlplane_endpoint_trimmed}'"}}}'
