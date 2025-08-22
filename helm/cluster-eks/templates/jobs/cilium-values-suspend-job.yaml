@@ -1,0 +1,45 @@
+---
+# This hook job pauses the Cilium HelmRelease on initial install and also on
+# subsequent upgrades. As it has a low hook-weight value it runs before the job
+# which actually patches the HelmRelease.
+#
+# Initial install:
+#
+# When installing the chart, it takes a few minutes for the endpoint configMap to
+# be created so we can wait until after installation to suspend the HelmRelease.
+#
+# On initial install this job suspends the Cilium HelmRelease to prevent it from
+# being installed before the control plane loadbalancer configMap is created as
+# Cilium needs to know this in order to start up.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ include "resource.default.name" . }}-update-cilium-values-suspend-hook"
+  namespace: "{{ .Release.Namespace }}"
+  labels:
+    {{- include "labels.common" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": "post-install,post-upgrade,post-rollback"
+    "helm.sh/hook-delete-policy": "before-hook-creation"
+    "helm.sh/hook-weight": "0"
+spec:
+  ttlSecondsAfterFinished: 86400 # 24h
+  template:
+    metadata:
+      name: "{{ include "resource.default.name" . }}-update-cilium-values-suspend-hook"
+      namespace: "{{ .Release.Namespace }}"
+      labels:
+        {{- include "labels.common" . | nindent 8 }}
+    spec:
+      restartPolicy: Never
+      serviceAccountName: "{{- include "ciliumJobServiceAccount" . }}"
+      securityContext:
+        runAsUser: {{ include "securityContext.runAsUser" . }}
+        runAsGroup: {{ include "securityContext.runAsGroup" . }}
+      containers:
+        - name: pre-upgrade-job
+          {{- include "jobContainerCommon" . | nindent 10 }}
+          command:
+            - "/bin/bash"
+            - "-xc"
+            - kubectl patch helmreleases.helm.toolkit.fluxcd.io -n {{ .Release.Namespace }} {{ include "resource.default.name" . }}-cilium --type=merge -p '{"spec":{"suspend":true}}'
