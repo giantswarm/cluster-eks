@@ -177,9 +177,9 @@ internal:
       minSize: 3
   sandboxContainerImage:
     name: giantswarm/pause
-    registry: quay.io
-    tag: "3.9"
+    registry: gsoci.azurecr.io
+    tag: 3.10.1
 kubectlImage:
   name: giantswarm/kubectl
-  registry: quay.io
-  tag: 1.23.5
+  registry: gsoci.azurecr.io
+  tag: 1.31.4

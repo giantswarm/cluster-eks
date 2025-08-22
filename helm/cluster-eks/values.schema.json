@@ -884,12 +884,12 @@
                         "registry": {
                             "type": "string",
                             "title": "Registry",
-                            "default": "quay.io"
+                            "default": "gsoci.azurecr.io"
                         },
                         "tag": {
                             "type": "string",
                             "title": "Tag",
-                            "default": "3.9"
+                            "default": "3.10.1"
                         }
                     }
                 }
@@ -907,12 +907,12 @@
                 "registry": {
                     "type": "string",
                     "title": "Registry",
-                    "default": "quay.io"
+                    "default": "gsoci.azurecr.io"
                 },
                 "tag": {
                     "type": "string",
                     "title": "Tag",
-                    "default": "1.23.5"
+                    "default": "1.31.4"
                 }
             }
         },
