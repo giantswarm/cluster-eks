@@ -1,0 +1,45 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ include "resource.default.name" . }}-create-configmap-job"
+  namespace: "{{ .Release.Namespace }}"
+  labels:
+    {{- include "labels.common" . | nindent 4 }}
+spec:
+  ttlSecondsAfterFinished: 86400 # 24h
+  activeDeadlineSeconds: 3600 # 1h
+  template:
+    metadata:
+      name: "{{ include "resource.default.name" . }}-create-configmap-job"
+      namespace: "{{ .Release.Namespace }}"
+      labels:
+        {{- include "labels.selector" . | nindent 8 }}
+    spec:
+      restartPolicy: Never
+      serviceAccountName: "{{- include "controlPlaneJobServiceAccount" . }}"
+      securityContext:
+        runAsUser: {{ include "securityContext.runAsUser" . }}
+        runAsGroup: {{ include "securityContext.runAsGroup" . }}
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: create-cp-cm
+          {{- include "jobContainerCommon" . | nindent 10 }}
+          command:
+            - "/bin/bash"
+            - "-c"
+            - |
+              set -o errexit
+              set -o pipefail
+              set -o nounset
+              control_plane_endpoint=""
+              while [ -z "${control_plane_endpoint}" ] ; do
+                echo "waiting for cluster controlplane endpoint address.."
+                control_plane_endpoint=$(kubectl get cluster.cluster.x-k8s.io -n {{ .Release.Namespace }} {{ include "resource.default.name" . }} -o 'jsonpath={.spec.controlPlaneEndpoint.host}')
+                sleep 10
+              done
+              control_plane_endpoint_host=$(echo $control_plane_endpoint | cut -d\/ -f 3 )
+              echo "Got the endpoint address: ${control_plane_endpoint_host}"
+              kubectl -n {{ .Release.Namespace }} create configmap {{ include "resource.default.name" . }}-control-plane-endpoint --from-literal=control_plane_endpoint_host=${control_plane_endpoint_host} --dry-run=client -o yaml | kubectl apply -f -
