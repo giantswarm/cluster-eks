@@ -12,6 +12,7 @@ operator:
   extraArgs:
     - "--aws-release-excess-ips=true"
 enableIPv4Masquerade: false
+egressMasqueradeInterfaces: eth+
 cluster:
   name: {{ include "resource.default.name" $ }}
 cni:
@@ -28,4 +29,5 @@ cniCustomConf:
       "sigs.k8s.io/cluster-api-provider-aws/association": "secondary"
       "sigs.k8s.io/cluster-api-provider-aws/role": "private"
 k8sServicePort: '443'
+routingMode: native
 {{- end }}
