@@ -73,7 +73,7 @@ spec:
       {{- end }}
     {{- end }}
     {{- end }}
-  version: {{ $.Values.internal.kubernetesVersion }}
+  version: {{ include "cluster.component.kubernetes.version" . }}
   vpcCni:
     disable: true
   kubeProxy:

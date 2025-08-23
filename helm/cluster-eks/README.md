@@ -107,7 +107,6 @@ For Giant Swarm internal use only, not stable, or not supported by UIs.
 | **Property** | **Description** | **More Details** |
 | :----------- | :-------------- | :--------------- |
 | `internal.hashSalt` | **Hash salt** - If specified, this token is used as a salt to the hash suffix of some resource names. Can be used to force-recreate some resources.|**Type:** `string`<br/>|
-| `internal.kubernetesVersion` | **Kubernetes version**|**Type:** `string`<br/>**Example:** `"1.25.7"`<br/>**Default:** `"1.25.16"`|
 | `internal.nodePools` | **Default node pool**|**Type:** `object`<br/>**Default:** `{"def00":{"amiType":"AL2023_x86_64_STANDARD","customNodeLabels":["label=default"],"instanceType":"r6i.xlarge","maxSize":4,"minSize":3}}`|
 | `internal.nodePools.PATTERN` | **Node pool**|**Type:** `object`<br/>**Key pattern:**<br/>`PATTERN`=`^[a-z0-9][-a-z0-9]{3,18}[a-z0-9]$`<br/>|
 | `internal.nodePools.PATTERN.amiType` | **AMI type**|**Type:** `string`<br/>**Key pattern:**<br/>`PATTERN`=`^[a-z0-9][-a-z0-9]{3,18}[a-z0-9]$`<br/>|
@@ -134,8 +133,8 @@ For Giant Swarm internal use only, not stable, or not supported by UIs.
 | `internal.nodePools.PATTERN.updateConfig.maxUnavailablePercentage` | **Max unavailable percentage** - MaxUnavailablePercentage is the maximum percentage of nodes unavailable during a version update. This percentage of nodes will be updated in parallel, up to 100 nodes at once.|**Type:** `integer`<br/>**Key pattern:**<br/>`PATTERN`=`^[a-z0-9][-a-z0-9]{3,18}[a-z0-9]$`<br/>|
 | `internal.sandboxContainerImage` | **Kubectl image**|**Type:** `object`<br/>|
 | `internal.sandboxContainerImage.name` | **Repository**|**Type:** `string`<br/>**Default:** `"giantswarm/pause"`|
-| `internal.sandboxContainerImage.registry` | **Registry**|**Type:** `string`<br/>**Default:** `"quay.io"`|
-| `internal.sandboxContainerImage.tag` | **Tag**|**Type:** `string`<br/>**Default:** `"3.9"`|
+| `internal.sandboxContainerImage.registry` | **Registry**|**Type:** `string`<br/>**Default:** `"gsoci.azurecr.io"`|
+| `internal.sandboxContainerImage.tag` | **Tag**|**Type:** `string`<br/>**Default:** `"3.10.1"`|
 
 ### Kubectl image
 Properties within the `.kubectlImage` top-level object
@@ -143,8 +142,8 @@ Properties within the `.kubectlImage` top-level object
 | **Property** | **Description** | **More Details** |
 | :----------- | :-------------- | :--------------- |
 | `kubectlImage.name` | **Repository**|**Type:** `string`<br/>**Default:** `"giantswarm/kubectl"`|
-| `kubectlImage.registry` | **Registry**|**Type:** `string`<br/>**Default:** `"quay.io"`|
-| `kubectlImage.tag` | **Tag**|**Type:** `string`<br/>**Default:** `"1.23.5"`|
+| `kubectlImage.registry` | **Registry**|**Type:** `string`<br/>**Default:** `"gsoci.azurecr.io"`|
+| `kubectlImage.tag` | **Tag**|**Type:** `string`<br/>**Default:** `"1.31.4"`|
 
 ### Metadata
 Properties within the `.global.metadata` object
@@ -205,7 +204,7 @@ Properties within the `.global.podSecurityStandards` object
 | **Property** | **Description** | **More Details** |
 | :----------- | :-------------- | :--------------- |
 | `baseDomain` | **Base DNS domain**|**Type:** `string`<br/>|
-| `cluster` | **Cluster** - Helm values for the provider-independent cluster chart.|**Type:** `object`<br/>**Default:** `{"providerIntegration":{"controlPlane":{"resources":{"controlPlane":{"api":{"group":"controlplane.cluster.x-k8s.io","kind":"AWSManagedControlPlane","version":"v1beta2"}},"infrastructureMachineTemplate":{"group":"controlplane.cluster.x-k8s.io","kind":"AWSManagedControlPlane","version":"v1beta2"},"infrastructureMachineTemplateSpecTemplateName":"template-not-implemented"}},"provider":"eks","resourcesApi":{"bastionResourceEnabled":false,"cleanupHelmReleaseResourcesEnabled":false,"clusterResourceEnabled":true,"controlPlaneResourceEnabled":false,"helmRepositoryResourcesEnabled":false,"infrastructureCluster":{"group":"infrastructure.cluster.x-k8s.io","kind":"AWSManagedCluster","version":"v1beta2"},"infrastructureMachinePool":{"group":"infrastructure.cluster.x-k8s.io","kind":"AWSManagedMachinePool","version":"v1beta2"},"machineHealthCheckResourceEnabled":false,"machinePool":{"bootstrap":{"templateName":"machine-pool-bootstrap-config"}},"machinePoolResourcesEnabled":true,"nodePoolKind":"MachinePool"},"workers":{"defaultNodePools":{"def00":{"cloneMode":"linkedClone","machineHealthCheck":{"enabled":true,"maxUnhealthy":"40%","nodeStartupTimeout":"20m0s","unhealthyNotReadyTimeout":"10m0s","unhealthyUnknownTimeout":"10m0s"},"memoryMiB":16896,"network":{},"numCPUs":6,"replicas":2,"resourcePool":"*/Resources","template":""}},"kubeadmConfig":{"enabled":false},"resources":{"infrastructureMachineTemplateSpecTemplateName":"managed-machine-pool-spec"}}}}`|
+| `cluster` | **Cluster** - Helm values for the provider-independent cluster chart.|**Type:** `object`<br/>**Default:** `{"providerIntegration":{"apps":{"capiNodeLabeler":{"enable":true},"certExporter":{"enable":true},"certManager":{"enable":true},"chartOperatorExtensions":{"enable":true},"cilium":{"configTemplateName":"EKSCiliumHelmValues","enable":true},"ciliumServiceMonitors":{"enable":true},"clusterAutoscaler":{"configTemplateName":"EKSClusterAutoscalerHelmValues","enable":true},"coreDns":{"enable":true},"coreDnsExtensions":{"configTemplateName":"EKSCorednsHelmValues","enable":true},"externalDns":{"configTemplateName":"EKSExternalDNSHelmValues","enable":true},"k8sDnsNodeCache":{"enable":true},"metricsServer":{"enable":true},"netExporter":{"configTemplateName":"EKSNetExporterHelmValues","enable":true},"networkPolicies":{"configTemplateName":"EKSNetworkPoliciesHelmValues","enable":true},"nodeExporter":{"enable":true},"observabilityBundle":{"enable":true},"observabilityPolicies":{"enable":true},"securityBundle":{"configTemplateName":"EKSSecurityBundleHelmValues","enable":true},"teleportKubeAgent":{"enable":true},"verticalPodAutoscaler":{"enable":true},"verticalPodAutoscalerCrd":{"enable":true}},"controlPlane":{"resources":{"controlPlane":{"api":{"group":"controlplane.cluster.x-k8s.io","kind":"AWSManagedControlPlane","version":"v1beta2"}},"infrastructureMachineTemplate":{"group":"controlplane.cluster.x-k8s.io","kind":"AWSManagedControlPlane","version":"v1beta2"},"infrastructureMachineTemplateSpecTemplateName":"template-not-implemented"}},"provider":"eks","resourcesApi":{"bastionResourceEnabled":false,"cleanupHelmReleaseResourcesEnabled":false,"clusterResourceEnabled":true,"controlPlaneResourceEnabled":false,"helmRepositoryResourcesEnabled":true,"infrastructureCluster":{"group":"infrastructure.cluster.x-k8s.io","kind":"AWSManagedCluster","version":"v1beta2"},"infrastructureMachinePool":{"group":"infrastructure.cluster.x-k8s.io","kind":"AWSManagedMachinePool","version":"v1beta2"},"machineHealthCheckResourceEnabled":false,"machinePool":{"bootstrap":{"templateName":"machine-pool-bootstrap-config"}},"machinePoolResourcesEnabled":true,"nodePoolKind":"MachinePool"},"useReleases":true,"workers":{"defaultNodePools":{"def00":{"cloneMode":"linkedClone","machineHealthCheck":{"enabled":true,"maxUnhealthy":"40%","nodeStartupTimeout":"20m0s","unhealthyNotReadyTimeout":"10m0s","unhealthyUnknownTimeout":"10m0s"},"memoryMiB":16896,"network":{},"numCPUs":6,"replicas":2,"resourcePool":"*/Resources","template":""}},"kubeadmConfig":{"enabled":false},"resources":{"infrastructureMachineTemplateSpecTemplateName":"managed-machine-pool-spec"}}}}`|
 | `cluster-shared` | **Library chart**|**Type:** `object`<br/>|
 | `managementCluster` | **Management cluster** - Name of the Cluster API cluster managing this workload cluster.|**Type:** `string`<br/>|
 | `provider` | **Cluster API provider name**|**Type:** `string`<br/>|

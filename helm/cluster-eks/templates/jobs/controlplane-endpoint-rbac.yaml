@@ -1,0 +1,40 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: "{{- include "controlPlaneJobServiceAccount" . }}"
+  namespace: "{{ .Release.Namespace }}"
+  labels:
+    {{- include "labels.common" . | nindent 4 }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: "{{- include "controlPlaneJobServiceAccount" . }}"
+  namespace: "{{ .Release.Namespace }}"
+  labels:
+    {{- include "labels.common" . | nindent 4 }}
+rules:
+  - apiGroups: ["cluster.x-k8s.io"]
+    resources: ["clusters"]
+    resourceNames: ["{{ include "resource.default.name" . }}"]
+    verbs: ["get"]
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get", "create","update", "patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: "{{- include "controlPlaneJobServiceAccount" . }}"
+  namespace: "{{ .Release.Namespace }}"
+  labels:
+    {{- include "labels.common" . | nindent 4 }}
+subjects:
+  - kind: ServiceAccount
+    name: "{{- include "controlPlaneJobServiceAccount" . }}"
+    namespace: "{{ .Release.Namespace }}"
+roleRef:
+  kind: Role
+  name: "{{- include "controlPlaneJobServiceAccount" . }}"
+  apiGroup: rbac.authorization.k8s.io
