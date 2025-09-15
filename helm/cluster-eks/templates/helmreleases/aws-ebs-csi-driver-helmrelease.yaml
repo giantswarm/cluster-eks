@@ -41,9 +41,6 @@ spec:
       enabled: true
     controller:
       hostNetwork: false
-      nodeSelector:
-        "node-role.kubernetes.io/control-plane": null
-        "node-role.kubernetes.io/worker": ""
     removeStorageClassJob:
       enabled: true
       storageClassName: gp2
