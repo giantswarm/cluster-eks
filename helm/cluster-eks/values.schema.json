@@ -147,6 +147,7 @@
                             "enable": true
                         },
                         "certExporter": {
+                            "configTemplateName": "EKSCertExporterHelmValues",
                             "enable": true
                         },
                         "certManager": {

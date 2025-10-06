@@ -6,6 +6,7 @@ cluster:
       capiNodeLabeler:
         enable: true
       certExporter:
+        configTemplateName: EKSCertExporterHelmValues
         enable: true
       certManager:
         enable: true
