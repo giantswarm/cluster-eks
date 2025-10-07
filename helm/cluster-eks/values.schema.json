@@ -168,6 +168,7 @@
                             "enable": true
                         },
                         "coreDns": {
+                            "configTemplateName": "EKSCoreDNSHelmValues",
                             "enable": true
                         },
                         "coreDnsExtensions": {
