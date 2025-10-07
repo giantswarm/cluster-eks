@@ -1,4 +1,6 @@
 global:
+  release:
+    version: 32.0.0
   metadata:
     name: test-wc-minimal
     organization: test
@@ -7,3 +9,9 @@ global:
     baseDomain: example.com
   providerSpecific:
     awsAccountId: "1234567890"
+
+cluster:
+  internal:
+    ephemeralConfiguration:
+      offlineTesting:
+        renderWithoutReleaseResource: true

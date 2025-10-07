@@ -1,0 +1,5 @@
+{{/* EKS-specific network-exporter Helm values*/}}
+{{- define "EKSNetExporterHelmValues" }}
+NetExporter:
+  NTPServers: 169.254.169.123
+{{- end }}

@@ -1,0 +1,5 @@
+{{/* EKS-specific cert-exporter Helm values*/}}
+{{- define "EKSCoreDNSHelmValues" }}
+mastersInstance:
+  enabled: false
+{{- end }}

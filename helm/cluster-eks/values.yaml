@@ -2,6 +2,58 @@
 
 cluster:
   providerIntegration:
+    apps:
+      capiNodeLabeler:
+        enable: true
+      certExporter:
+        configTemplateName: EKSCertExporterHelmValues
+        enable: true
+      certManager:
+        enable: true
+      chartOperatorExtensions:
+        enable: true
+      cilium:
+        configTemplateName: EKSCiliumHelmValues
+        enable: true
+      ciliumServiceMonitors:
+        enable: true
+      clusterAutoscaler:
+        configTemplateName: EKSClusterAutoscalerHelmValues
+        enable: true
+      coreDns:
+        configTemplateName: EKSCoreDNSHelmValues
+        enable: true
+      coreDnsExtensions:
+        configTemplateName: EKSCorednsHelmValues
+        enable: true
+      externalDns:
+        configTemplateName: EKSExternalDNSHelmValues
+        enable: true
+      k8sDnsNodeCache:
+        enable: true
+      metricsServer:
+        enable: true
+      netExporter:
+        configTemplateName: EKSNetExporterHelmValues
+        enable: true
+      networkPolicies:
+        configTemplateName: EKSNetworkPoliciesHelmValues
+        enable: true
+      nodeExporter:
+        enable: true
+      observabilityBundle:
+        enable: true
+      observabilityPolicies:
+        enable: true
+      securityBundle:
+        configTemplateName: EKSSecurityBundleHelmValues
+        enable: true
+      teleportKubeAgent:
+        enable: true
+      verticalPodAutoscaler:
+        enable: true
+      verticalPodAutoscalerCrd:
+        enable: true
     controlPlane:
       resources:
         controlPlane:
@@ -20,7 +72,7 @@ cluster:
       cleanupHelmReleaseResourcesEnabled: false
       clusterResourceEnabled: true
       controlPlaneResourceEnabled: false
-      helmRepositoryResourcesEnabled: false
+      helmRepositoryResourcesEnabled: true
       infrastructureCluster:
         group: infrastructure.cluster.x-k8s.io
         kind: AWSManagedCluster
@@ -35,6 +87,7 @@ cluster:
           templateName: machine-pool-bootstrap-config
       machinePoolResourcesEnabled: true
       nodePoolKind: MachinePool
+    useReleases: true
     workers:
       defaultNodePools:
         def00:
@@ -116,7 +169,6 @@ global:
     awsAccountId: ""
     awsClusterRoleIdentityName: default
 internal:
-  kubernetesVersion: 1.25.16
   nodePools:
     def00:
       amiType: AL2023_x86_64_STANDARD
@@ -127,9 +179,9 @@ internal:
       minSize: 3
   sandboxContainerImage:
     name: giantswarm/pause
-    registry: quay.io
-    tag: "3.9"
+    registry: gsoci.azurecr.io
+    tag: 3.10.1
 kubectlImage:
   name: giantswarm/kubectl
-  registry: quay.io
-  tag: 1.23.5
+  registry: gsoci.azurecr.io
+  tag: 1.31.4
