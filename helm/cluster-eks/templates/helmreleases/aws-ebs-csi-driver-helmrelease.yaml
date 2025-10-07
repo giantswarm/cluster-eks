@@ -34,9 +34,11 @@ spec:
       retries: 30
   values:
     global:
+      image:
+        registry: {{ .Values.cluster.internal.advancedConfiguration.registry }}
       podSecurityStandards:
         enforced: {{ .Values.global.podSecurityStandards.enforced }}
-    extraVolumeTags: {{ include "resource.default.additionalTags" . | nindent 6 }} 
+    extraVolumeTags: {{ include "resource.default.additionalTags" . | nindent 6 }}
     ciliumNetworkPolicy:
       enabled: true
     controller:
