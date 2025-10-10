@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update AWSManagedControlPlane resource to align with the Cluster chart.
 - Integrate Releases into the chart.
 - Remove MachinePool spec hash from resource names.
+- Update `giantswarm/cluster` to 4.0.2.
 
 ## [0.19.0] - 2024-09-19
 
