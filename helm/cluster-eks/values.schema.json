@@ -143,9 +143,6 @@
             "default": {
                 "providerIntegration": {
                     "apps": {
-                        "capiNodeLabeler": {
-                            "enable": true
-                        },
                         "certExporter": {
                             "configTemplateName": "EKSCertExporterHelmValues",
                             "enable": true
