@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Integrate Releases into the chart.
 - Remove MachinePool spec hash from resource names.
 - Update `giantswarm/cluster` to 4.0.2.
+- Update `aws-ebs-csi-driver-app` to 3.2.0.
 
 ## [0.19.0] - 2024-09-19
 
