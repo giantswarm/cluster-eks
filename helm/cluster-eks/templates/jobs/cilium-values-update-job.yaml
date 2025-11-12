@@ -1,3 +1,4 @@
+{{- if .Values.cluster.providerIntegration.apps.cilium.enable }}
 ---
 # This hook job waits for the control plane loadbalancer endpoint configMap to be
 # created and then patches the Cilium HelmRelease to inject the loadbalancer address
@@ -113,3 +114,4 @@ spec:
               else
                 echo "HelmRelease {{ include "resource.default.name" . }}-cilium does not exist. Skipping patch."
               fi
+{{- end }}
