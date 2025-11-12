@@ -77,9 +77,9 @@ spec:
     {{- end }}
   version: {{ include "cluster.component.kubernetes.version" . }}
   vpcCni:
-    disable: true
+    {{- toYaml .Values.global.providerSpecific.vpcCni | nindent 4 }}
   kubeProxy:
-    disable: true
+    {{- toYaml .Values.global.providerSpecific.kubeProxy | nindent 4 }}
   {{ if .Values.global.controlPlane.encryptionConfig.keyArn -}}
   encryptionConfig:
     provider: {{ $.Values.global.controlPlane.encryptionConfig.keyArn }}
