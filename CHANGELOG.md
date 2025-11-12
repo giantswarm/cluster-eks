@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Disable all apps, keep only the bare CAPI and infra resources and Teleport agent
+
 ## [1.1.0] - 2025-11-03
 
 ### Fixed
