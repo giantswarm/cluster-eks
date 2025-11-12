@@ -145,72 +145,72 @@
                     "apps": {
                         "certExporter": {
                             "configTemplateName": "EKSCertExporterHelmValues",
-                            "enable": true
+                            "enable": false
                         },
                         "certManager": {
-                            "enable": true
+                            "enable": false
                         },
                         "chartOperatorExtensions": {
-                            "enable": true
+                            "enable": false
                         },
                         "cilium": {
                             "configTemplateName": "EKSCiliumHelmValues",
-                            "enable": true
+                            "enable": false
                         },
                         "ciliumServiceMonitors": {
-                            "enable": true
+                            "enable": false
                         },
                         "clusterAutoscaler": {
                             "configTemplateName": "EKSClusterAutoscalerHelmValues",
-                            "enable": true
+                            "enable": false
                         },
                         "coreDns": {
                             "configTemplateName": "EKSCoreDNSHelmValues",
-                            "enable": true
+                            "enable": false
                         },
                         "coreDnsExtensions": {
                             "configTemplateName": "EKSCorednsHelmValues",
-                            "enable": true
+                            "enable": false
                         },
                         "externalDns": {
                             "configTemplateName": "EKSExternalDNSHelmValues",
-                            "enable": true
+                            "enable": false
                         },
                         "k8sDnsNodeCache": {
-                            "enable": true
+                            "enable": false
                         },
                         "metricsServer": {
-                            "enable": true
+                            "enable": false
                         },
                         "netExporter": {
                             "configTemplateName": "EKSNetExporterHelmValues",
-                            "enable": true
+                            "enable": false
                         },
                         "networkPolicies": {
                             "configTemplateName": "EKSNetworkPoliciesHelmValues",
-                            "enable": true
+                            "enable": false
                         },
                         "nodeExporter": {
-                            "enable": true
+                            "enable": false
                         },
                         "observabilityBundle": {
-                            "enable": true
+                            "enable": false
                         },
                         "observabilityPolicies": {
-                            "enable": true
+                            "enable": false
                         },
                         "securityBundle": {
                             "configTemplateName": "EKSSecurityBundleHelmValues",
-                            "enable": true
+                            "enable": false
                         },
                         "teleportKubeAgent": {
                             "enable": true
                         },
                         "verticalPodAutoscaler": {
-                            "enable": true
+                            "enable": false
                         },
                         "verticalPodAutoscalerCrd": {
-                            "enable": true
+                            "enable": false
                         }
                     },
                     "controlPlane": {
@@ -809,6 +809,53 @@
                                 "$ref": "#/$defs/awsResourceTagValue"
                             }
                         },
+                        "addons": {
+                            "type": "array",
+                            "title": "EKS Addons",
+                            "description": "List of EKS addons to enable with the EKS cluster.",
+                            "items": {
+                                "type": "object",
+                                "title": "Addon",
+                                "required": [
+                                    "name",
+                                    "version"
+                                ],
+                                "additionalProperties": false,
+                                "properties": {
+                                    "configuration": {
+                                        "type": "string",
+                                        "title": "Configuration",
+                                        "description": "Configuration of the EKS addon."
+                                    },
+                                    "conflictResolution": {
+                                        "type": "string",
+                                        "title": "Conflict resolution",
+                                        "description": "Declare what should happen if there are parameter conflicts. Defaults to none.",
+                                        "enum": [
+                                            "overwrite",
+                                            "none"
+                                        ],
+                                        "default": "none"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "title": "Addon name",
+                                        "description": "Name of the EKS addon."
+                                    },
+                                    "serviceAccountRoleARN": {
+                                        "type": "string",
+                                        "title": "Service Account Role ARN",
+                                        "description": "The ARN of an IAM role to bind to the addon's service account."
+                                    },
+                                    "version": {
+                                        "type": "string",
+                                        "title": "Addon version",
+                                        "description": "Version of the EKS addon."
+                                    }
+                                }
+                            },
+                            "default": []
+                        },
                         "ami": {
                             "type": "string",
                             "title": "Amazon machine image (AMI)",
@@ -833,9 +880,36 @@
                             "minLength": 1,
                             "pattern": "^[-a-zA-Z0-9_\\.]{1,63}$"
                         },
+                        "kubeProxy": {
+                            "type": "object",
+                            "title": "Kube Proxy",
+                            "description": "KubeProxy defines managed attributes of the kube-proxy daemonset.",
+                            "additionalProperties": false,
+                            "properties": {
+                                "disable": {
+                                    "type": "boolean",
+                                    "title": "Disable kube-proxy",
+                                    "description": "Disable set to true indicates that kube-proxy should be disabled. With EKS clusters, kube-proxy is automatically installed into the cluster. For clusters where you want to use kube-proxy functionality that is provided with an alternate CNI, this option provides a way to specify that the kube-proxy daemonset should be deleted. You cannot set this to true if you are using the Amazon kube-proxy addon.",
+                                    "default": false
+                                }
+                            }
+                        },
                         "region": {
                             "type": "string",
                             "title": "Region"
+                        },
+                        "vpcCni": {
+                            "type": "object",
+                            "title": "VPC CNI",
+                            "description": "Configuration for the AWS VPC CNI.",
+                            "properties": {
+                                "disable": {
+                                    "type": "boolean",
+                                    "title": "Disable",
+                                    "description": "Disable indicates that the Amazon VPC CNI should be disabled. With EKS clusters the Amazon VPC CNI is automatically installed into the cluster. For clusters where you want to use an alternate CNI this option provides a way to specify that the Amazon VPC CNI should be deleted. You cannot set this to true if you are using the Amazon VPC CNI addon.",
+                                    "default": false
+                                }
+                            }
                         }
                     }
                 }

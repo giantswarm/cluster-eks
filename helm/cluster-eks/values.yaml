@@ -100,7 +100,7 @@ cluster:
           network: {}
           numCPUs: 6
           replicas: 2
-          resourcePool: "*/Resources"
+          resourcePool: '*/Resources'
           template: ""
       kubeadmConfig:
         enabled: false
@@ -164,13 +164,13 @@ global:
   podSecurityStandards:
     enforced: true
   providerSpecific:
+    addons: []
     awsAccountId: ""
     awsClusterRoleIdentityName: default
-    addons: []
-    vpcCni:
-      disable: true
     kubeProxy:
-      disable: true
+      disable: false
+    vpcCni:
+      disable: false
 internal:
   nodePools:
     def00:
