@@ -100,7 +100,7 @@ cluster:
           network: {}
           numCPUs: 6
           replicas: 2
-          resourcePool: '*/Resources'
+          resourcePool: "*/Resources"
           template: ""
       kubeadmConfig:
         enabled: false
@@ -166,6 +166,11 @@ global:
   providerSpecific:
     awsAccountId: ""
     awsClusterRoleIdentityName: default
+    addons:
+      - name: vpc-cni
+        version: v1.20.4-eksbuild.2
+      - name: kube-proxy
+        version: v1.32.6-eksbuild.12
 internal:
   nodePools:
     def00:

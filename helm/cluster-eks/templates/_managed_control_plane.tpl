@@ -17,6 +17,8 @@ metadata:
   name: {{ include "resource.default.name" $ }}
   namespace: {{ $.Release.Namespace }}
 spec:
+  addons:
+    {{- toYaml .Values.global.providerSpecific.addons | nindent 4 }}
   additionalTags:
     giantswarm.io/cluster: {{ include "resource.default.name" $ }}
     {{- if .Values.global.providerSpecific.additionalResourceTags -}}{{- toYaml .Values.global.providerSpecific.additionalResourceTags | nindent 4 }}{{- end}}
