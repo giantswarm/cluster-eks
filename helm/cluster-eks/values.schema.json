@@ -314,6 +314,11 @@
                             "type": "object",
                             "title": "Network",
                             "properties": {
+                                "internetGatewayId": {
+                                    "type": "string",
+                                    "title": "Internet gateway ID",
+                                    "description": "ID of the existing internet gateway to use. If not specified, a new internet gateway will be created."
+                                },
                                 "pods": {
                                     "type": "object",
                                     "title": "Pods",
@@ -368,6 +373,30 @@
                                     "title": "VPC subnet",
                                     "description": "IPv4 address range to assign to this cluster's VPC, in CIDR notation.",
                                     "default": "10.0.0.0/16"
+                                },
+                                "vpcCidrs": {
+                                    "type": "array",
+                                    "title": "Secondary VPC CIDR blocks",
+                                    "description": "Additional CIDR blocks to be associated when the provider creates a managed VPC. Mutually exclusive with IPAMPool.",
+                                    "items": {
+                                        "type": "object",
+                                        "title": "VPC CIDR block",
+                                        "required": [
+                                            "ipv4CidrBlock"
+                                        ],
+                                        "properties": {
+                                            "ipv4CidrBlock": {
+                                                "type": "string",
+                                                "title": "IPv4 CIDR block",
+                                                "description": "IPv4 address range to associate with the VPC, in CIDR notation."
+                                            }
+                                        }
+                                    }
+                                },
+                                "vpcId": {
+                                    "type": "string",
+                                    "title": "VPC ID",
+                                    "description": "ID of an existing VPC to use. If not specified, a new VPC will be created."
                                 }
                             }
                         },

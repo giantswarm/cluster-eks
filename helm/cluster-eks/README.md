@@ -43,6 +43,7 @@ Properties within the `.global.connectivity` object
 | `global.connectivity.availabilityZoneUsageLimit` | **Availability zones** - Maximum number of availability zones (AZ) that should be used in a region. If a region has more than this number of AZs then this number of AZs will be picked randomly when creating subnets.|**Type:** `[integer]`<br/>**Default:** `3`|
 | `global.connectivity.baseDomain` | **Base DNS domain**|**Type:** `[string]`<br/>|
 | `global.connectivity.network` | **Network**|**Type:** `[object]`<br/>|
+| `global.connectivity.network.internetGatewayId` | **Internet gateway ID** - ID of the existing internet gateway to use. If not specified, a new internet gateway will be created.|**Type:** `[string]`<br/>|
 | `global.connectivity.network.pods` | **Pods**|**Type:** `[object]`<br/>|
 | `global.connectivity.network.pods.cidrBlocks` | **Pod subnets**|**Type:** `[array]`<br/>**Default:** `["100.64.0.0/16"]`|
 | `global.connectivity.network.pods.cidrBlocks[*]` | **Pod subnet** - IPv4 address range for pods, in CIDR notation. Must be within the 100.64.0.0/10 or 198.19.0.0/16 range. The CIDR block size must be betwen /16 and /28.|**Type:** `[string]`<br/>**Example:** `"100.64.0.0/16"`<br/>|
@@ -50,6 +51,10 @@ Properties within the `.global.connectivity` object
 | `global.connectivity.network.services.cidrBlocks` | **K8s Service subnets**|**Type:** `[array]`<br/>**Default:** `["172.31.0.0/16"]`|
 | `global.connectivity.network.services.cidrBlocks[*]` | **Service subnet** - IPv4 address range for kubernetes services, in CIDR notation.|**Type:** `[string]`<br/>**Example:** `"172.31.0.0/16"`<br/>|
 | `global.connectivity.network.vpcCidr` | **VPC subnet** - IPv4 address range to assign to this cluster's VPC, in CIDR notation.|**Type:** `[string]`<br/>**Default:** `"10.0.0.0/16"`|
+| `global.connectivity.network.vpcCidrs` | **Secondary VPC CIDR blocks** - Additional CIDR blocks to be associated when the provider creates a managed VPC. Mutually exclusive with IPAMPool.|**Type:** `[array]`<br/>|
+| `global.connectivity.network.vpcCidrs[*]` | **VPC CIDR block**|**Type:** `[object]`<br/>|
+| `global.connectivity.network.vpcCidrs[*].ipv4CidrBlock` | **IPv4 CIDR block** - IPv4 address range to associate with the VPC, in CIDR notation.|**Type:** `[string]`<br/>|
+| `global.connectivity.network.vpcId` | **VPC ID** - ID of an existing VPC to use. If not specified, a new VPC will be created.|**Type:** `[string]`<br/>|
 | `global.connectivity.podSubnets` | **Pod Subnets** - Pod Subnets are created and tagged based on this definition.|**Type:** `[array]`<br/>**Default:** `[{"cidrBlocks":[{"availabilityZone":"a","cidr":"100.64.0.0/18","tags":{"sigs.k8s.io/cluster-api-provider-aws/association":"secondary"}},{"availabilityZone":"b","cidr":"100.64.64.0/18","tags":{"sigs.k8s.io/cluster-api-provider-aws/association":"secondary"}},{"availabilityZone":"c","cidr":"100.64.128.0/18","tags":{"sigs.k8s.io/cluster-api-provider-aws/association":"secondary"}}]}]`|
 | `global.connectivity.podSubnets[*]` | **Subnet**|**Type:** `[object]`<br/>|
 | `global.connectivity.podSubnets[*].cidrBlocks` | **Network**|**Type:** `[array]`<br/>|

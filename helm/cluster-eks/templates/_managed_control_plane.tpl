@@ -33,21 +33,17 @@ spec:
   sshKeyName: ssh-key
   network:
     vpc:
-      {{- with .Values.global.connectivity.network.vpc.id }}
+      {{- with .Values.global.connectivity.network.vpcId }}
       id: {{ . | quote }}
       {{- end }}
       availabilityZoneUsageLimit: {{ .Values.global.connectivity.availabilityZoneUsageLimit }}
       cidrBlock: {{ .Values.global.connectivity.network.vpcCidr }}
       emptyRoutesDefaultVPCSecurityGroup: true
-      {{- with .Values.global.connectivity.network.vpc.internetGatewayId }}
+      {{- with .Values.global.connectivity.network.internetGatewayId }}
       internetGatewayId: {{ . | quote }}
       {{- end }}
-      {{- with .Values.global.connectivity.network.vpc.secondaryCidrBlocks }}
+      {{- with .Values.global.connectivity.network.vpcCidrs }}
       secondaryCidrBlocks:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.global.connectivity.network.vpc.tags }}
-      tags:
         {{- toYaml . | nindent 8 }}
       {{- end }}
     subnets:
