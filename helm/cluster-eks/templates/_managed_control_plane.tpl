@@ -17,6 +17,8 @@ metadata:
   name: {{ include "resource.default.name" $ }}
   namespace: {{ $.Release.Namespace }}
 spec:
+  addons:
+    {{- toYaml .Values.global.providerSpecific.addons | nindent 4 }}
   additionalTags:
     giantswarm.io/cluster: {{ include "resource.default.name" $ }}
     {{- if .Values.global.providerSpecific.additionalResourceTags -}}{{- toYaml .Values.global.providerSpecific.additionalResourceTags | nindent 4 }}{{- end}}
@@ -31,11 +33,29 @@ spec:
   sshKeyName: ssh-key
   network:
     vpc:
+      {{- with .Values.global.connectivity.network.vpcId }}
+      id: {{ . | quote }}
+      {{- end }}
       availabilityZoneUsageLimit: {{ .Values.global.connectivity.availabilityZoneUsageLimit }}
       cidrBlock: {{ .Values.global.connectivity.network.vpcCidr }}
       emptyRoutesDefaultVPCSecurityGroup: true
+      {{- with .Values.global.connectivity.network.internetGatewayId }}
+      internetGatewayId: {{ . | quote }}
+      {{- end }}
+      {{- with .Values.global.connectivity.network.vpcCidrs }}
+      secondaryCidrBlocks:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
     subnets:
     {{- range $j, $subnet := .Values.global.connectivity.subnets }}
+    {{- if $subnet.id }}
+    - id: {{ $subnet.id }}
+      isPublic: {{ $subnet.isPublic }}
+      routeTableId: {{ $subnet.routeTableId }}
+      {{- if $subnet.natGatewayId }}
+      natGatewayId: {{ $subnet.natGatewayId }}
+      {{- end }}
+    {{- else }}
     {{- range $i, $cidr := $subnet.cidrBlocks -}}
     {{/* CAPA v2.3.0 defaults to using the `id` field as subnet name unless it's an unmanaged one (`id` starts with `subnet-`), so use CAPA's previous standard subnet naming scheme */}}
     - id: "{{ include "resource.default.name" $ }}-subnet-{{ $subnet.isPublic | default false | ternary "public" "private" }}-{{ if eq (len $cidr.availabilityZone) 1 }}{{ include "aws-region" $ }}{{ end }}{{ $cidr.availabilityZone }}"
@@ -55,7 +75,16 @@ spec:
       {{- end }}
     {{- end }}
     {{- end }}
+    {{- end }}
     {{- range $j, $subnet := .Values.global.connectivity.podSubnets }}
+    {{- if $subnet.id }}
+    - id: {{ $subnet.id }}
+      isPublic: {{ $subnet.isPublic }}
+      routeTableId: {{ $subnet.routeTableId }}
+      {{- if $subnet.natGatewayId }}
+      natGatewayId: {{ $subnet.natGatewayId }}
+      {{- end }}
+    {{- else }}
     {{- range $i, $cidr := $subnet.cidrBlocks }}
     - id: "{{ include "resource.default.name" $ }}-subnet-secondary-{{ if eq (len $cidr.availabilityZone) 1 }}{{ include "aws-region" $ }}{{ end }}{{ $cidr.availabilityZone }}"
       cidrBlock: "{{ $cidr.cidr }}"
@@ -73,11 +102,12 @@ spec:
       {{- end }}
     {{- end }}
     {{- end }}
+    {{- end }}
   version: {{ include "cluster.component.kubernetes.version" . }}
   vpcCni:
-    disable: true
+    {{- toYaml .Values.global.providerSpecific.vpcCni | nindent 4 }}
   kubeProxy:
-    disable: true
+    {{- toYaml .Values.global.providerSpecific.kubeProxy | nindent 4 }}
   {{ if .Values.global.controlPlane.encryptionConfig.keyArn -}}
   encryptionConfig:
     provider: {{ $.Values.global.controlPlane.encryptionConfig.keyArn }}
