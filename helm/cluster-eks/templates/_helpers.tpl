@@ -84,7 +84,7 @@ Set the secondary CIDR block for Pod ENIs unless it's not set or it's the same a
 */}}
 {{- define "secondaryCidrBlock" -}}
 {{- $podsCidrBlocks := .Values.global.connectivity.network.pods.cidrBlocks | default (list) -}}
-{{- if not empty $podsCidrBlocks -}}
+{{- if not (empty $podsCidrBlocks) -}}
   {{- $podsCidrBlock := first $podsCidrBlocks -}}
   {{- if ne $podsCidrBlock $.Values.global.connectivity.network.vpcCidr }}
 secondaryCidrBlock: {{ $podsCidrBlock }}
