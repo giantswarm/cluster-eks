@@ -29,7 +29,7 @@ spec:
     {{- end }}
   eksClusterName: {{ include "resource.default.name" $ }}
   region: {{ include "aws-region" . }}
-  secondaryCidrBlock: {{ first .Values.global.connectivity.network.pods.cidrBlocks }}
+  {{- include "secondaryCidrBlock" . | nindent 2 }}
   sshKeyName: ssh-key
   network:
     vpc:

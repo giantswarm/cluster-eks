@@ -78,3 +78,16 @@ giantswarm.io/cluster: {{ include "resource.default.name" $ }}
 This template is present to ensure the chart renders successfully, it is not actually used.
 */}}
 {{- end -}}
+
+{{/*
+Set the secondary CIDR block for Pod ENIs unless it's not set or it's the same as the VPC main CIDR block.
+*/}}
+{{- define "secondaryCidrBlock" -}}
+{{- $podsCidrBlocks := .Values.global.connectivity.network.pods.cidrBlocks | default (list) -}}
+{{- if not empty $podsCidrBlocks -}}
+  {{- $podsCidrBlock := first $podsCidrBlocks -}}
+  {{- if ne $podsCidrBlock $.Values.global.connectivity.network.vpcCidr }}
+secondaryCidrBlock: {{ $podsCidrBlock }}
+  {{- end }}
+{{- end -}}
+{{- end -}}
