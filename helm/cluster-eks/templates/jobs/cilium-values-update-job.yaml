@@ -1,3 +1,4 @@
+{{- if .Values.cluster.providerIntegration.apps.cilium.enable }}
 ---
 # This hook job waits for the control plane loadbalancer endpoint configMap to be
 # created and then patches the Cilium HelmRelease to inject the loadbalancer address
@@ -50,8 +51,13 @@ spec:
               done
               controlplane_endpoint_trimmed=$(echo $controlplane_endpoint | sed s/'http[s]\?:\/\/'//)
               echo "Got the endpoint address: ${controlplane_endpoint_trimmed}"
-              # patch the cilium helmrelease.spec.values.k8sServiceHost and unsuspend the helmrelease
-              kubectl patch helmreleases.helm.toolkit.fluxcd.io -n {{ .Release.Namespace }} {{ include "resource.default.name" . }}-cilium --type=merge -p '{"spec":{"suspend":false,"values":{"k8sServiceHost": "'${controlplane_endpoint_trimmed}'"}}}'
+
+              # Only patch the HelmRelease if it exists
+              if kubectl get helmreleases.helm.toolkit.fluxcd.io -n {{ .Release.Namespace }} {{ include "resource.default.name" . }}-cilium >/dev/null 2>&1; then
+                kubectl patch helmreleases.helm.toolkit.fluxcd.io -n {{ .Release.Namespace }} {{ include "resource.default.name" . }}-cilium --type=merge -p '{"spec":{"suspend":false,"values":{"k8sServiceHost": "'${controlplane_endpoint_trimmed}'"}}}'
+              else
+                echo "HelmRelease {{ include "resource.default.name" . }}-cilium does not exist. Skipping patch."
+              fi
 ---
 # Upgrade/Rollback:
 #
@@ -103,4 +109,9 @@ spec:
               controlplane_endpoint_trimmed=$(echo $controlplane_endpoint | sed s/'http[s]\?:\/\/'//)
               echo "Got the endpoint address: ${controlplane_endpoint_trimmed}"
               # patch the cilium helmrelease.spec.values.k8sServiceHost and unsuspend the helmrelease
-              kubectl patch helmreleases.helm.toolkit.fluxcd.io -n {{ .Release.Namespace }} {{ include "resource.default.name" . }}-cilium --type=merge -p '{"spec":{"suspend":false,"values":{"k8sServiceHost": "'${controlplane_endpoint_trimmed}'"}}}'
+              if kubectl get helmreleases.helm.toolkit.fluxcd.io -n {{ .Release.Namespace }} {{ include "resource.default.name" . }}-cilium >/dev/null 2>&1; then
+                kubectl patch helmreleases.helm.toolkit.fluxcd.io -n {{ .Release.Namespace }} {{ include "resource.default.name" . }}-cilium --type=merge -p '{"spec":{"suspend":false,"values":{"k8sServiceHost": "'${controlplane_endpoint_trimmed}'"}}}'
+              else
+                echo "HelmRelease {{ include "resource.default.name" . }}-cilium does not exist. Skipping patch."
+              fi
+{{- end }}
