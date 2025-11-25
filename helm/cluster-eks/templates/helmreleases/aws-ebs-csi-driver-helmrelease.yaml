@@ -33,6 +33,7 @@ spec:
     remediation:
       retries: 30
   values:
+    clusterID: {{ include "resource.default.name" $ }}
     global:
       image:
         registry: {{ .Values.cluster.internal.advancedConfiguration.registry }}
@@ -46,13 +47,6 @@ spec:
     removeStorageClassJob:
       enabled: true
       storageClassName: gp2
-    serviceAccount:
-      controller:
-        annotations:
-          eks.amazonaws.com/role-arn: arn:aws:iam::{{ include "aws-account-id" $ }}:role/{{ include "resource.default.name" $  }}-ebs-csi-driver-role
-      snapshot:
-        annotations:
-          eks.amazonaws.com/role-arn: arn:aws:iam::{{ include "aws-account-id" $ }}:role/{{ include "resource.default.name" $  }}-ebs-csi-driver-role
   {{- if .Values.global.connectivity.proxy.enabled }}
     proxy:
       noProxy: "{{ include "noProxyList" $ }}"
