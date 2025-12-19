@@ -23,8 +23,8 @@ spec:
         kind: HelmRepository
         name: {{ include "resource.default.name" $ }}-default
   dependsOn:
-      - name: {{ include "resource.default.name" $ }}-vertical-pod-autoscaler-crd
-        namespace: {{ $.Release.Namespace }}
+    - name: {{ include "resource.default.name" $ }}-vertical-pod-autoscaler-crd
+      namespace: {{ $.Release.Namespace }}
   kubeConfig:
     secretRef:
       name: {{ include "resource.default.name" $ }}-kubeconfig
