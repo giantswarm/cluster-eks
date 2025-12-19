@@ -9,7 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Disable all apps, keep only the bare CAPI and infra resources and Teleport agent
+- Disable all Giant Swarm apps by default, keeping only Teleport agent enabled.
+- Only install Cilium hook jobs when Cilium is enabled.
+
+### Added
+
+- Add support for EKS addons configuration (`global.providerSpecific.addons`).
+- Add support for disabling VPC CNI and kube-proxy (`global.providerSpecific.vpcCni.disable`, `global.providerSpecific.kubeProxy.disable`).
+- Add support for pre-setting network resource IDs (`vpcId`, `internetGatewayId`).
+- Add support for secondary VPC CIDR blocks (`vpcCidrs`).
+
+### Fixed
+
+- Fix Cilium HelmRelease patching to only run if HelmRelease exists.
+- Fix EBS CSI driver HelmRelease values.
 
 ## [1.1.0] - 2025-11-03
 
