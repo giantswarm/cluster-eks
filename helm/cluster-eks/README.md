@@ -50,7 +50,7 @@ Properties within the `.global.connectivity` object
 | `global.connectivity.network.pods.cidrBlocks[*]` | **Pod subnet** - IPv4 address range for pods, in CIDR notation. Must be within the 100.64.0.0/10 or 198.19.0.0/16 range. The CIDR block size must be betwen /16 and /28.|**Type:** `string`<br/>**Example:** `"100.64.0.0/16"`<br/>|
 | `global.connectivity.network.services` | **Services**|**Type:** `object`<br/>|
 | `global.connectivity.network.services.cidrBlocks` | **K8s Service subnets**|**Type:** `array`<br/>**Default:** `["172.31.0.0/16"]`|
-| `global.connectivity.network.services.cidrBlocks[*]` | **Service subnet** - IPv4 address range for kubernetes services, in CIDR notation.|**Type:** `string`<br/>**Example:** `"172.31.0.0/16"`<br/>**Allowed value:** `172.31.0.0/16`<br/>|
+| `global.connectivity.network.services.cidrBlocks[*]` | **Service subnet** - IPv4 address range for kubernetes services, in CIDR notation.|**Type:** `string`<br/>**Example:** `"172.31.0.0/16"`<br/>|
 | `global.connectivity.network.vpcCidr` | **VPC subnet** - IPv4 address range to assign to this cluster's VPC, in CIDR notation.|**Type:** `string`<br/>**Default:** `"10.0.0.0/16"`|
 | `global.connectivity.network.vpcCidrs` | **Secondary VPC CIDR blocks** - Additional CIDR blocks to be associated when the provider creates a managed VPC. Mutually exclusive with IPAMPool.|**Type:** `array`<br/>|
 | `global.connectivity.network.vpcCidrs[*]` | **VPC CIDR block**|**Type:** `object`<br/>|
