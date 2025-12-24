@@ -167,7 +167,6 @@ global:
     addons: []
     awsAccountId: ""
     awsClusterRoleIdentityName: default
-    irsaCrossplane: true
     kubeProxy:
       disable: false
     vpcCni:

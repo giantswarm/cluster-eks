@@ -906,12 +906,6 @@
                             "minLength": 1,
                             "pattern": "^[-a-zA-Z0-9_\\.]{1,63}$"
                         },
-                        "irsaCrossplane": {
-                            "type": "boolean",
-                            "title": "Use Crossplane to provision IRSA infrastructure",
-                            "description": "Defaults to true. Crossplane will adopt all the resources created by IRSA Operator. If set to false, the IRSA Operator will take over the infrastructure again.",
-                            "default": true
-                        },
                         "kubeProxy": {
                             "type": "object",
                             "title": "Kube Proxy",
