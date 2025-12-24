@@ -100,7 +100,7 @@ cluster:
           network: {}
           numCPUs: 6
           replicas: 2
-          resourcePool: '*/Resources'
+          resourcePool: "*/Resources"
           template: ""
       kubeadmConfig:
         enabled: false
@@ -167,6 +167,7 @@ global:
     addons: []
     awsAccountId: ""
     awsClusterRoleIdentityName: default
+    irsaCrossplane: true
     kubeProxy:
       disable: false
     vpcCni:
