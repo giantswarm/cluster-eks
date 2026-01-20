@@ -1,7 +1,24 @@
+{{/* Default Helm values for the app */}}
+{{/* See schema for the appropriate app version here https://github.com/giantswarm/aws-ebs-csi-driver-app/blob/master/helm/aws-ebs-csi-driver-bundle/values.schema.json */}}
+{{- define "defaultAwsEbsCsiDriverHelmValues" }}
+clusterID: {{ include "resource.default.name" $ }}
+extraVolumeTags: {{ include "resource.default.additionalTags" . | nindent 2 }} 
+{{- if (.Values.global.connectivity.proxy).enabled }}
+proxy:
+  noProxy: "{{ include "cluster.connectivity.proxy.noProxy" (dict "global" $.Values.global "providerIntegration" $.Values.cluster.providerIntegration) }}"
+  http: {{ .Values.global.connectivity.proxy.httpProxy | quote }}
+  https: {{ .Values.global.connectivity.proxy.httpsProxy | quote }}
+{{- end }}
+global:
+  image:
+    registry: {{ include "awsContainerImageRegistry" $ }}
+  podSecurityStandards:
+    enforced: {{ .Values.global.podSecurityStandards.enforced }}
+{{- end }}
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: {{ include "resource.default.name" $ }}-aws-ebs-csi-driver
+  name: {{ include "resource.default.name" $ }}-aws-ebs-csi-driver-bundle
   namespace: {{ $.Release.Namespace }}
   annotations:
     cluster.giantswarm.io/description: "{{ .Values.global.metadata.description }}"
@@ -9,44 +26,24 @@ metadata:
     cluster-apps-operator.giantswarm.io/watching: ""
     {{- include "labels.common" . | nindent 4 }}
 spec:
-  suspend: false # It can be unsuspended by the post-install/post-upgrade hook. Useful if we need to populate some fields later on.
-  releaseName: aws-ebs-csi-driver
+  releaseName: aws-ebs-csi-driver-bundle
   targetNamespace: kube-system
   storageNamespace: kube-system
   chart:
     spec:
-      chart: aws-ebs-csi-driver-app
-      # used by renovate
-      # repo: giantswarm/aws-ebs-csi-driver-app
-      version: 3.3.0
+      chart: aws-ebs-csi-driver-bundle-app
+      version: {{ include "cluster.app.version" $ }}
       sourceRef:
         kind: HelmRepository
         name: {{ include "resource.default.name" $ }}-default
-  kubeConfig:
-    secretRef:
-      name: {{ include "resource.default.name" $ }}-kubeconfig
+  serviceAccountName: automation
   interval: 5m
   install:
     remediation:
       retries: 30
-  values:
-    clusterID: {{ include "resource.default.name" $ }}
-    global:
-      image:
-        registry: {{ .Values.cluster.internal.advancedConfiguration.registry }}
-      podSecurityStandards:
-        enforced: {{ .Values.global.podSecurityStandards.enforced }}
-    extraVolumeTags: {{ include "resource.default.additionalTags" . | nindent 6 }}
-    ciliumNetworkPolicy:
-      enabled: true
-    controller:
-      hostNetwork: false
-    removeStorageClassJob:
-      enabled: true
-      storageClassName: gp2
-  {{- if .Values.global.connectivity.proxy.enabled }}
-    proxy:
-      noProxy: "{{ include "noProxyList" $ }}"
-      http: {{ .Values.global.connectivity.proxy.httpProxy | quote }}
-      https: {{ .Values.global.connectivity.proxy.httpsProxy | quote }}
-  {{ end }}
+  {{- if $customAwsEbsCsiDriverHelmValues }}
+  {{- $awsEbsCsiDriverHelmValues = merge (deepCopy $customAwsEbsCsiDriverHelmValues) $awsEbsCsiDriverHelmValues -}}
+  {{- end }}
+  {{- if $awsEbsCsiDriverHelmValues }}
+  values: {{- $awsEbsCsiDriverHelmValues | toYaml | nindent 4 }}
+  {{- end }}

@@ -66,6 +66,10 @@ Where `data` is the data to has on and `global` is the top level scope.
 1000
 {{- end -}}
 
+{{- define "awsContainerImageRegistry" -}}
+gsoci.azurecr.io
+{{- end }}
+
 {{- define "resource.default.additionalTags" -}}
 {{- if .Values.global.providerSpecific.additionalResourceTags }}
 {{ toYaml .Values.global.providerSpecific.additionalResourceTags }}
