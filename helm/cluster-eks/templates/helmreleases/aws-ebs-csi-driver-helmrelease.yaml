@@ -49,9 +49,9 @@ spec:
   {{- if $awsEbsCsiDriverHelmValues }}
   values: {{- $awsEbsCsiDriverHelmValues | toYaml | nindent 4 }}
   {{- end }}
-  {{- if $.Values.global.apps.awsEbsCsiDriver.extraConfigs }}
+  {{- if ((($.Values.global).apps).awsEbsCsiDriver).extraConfigs }}
   valuesFrom:
-    {{- range $config := $.Values.global.apps.awsEbsCsiDriver.extraConfigs }}
+    {{- range $config := ((($.Values.global).apps).awsEbsCsiDriver).extraConfigs }}
     - kind: {{ $config.kind }}
       name: {{ $config.name }}
       valuesKey: values
