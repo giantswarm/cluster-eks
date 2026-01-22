@@ -26,12 +26,12 @@ metadata:
     cluster-apps-operator.giantswarm.io/watching: ""
     {{- include "labels.common" . | nindent 4 }}
 spec:
-  releaseName: aws-ebs-csi-driver-bundle
-  targetNamespace: {{ $.Release.Namespace }}
-  storageNamespace: {{ $.Release.Namespace }}
+  releaseName: {{ include "resource.default.name" $ }}-aws-ebs-csi-driver-bundle
+  targetNamespace: {{ $.Release.Namespace | quote }}
+  storageNamespace: {{ $.Release.Namespace | quote }}
   chart:
     spec:
-      chart: aws-ebs-csi-driver-bundle-app
+      chart: aws-ebs-csi-driver-bundle
       version: {{ include "cluster.app.version" $ }}
       sourceRef:
         kind: HelmRepository
