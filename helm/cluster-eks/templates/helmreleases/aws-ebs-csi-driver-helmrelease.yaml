@@ -27,8 +27,8 @@ metadata:
     {{- include "labels.common" . | nindent 4 }}
 spec:
   releaseName: aws-ebs-csi-driver-bundle
-  targetNamespace: kube-system
-  storageNamespace: kube-system
+  targetNamespace: {{ $.Release.Namespace }}
+  storageNamespace: {{ $.Release.Namespace }}
   chart:
     spec:
       chart: aws-ebs-csi-driver-bundle-app
