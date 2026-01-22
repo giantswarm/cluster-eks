@@ -32,15 +32,19 @@ spec:
   chart:
     spec:
       chart: aws-ebs-csi-driver-bundle
+      {{- $_ := set $ "appName" "aws-ebs-csi-driver" }}
       version: {{ include "cluster.app.version" $ }}
       sourceRef:
         kind: HelmRepository
-        name: {{ include "resource.default.name" $ }}-default
+        name: {{ include "resource.default.name" $ }}-{{ include "cluster.app.catalog" $ }}
   serviceAccountName: automation
   interval: 5m
   install:
     remediation:
-      retries: 30
+      retries: -1
+  upgrade:
+    remediation:
+      retries: -1
   {{- $awsEbsCsiDriverHelmValues := (include "defaultAwsEbsCsiDriverHelmValues" .) | fromYaml -}}
   {{- $customAwsEbsCsiDriverHelmValues := ((($.Values.global).apps).awsEbsCsiDriver).values -}}
   {{- if $customAwsEbsCsiDriverHelmValues }}
