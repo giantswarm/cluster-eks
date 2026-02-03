@@ -22,6 +22,7 @@ spec:
   additionalTags:
     giantswarm.io/cluster: {{ include "resource.default.name" $ }}
     {{- if .Values.global.providerSpecific.additionalResourceTags -}}{{- toYaml .Values.global.providerSpecific.additionalResourceTags | nindent 4 }}{{- end}}
+  associateOIDCProvider: true
   identityRef:
     kind: AWSClusterRoleIdentity
     {{- with .Values.global.providerSpecific.awsClusterRoleIdentityName }}
