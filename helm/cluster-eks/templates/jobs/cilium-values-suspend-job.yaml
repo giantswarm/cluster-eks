@@ -1,3 +1,4 @@
+{{- if .Values.cluster.providerIntegration.apps.cilium.enable }}
 ---
 # This hook job pauses the Cilium HelmRelease on initial install and also on
 # subsequent upgrades. As it has a low hook-weight value it runs before the job
@@ -42,4 +43,10 @@ spec:
           command:
             - "/bin/bash"
             - "-xc"
-            - kubectl patch helmreleases.helm.toolkit.fluxcd.io -n {{ .Release.Namespace }} {{ include "resource.default.name" . }}-cilium --type=merge -p '{"spec":{"suspend":true}}'
+            - |
+              if kubectl get helmreleases.helm.toolkit.fluxcd.io -n {{ .Release.Namespace }} {{ include "resource.default.name" . }}-cilium >/dev/null 2>&1; then
+                kubectl patch helmreleases.helm.toolkit.fluxcd.io -n {{ .Release.Namespace }} {{ include "resource.default.name" . }}-cilium --type=merge -p '{"spec":{"suspend":true}}'
+              else
+                echo "HelmRelease {{ include "resource.default.name" . }}-cilium does not exist. Skipping patch."
+              fi
+{{- end }}
