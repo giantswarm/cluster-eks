@@ -7,6 +7,7 @@ description: A helm chart for creating Cluster API EKS clusters with the AWS inf
 icon: https://s.giantswarm.io/app-icons/aws/2/dark.svg
 type: application
 version: 1.1.0
+appVersion: 1.1.0
 annotations:
   application.giantswarm.io/team: "phoenix"
   application.giantswarm.io/app-type: "cluster"
