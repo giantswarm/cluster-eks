@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add `appVersion` field to `Chart.yaml`.
+
+### Fixed
+
+- Use `.Chart.AppVersion` instead of `.Chart.Version` for `app.kubernetes.io/version` labels.
+
 ## [1.1.0] - 2025-11-03
 
 ### Fixed
