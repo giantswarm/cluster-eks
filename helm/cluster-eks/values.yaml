@@ -5,53 +5,53 @@ cluster:
     apps:
       certExporter:
         configTemplateName: EKSCertExporterHelmValues
-        enable: true
+        enable: false
       certManager:
-        enable: true
+        enable: false
       chartOperatorExtensions:
-        enable: true
+        enable: false
       cilium:
         configTemplateName: EKSCiliumHelmValues
-        enable: true
+        enable: false
       ciliumServiceMonitors:
-        enable: true
+        enable: false
       clusterAutoscaler:
         configTemplateName: EKSClusterAutoscalerHelmValues
-        enable: true
+        enable: false
       coreDns:
         configTemplateName: EKSCoreDNSHelmValues
-        enable: true
+        enable: false
       coreDnsExtensions:
         configTemplateName: EKSCorednsHelmValues
-        enable: true
+        enable: false
       externalDns:
         configTemplateName: EKSExternalDNSHelmValues
-        enable: true
+        enable: false
       k8sDnsNodeCache:
-        enable: true
+        enable: false
       metricsServer:
-        enable: true
+        enable: false
       netExporter:
         configTemplateName: EKSNetExporterHelmValues
-        enable: true
+        enable: false
       networkPolicies:
         configTemplateName: EKSNetworkPoliciesHelmValues
-        enable: true
+        enable: false
       nodeExporter:
-        enable: true
+        enable: false
       observabilityBundle:
-        enable: true
+        enable: false
       observabilityPolicies:
-        enable: true
+        enable: false
       securityBundle:
         configTemplateName: EKSSecurityBundleHelmValues
-        enable: true
+        enable: false
       teleportKubeAgent:
         enable: true
       verticalPodAutoscaler:
-        enable: true
+        enable: false
       verticalPodAutoscalerCrd:
-        enable: true
+        enable: false
     controlPlane:
       resources:
         controlPlane:
@@ -164,8 +164,13 @@ global:
   podSecurityStandards:
     enforced: true
   providerSpecific:
+    addons: []
     awsAccountId: ""
     awsClusterRoleIdentityName: default
+    kubeProxy:
+      disable: false
+    vpcCni:
+      disable: false
 internal:
   nodePools:
     def00:

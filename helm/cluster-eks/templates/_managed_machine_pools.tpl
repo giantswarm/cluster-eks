@@ -7,10 +7,10 @@
 additionalTags:
   k8s.io/cluster-autoscaler/enabled: "true"
   sigs.k8s.io/cluster-api-provider-aws/cluster/{{ include "resource.default.name" $ }}: "owned"
-amiType: {{ $.nodePoolObject.amiType }}
+amiType: {{ $.nodePoolObject.amiType | default "AL2023_x86_64_STANDARD" }}
 availabilityZones: {{ include "aws-availability-zones" (dict "mp" $.nodePoolObject "Values" $.Values "Files" $.Files) | nindent 2 }}
 availabilityZoneSubnetType: private
-instanceType:  {{ $.nodePoolObject.instanceType }}
+instanceType: {{ $.nodePoolObject.instanceType | default "r6i.xlarge" }}
 roleName: nodes-{{ include "resource.default.name" $ }}-{{ $.nodePoolName }}
 scaling:
   minSize: {{ $.nodePoolObject.minSize | default 1 }}

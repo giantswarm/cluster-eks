@@ -1,7 +1,25 @@
+{{/* Default Helm values for the app */}}
+{{/* See schema for the appropriate app version here https://github.com/giantswarm/aws-ebs-csi-driver-app/blob/master/helm/aws-ebs-csi-driver-bundle/values.schema.json */}}
+{{- define "defaultAwsEbsCsiDriverHelmValues" }}
+clusterID: {{ include "resource.default.name" $ }}
+clusterName: {{ include "resource.default.name" $ }}
+extraVolumeTags: {{ include "resource.default.additionalTags" . | nindent 2 }} 
+{{- if (.Values.global.connectivity.proxy).enabled }}
+proxy:
+  noProxy: "{{ include "cluster.connectivity.proxy.noProxy" (dict "global" $.Values.global "providerIntegration" $.Values.cluster.providerIntegration) }}"
+  http: {{ .Values.global.connectivity.proxy.httpProxy | quote }}
+  https: {{ .Values.global.connectivity.proxy.httpsProxy | quote }}
+{{- end }}
+global:
+  image:
+    registry: {{ include "awsContainerImageRegistry" $ }}
+  podSecurityStandards:
+    enforced: {{ .Values.global.podSecurityStandards.enforced }}
+{{- end }}
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: {{ include "resource.default.name" $ }}-aws-ebs-csi-driver
+  name: {{ include "resource.default.name" $ }}-aws-ebs-csi-driver-bundle
   namespace: {{ $.Release.Namespace }}
   annotations:
     cluster.giantswarm.io/description: "{{ .Values.global.metadata.description }}"
@@ -9,53 +27,39 @@ metadata:
     cluster-apps-operator.giantswarm.io/watching: ""
     {{- include "labels.common" . | nindent 4 }}
 spec:
-  suspend: false # It can be unsuspended by the post-install/post-upgrade hook. Useful if we need to populate some fields later on.
-  releaseName: aws-ebs-csi-driver
-  targetNamespace: kube-system
-  storageNamespace: kube-system
+  releaseName: {{ include "resource.default.name" $ }}-aws-ebs-csi-driver-bundle
+  targetNamespace: {{ $.Release.Namespace | quote }}
+  storageNamespace: {{ $.Release.Namespace | quote }}
   chart:
     spec:
-      chart: aws-ebs-csi-driver-app
-      # used by renovate
-      # repo: giantswarm/aws-ebs-csi-driver-app
-      version: 3.3.0
+      chart: aws-ebs-csi-driver-bundle
+      {{- $_ := set $ "appName" "aws-ebs-csi-driver" }}
+      version: {{ include "cluster.app.version" $ }}
       sourceRef:
         kind: HelmRepository
-        name: {{ include "resource.default.name" $ }}-default
-  dependsOn:
-      - name: {{ include "resource.default.name" $ }}-vertical-pod-autoscaler-crd
-        namespace: {{ $.Release.Namespace }}
-  kubeConfig:
-    secretRef:
-      name: {{ include "resource.default.name" $ }}-kubeconfig
+        name: {{ include "resource.default.name" $ }}-{{ include "cluster.app.catalog" $ }}
+  serviceAccountName: automation
   interval: 5m
   install:
     remediation:
-      retries: 30
-  values:
-    global:
-      image:
-        registry: {{ .Values.cluster.internal.advancedConfiguration.registry }}
-      podSecurityStandards:
-        enforced: {{ .Values.global.podSecurityStandards.enforced }}
-    extraVolumeTags: {{ include "resource.default.additionalTags" . | nindent 6 }}
-    ciliumNetworkPolicy:
-      enabled: true
-    controller:
-      hostNetwork: false
-    removeStorageClassJob:
-      enabled: true
-      storageClassName: gp2
-    serviceAccount:
-      controller:
-        annotations:
-          eks.amazonaws.com/role-arn: arn:aws:iam::{{ include "aws-account-id" $ }}:role/{{ include "resource.default.name" $  }}-ebs-csi-driver-role
-      snapshot:
-        annotations:
-          eks.amazonaws.com/role-arn: arn:aws:iam::{{ include "aws-account-id" $ }}:role/{{ include "resource.default.name" $  }}-ebs-csi-driver-role
-  {{- if .Values.global.connectivity.proxy.enabled }}
-    proxy:
-      noProxy: "{{ include "noProxyList" $ }}"
-      http: {{ .Values.global.connectivity.proxy.httpProxy | quote }}
-      https: {{ .Values.global.connectivity.proxy.httpsProxy | quote }}
-  {{ end }}
+      retries: -1
+  upgrade:
+    remediation:
+      retries: -1
+  {{- $awsEbsCsiDriverHelmValues := (include "defaultAwsEbsCsiDriverHelmValues" .) | fromYaml -}}
+  {{- $customAwsEbsCsiDriverHelmValues := ((($.Values.global).apps).awsEbsCsiDriver).values -}}
+  {{- if $customAwsEbsCsiDriverHelmValues }}
+  {{- $awsEbsCsiDriverHelmValues = merge (deepCopy $customAwsEbsCsiDriverHelmValues) $awsEbsCsiDriverHelmValues -}}
+  {{- end }}
+  {{- if $awsEbsCsiDriverHelmValues }}
+  values: {{- $awsEbsCsiDriverHelmValues | toYaml | nindent 4 }}
+  {{- end }}
+  {{- if ((($.Values.global).apps).awsEbsCsiDriver).extraConfigs }}
+  valuesFrom:
+    {{- range $config := ((($.Values.global).apps).awsEbsCsiDriver).extraConfigs }}
+    - kind: {{ $config.kind }}
+      name: {{ $config.name }}
+      valuesKey: values
+      optional: {{ $config.optional | default false  }}
+    {{- end }}
+  {{- end }}
