@@ -47,6 +47,7 @@ cluster:
         configTemplateName: EKSSecurityBundleHelmValues
         enable: false
       teleportKubeAgent:
+        configTemplateName: EKSTeleportKubeAgentHelmValues
         enable: true
       verticalPodAutoscaler:
         enable: false
