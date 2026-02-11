@@ -204,6 +204,7 @@
                             "enable": false
                         },
                         "teleportKubeAgent": {
+                            "configTemplateName": "EKSTeleportKubeAgentHelmValues",
                             "enable": true
                         },
                         "verticalPodAutoscaler": {
