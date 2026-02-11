@@ -47,6 +47,7 @@ cluster:
         configTemplateName: EKSSecurityBundleHelmValues
         enable: false
       teleportKubeAgent:
+        configTemplateName: EKSTeleportKubeAgentHelmValues
         enable: true
       verticalPodAutoscaler:
         enable: false
@@ -100,7 +101,7 @@ cluster:
           network: {}
           numCPUs: 6
           replicas: 2
-          resourcePool: '*/Resources'
+          resourcePool: "*/Resources"
           template: ""
       kubeadmConfig:
         enabled: false
