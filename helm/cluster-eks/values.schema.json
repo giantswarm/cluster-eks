@@ -199,6 +199,9 @@
                         "observabilityPolicies": {
                             "enable": false
                         },
+                        "rbacBootstrap": {
+                            "enable": false
+                        },
                         "securityBundle": {
                             "configTemplateName": "EKSSecurityBundleHelmValues",
                             "enable": false
