@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-02-27
+
 ### Changed
 
 - Chart: Update `cluster` to v5.3.0.
@@ -262,7 +264,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add EKS templates.
 
-[Unreleased]: https://github.com/giantswarm/cluster-eks/compare/v1.2.1...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-eks/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/giantswarm/cluster-eks/compare/v1.2.1...v1.3.0
 [1.2.1]: https://github.com/giantswarm/cluster-eks/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/giantswarm/cluster-eks/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/giantswarm/cluster-eks/compare/v1.0.0...v1.1.0
