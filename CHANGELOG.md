@@ -15,6 +15,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Use `.Chart.AppVersion` instead of `.Chart.Version` for `app.kubernetes.io/version` labels.
 
+## [1.3.0] - 2026-02-27
+
+### Changed
+
+- Chart: Update `cluster` to v5.3.0.
+- Apps: Enable `rbac-bootstrap` as a default HelmRelease app.
+
+## [1.2.1] - 2026-02-11
+
+### Changed
+
+- Disable podMonitor in teleport-kube-agent app.
+
+## [1.2.0] - 2026-02-10
+
+### Changed
+
+- Disable all Giant Swarm apps by default, keeping only Teleport agent enabled.
+- Only install Cilium hook jobs when Cilium is enabled.
+
+### Added
+
+- Add support for EKS addons configuration (`global.providerSpecific.addons`).
+- Add support for disabling VPC CNI and kube-proxy (`global.providerSpecific.vpcCni.disable`, `global.providerSpecific.kubeProxy.disable`).
+- Add support for pre-setting network resource IDs (`vpcId`, `internetGatewayId`).
+- Add support for secondary VPC CIDR blocks (`vpcCidrs`).
+
+### Fixed
+
+- Fix Cilium HelmRelease patching to only run if HelmRelease exists.
+- Fix EBS CSI driver HelmRelease values.
+
 ## [1.1.0] - 2025-11-03
 
 ### Fixed
@@ -240,7 +272,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add EKS templates.
 
-[Unreleased]: https://github.com/giantswarm/cluster-eks/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-eks/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/giantswarm/cluster-eks/compare/v1.2.1...v1.3.0
+[1.2.1]: https://github.com/giantswarm/cluster-eks/compare/v1.2.0...v1.2.1
+[1.2.0]: https://github.com/giantswarm/cluster-eks/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/giantswarm/cluster-eks/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/giantswarm/cluster-eks/compare/v0.19.0...v1.0.0
 [0.19.0]: https://github.com/giantswarm/cluster-eks/compare/v0.18.0...v0.19.0

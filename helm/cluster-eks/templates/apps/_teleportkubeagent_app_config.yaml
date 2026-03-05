@@ -1,0 +1,5 @@
+{{/* EKS-specific teleport-kube-agent Helm values*/}}
+{{- define "EKSTeleportKubeAgentHelmValues" }}
+podMonitor:
+  enabled: false
+{{- end }}

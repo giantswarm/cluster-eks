@@ -1,4 +1,5 @@
 global:
+  managementCluster: test
   release:
     version: 32.1.0
   metadata:
