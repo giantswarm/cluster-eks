@@ -169,7 +169,7 @@
                             "enable": false
                         },
                         "coreDnsExtensions": {
-                            "configTemplateName": "EKSCorednsHelmValues",
+                            "configTemplateName": "EKSCoreDNSExtensionsHelmValues",
                             "enable": false
                         },
                         "externalDns": {

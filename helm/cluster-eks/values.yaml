@@ -22,7 +22,7 @@ cluster:
         configTemplateName: EKSCoreDNSHelmValues
         enable: false
       coreDnsExtensions:
-        configTemplateName: EKSCorednsHelmValues
+        configTemplateName: EKSCoreDNSExtensionsHelmValues
         enable: false
       externalDns:
         configTemplateName: EKSExternalDNSHelmValues
