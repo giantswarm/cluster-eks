@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add `appVersion` field to `Chart.yaml`.
 
+### Removed
+
+- Remove `cluster-shared` dependency — coredns-adopter job is now handled by `coredns-app` directly.
+
 ### Fixed
 
 - Use `.Chart.AppVersion` instead of `.Chart.Version` for `app.kubernetes.io/version` labels.

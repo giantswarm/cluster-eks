@@ -1,7 +1,5 @@
 {{- include "validation" . }}
 ---
-{{- include "coredns" . }}
----
 {{- include "aws-cluster" . }}
 ---
 {{- include "control-plane" . }}
