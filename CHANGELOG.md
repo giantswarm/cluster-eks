@@ -15,6 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Remove `cluster-shared` dependency — coredns-adopter job is now handled by `coredns-app` directly.
 
+### Changed
+
+- Disable kube-proxy by default since cilium replaces it.
+- Override cluster-autoscaler `nodeSelector` to `kubernetes.io/os: linux` for EKS nodes.
+- Enable coredns adopter job for EKS.
+
 ### Fixed
 
 - Use `.Chart.AppVersion` instead of `.Chart.Version` for `app.kubernetes.io/version` labels.
