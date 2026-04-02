@@ -6,5 +6,6 @@ serviceAccount:
 node:
   nodeSelector:
     kubernetes.io/os: linux
+    node-role.kubernetes.io/control-plane: null
   caBundlePath: "/etc/ssl/certs/ca-bundle.crt"
 {{- end }}
