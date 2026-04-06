@@ -18,8 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Disable kube-proxy by default since cilium replaces it.
-- Override cluster-autoscaler `nodeSelector` to `kubernetes.io/os: linux` for EKS nodes.
+- Clear cluster-autoscaler `nodeSelector` for EKS — no control-plane or worker role labels exist on EKS nodes.
 - Enable coredns adopter job for EKS.
+- Remove `mastersInstance` config from coredns — not applicable to EKS.
 
 ### Fixed
 
