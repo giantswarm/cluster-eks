@@ -1,10 +1,5 @@
 {{/* EKS-specific coreDns Helm values*/}}
 {{- define "EKSCoreDNSHelmValues" }}
-mastersInstance:
-  enabled: false
-  nodeSelector:
-    "node-role.kubernetes.io/control-plane": null
-    "node-role.kubernetes.io/worker": '""'
 adopter:
   enabled: true
 cluster:
