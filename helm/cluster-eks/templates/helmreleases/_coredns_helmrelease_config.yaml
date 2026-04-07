@@ -2,6 +2,8 @@
 {{- define "EKSCoreDNSHelmValues" }}
 mastersInstance:
   enabled: false
+  nodeSelector:
+    node-role.kubernetes.io/control-plane: null
 adopter:
   enabled: true
 cluster:
