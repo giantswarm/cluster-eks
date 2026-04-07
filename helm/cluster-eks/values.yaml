@@ -171,7 +171,7 @@ global:
     awsAccountId: ""
     awsClusterRoleIdentityName: default
     kubeProxy:
-      disable: true
+      disable: false
     vpcCni:
       disable: false
 internal:
