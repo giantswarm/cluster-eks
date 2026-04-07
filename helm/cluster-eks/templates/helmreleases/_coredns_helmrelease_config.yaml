@@ -1,5 +1,7 @@
 {{/* EKS-specific coreDns Helm values*/}}
 {{- define "EKSCoreDNSHelmValues" }}
+mastersInstance:
+  enabled: false
 adopter:
   enabled: true
 cluster:
