@@ -155,7 +155,7 @@
                         },
                         "cilium": {
                             "configTemplateName": "EKSCiliumHelmValues",
-                            "enable": false
+                            "enable": true
                         },
                         "ciliumServiceMonitors": {
                             "enable": false
@@ -166,7 +166,7 @@
                         },
                         "coreDns": {
                             "configTemplateName": "EKSCoreDNSHelmValues",
-                            "enable": false
+                            "enable": true
                         },
                         "coreDnsExtensions": {
                             "configTemplateName": "EKSCoreDNSExtensionsHelmValues",
@@ -188,7 +188,7 @@
                         },
                         "networkPolicies": {
                             "configTemplateName": "EKSNetworkPoliciesHelmValues",
-                            "enable": false
+                            "enable": true
                         },
                         "nodeExporter": {
                             "enable": false

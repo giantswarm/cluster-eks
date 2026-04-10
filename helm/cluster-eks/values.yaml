@@ -12,7 +12,7 @@ cluster:
         enable: false
       cilium:
         configTemplateName: EKSCiliumHelmValues
-        enable: false
+        enable: true
       ciliumServiceMonitors:
         enable: false
       clusterAutoscaler:
@@ -20,7 +20,7 @@ cluster:
         enable: false
       coreDns:
         configTemplateName: EKSCoreDNSHelmValues
-        enable: false
+        enable: true
       coreDnsExtensions:
         configTemplateName: EKSCoreDNSExtensionsHelmValues
         enable: false
@@ -36,7 +36,7 @@ cluster:
         enable: false
       networkPolicies:
         configTemplateName: EKSNetworkPoliciesHelmValues
-        enable: false
+        enable: true
       nodeExporter:
         enable: false
       observabilityBundle:

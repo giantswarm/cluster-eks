@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Override cluster-autoscaler `nodeSelector` for EKS — remove control-plane selector since EKS has no control-plane nodes.
 - Disable coredns `mastersInstance` and null its control-plane nodeSelector for EKS.
 - Enable coredns adopter job for EKS.
+- Enable CoreDNS, Cilium and network-policies Apps.
 
 ### Fixed
 
