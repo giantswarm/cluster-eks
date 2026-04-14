@@ -12,7 +12,7 @@ cluster:
         enable: false
       cilium:
         configTemplateName: EKSCiliumHelmValues
-        enable: false
+        enable: true
       ciliumServiceMonitors:
         enable: false
       clusterAutoscaler:
@@ -20,9 +20,9 @@ cluster:
         enable: false
       coreDns:
         configTemplateName: EKSCoreDNSHelmValues
-        enable: false
+        enable: true
       coreDnsExtensions:
-        configTemplateName: EKSCorednsHelmValues
+        configTemplateName: EKSCoreDNSExtensionsHelmValues
         enable: false
       externalDns:
         configTemplateName: EKSExternalDNSHelmValues
@@ -36,7 +36,7 @@ cluster:
         enable: false
       networkPolicies:
         configTemplateName: EKSNetworkPoliciesHelmValues
-        enable: false
+        enable: true
       nodeExporter:
         enable: false
       observabilityBundle:
@@ -171,9 +171,9 @@ global:
     awsAccountId: ""
     awsClusterRoleIdentityName: default
     kubeProxy:
-      disable: false
+      disable: true
     vpcCni:
-      disable: false
+      disable: true
 internal:
   nodePools:
     def00:

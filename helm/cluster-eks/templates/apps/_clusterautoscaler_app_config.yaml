@@ -5,7 +5,6 @@ serviceAccount:
     eks.amazonaws.com/role-arn: arn:aws:iam::{{ include "aws-account-id" $ }}:role/{{ .Values.global.metadata.name }}-cluster-autoscaler-role
 node:
   nodeSelector:
-    node-role.kubernetes.io/worker: ""
     node-role.kubernetes.io/control-plane: null
   caBundlePath: "/etc/ssl/certs/ca-bundle.crt"
 {{- end }}
