@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Disable coredns `mastersInstance` and null its control-plane nodeSelector for EKS.
 - Enable coredns adopter job for EKS.
 - Enable CoreDNS, Cilium and network-policies Apps.
+- Chart: Update `cluster` to v6.4.0.
 
 ### Fixed
 
@@ -207,7 +208,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add global fields. 
+- Add global fields.
 
 ## [0.6.2] - 2023-11-08
 

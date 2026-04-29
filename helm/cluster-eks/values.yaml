@@ -72,7 +72,8 @@ cluster:
       bastionResourceEnabled: false
       cleanupHelmReleaseResourcesEnabled: false
       clusterResourceEnabled: true
-      controlPlaneResourceEnabled: false
+      controlPlaneResource:
+        enabled: false
       helmRepositoryResourcesEnabled: true
       infrastructureCluster:
         group: infrastructure.cluster.x-k8s.io
@@ -110,6 +111,29 @@ cluster:
       resources:
         infrastructureMachineTemplateSpecTemplateName: managed-machine-pool-spec
 global:
+  apps:
+    awsEbsCsiDriver: {}
+    certExporter: {}
+    certManager: {}
+    chartOperatorExtensions: {}
+    cilium: {}
+    ciliumServiceMonitors: {}
+    clusterAutoscaler: {}
+    coreDns: {}
+    coreDnsExtensions: {}
+    externalDns: {}
+    k8sDnsNodeCache: {}
+    metricsServer: {}
+    netExporter: {}
+    networkPolicies: {}
+    nodeExporter: {}
+    observabilityBundle: {}
+    observabilityPolicies: {}
+    rbacBootstrap: {}
+    securityBundle: {}
+    teleportKubeAgent: {}
+    verticalPodAutoscaler: {}
+    verticalPodAutoscalerCrd: {}
   connectivity:
     availabilityZoneUsageLimit: 3
     network:
