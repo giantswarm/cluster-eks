@@ -28,7 +28,7 @@ updateConfig:
 {{- end }}
 {{- end }}
 {{- define "machine-pools" }}
-{{- range $name, $value := .Values.global.nodePools | default .Values.internal.nodePools }}
+{{- range $name, $value := .Values.global.nodePools | default .Values.cluster.providerIntegration.workers.defaultNodePools }}
 {{- $ := set $ "nodePoolName" $name }}
 {{- $ := set $ "nodePoolObject" $value }}
 apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
