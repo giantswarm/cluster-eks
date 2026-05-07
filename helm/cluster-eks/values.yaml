@@ -93,19 +93,11 @@ cluster:
     workers:
       defaultNodePools:
         def00:
-          cloneMode: linkedClone
-          machineHealthCheck:
-            enabled: true
-            maxUnhealthy: 40%
-            nodeStartupTimeout: 20m0s
-            unhealthyNotReadyTimeout: 10m0s
-            unhealthyUnknownTimeout: 10m0s
-          memoryMiB: 16896
-          network: {}
-          numCPUs: 6
-          replicas: 2
-          resourcePool: '*/Resources'
-          template: ""
+          amiType: AL2023_x86_64_STANDARD
+          instanceType: r6i.xlarge
+          maxSize: 4
+          minSize: 3
+          replicas: 3
       kubeadmConfig:
         enabled: false
       resources:
@@ -199,14 +191,6 @@ global:
     vpcCni:
       disable: true
 internal:
-  nodePools:
-    def00:
-      amiType: AL2023_x86_64_STANDARD
-      customNodeLabels:
-        - label=default
-      instanceType: r6i.xlarge
-      maxSize: 4
-      minSize: 3
   sandboxContainerImage:
     name: giantswarm/pause
     registry: gsoci.azurecr.io

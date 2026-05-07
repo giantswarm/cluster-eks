@@ -356,20 +356,11 @@
                     "workers": {
                         "defaultNodePools": {
                             "def00": {
-                                "cloneMode": "linkedClone",
-                                "machineHealthCheck": {
-                                    "enabled": true,
-                                    "maxUnhealthy": "40%",
-                                    "nodeStartupTimeout": "20m0s",
-                                    "unhealthyNotReadyTimeout": "10m0s",
-                                    "unhealthyUnknownTimeout": "10m0s"
-                                },
-                                "memoryMiB": 16896,
-                                "network": {},
-                                "numCPUs": 6,
-                                "replicas": 2,
-                                "resourcePool": "*/Resources",
-                                "template": ""
+                                "amiType": "AL2023_x86_64_STANDARD",
+                                "instanceType": "r6i.xlarge",
+                                "maxSize": 4,
+                                "minSize": 3,
+                                "replicas": 3
                             }
                         },
                         "kubeadmConfig": {
@@ -1040,7 +1031,7 @@
                 "nodePools": {
                     "type": "object",
                     "title": "Node pools",
-                    "description": "Node pools of the cluster. If not specified, this defaults to the value of `internal.nodePools`.",
+                    "description": "Node pools of the cluster. If not specified, this defaults to the value of `cluster.providerIntegration.workers.defaultNodePools`.",
                     "additionalProperties": false,
                     "patternProperties": {
                         "^[a-z0-9][-a-z0-9]{3,18}[a-z0-9]$": {
@@ -1186,26 +1177,6 @@
                     "type": "string",
                     "title": "Hash salt",
                     "description": "If specified, this token is used as a salt to the hash suffix of some resource names. Can be used to force-recreate some resources."
-                },
-                "nodePools": {
-                    "type": "object",
-                    "title": "Default node pool",
-                    "patternProperties": {
-                        "^[a-z0-9][-a-z0-9]{3,18}[a-z0-9]$": {
-                            "$ref": "#/$defs/machinePool"
-                        }
-                    },
-                    "default": {
-                        "def00": {
-                            "amiType": "AL2023_x86_64_STANDARD",
-                            "customNodeLabels": [
-                                "label=default"
-                            ],
-                            "instanceType": "r6i.xlarge",
-                            "maxSize": 4,
-                            "minSize": 3
-                        }
-                    }
                 },
                 "sandboxContainerImage": {
                     "type": "object",
