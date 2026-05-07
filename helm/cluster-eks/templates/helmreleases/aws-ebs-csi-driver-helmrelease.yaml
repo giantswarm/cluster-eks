@@ -21,11 +21,10 @@ verticalPodAutoscaler:
   enabled: false
 {{- end }}
 {{- if not $.Values.cluster.providerIntegration.apps.observabilityBundle.enable }}
-upstream:
-  controller:
-    enableMetrics: false
-    serviceMonitor:
-      forceEnable: false
+controller:
+  enableMetrics: false
+  serviceMonitor:
+    forceEnable: false
 {{- end }}
 {{- end }}
 apiVersion: helm.toolkit.fluxcd.io/v2
