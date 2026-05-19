@@ -30,7 +30,7 @@ cluster:
       k8sDnsNodeCache:
         enable: false
       metricsServer:
-        enable: false
+        enable: true
       netExporter:
         configTemplateName: EKSNetExporterHelmValues
         enable: false
@@ -40,7 +40,7 @@ cluster:
       nodeExporter:
         enable: false
       observabilityBundle:
-        enable: false
+        enable: true
       observabilityPolicies:
         enable: false
       rbacBootstrap:
