@@ -30,7 +30,7 @@ cluster:
       k8sDnsNodeCache:
         enable: false
       metricsServer:
-        enable: true
+        enable: false
       netExporter:
         configTemplateName: EKSNetExporterHelmValues
         enable: false

@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Enable observabilityBundle and metricsServer apps.
+- Enable observabilityBundle app.
 
 ## [2.0.0] - 2026-05-11
 

@@ -270,7 +270,7 @@
                             "enable": false
                         },
                         "metricsServer": {
-                            "enable": true
+                            "enable": false
                         },
                         "netExporter": {
                             "configTemplateName": "EKSNetExporterHelmValues",
