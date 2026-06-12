@@ -40,7 +40,7 @@ cluster:
       nodeExporter:
         enable: false
       observabilityBundle:
-        enable: false
+        enable: true
       observabilityPolicies:
         enable: false
       rbacBootstrap:
