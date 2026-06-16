@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.0] - 2026-06-16
+
 ### Changed
 
 - Enable observabilityBundle app.
@@ -14,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Chart: Update `cluster` to v6.6.0.
 - Chart: Properly truncate & trim version labels.
 - Chart: Fix validation errors.
+- Chart: Only install `install-cilium-values-update-job` on initial installation.
 
 ### Removed
 
@@ -303,7 +306,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add EKS templates.
 
-[Unreleased]: https://github.com/giantswarm/cluster-eks/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-eks/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/giantswarm/cluster-eks/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/giantswarm/cluster-eks/compare/v1.3.0...v2.0.0
 [1.3.0]: https://github.com/giantswarm/cluster-eks/compare/v1.2.1...v1.3.0
 [1.2.1]: https://github.com/giantswarm/cluster-eks/compare/v1.2.0...v1.2.1
