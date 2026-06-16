@@ -8,7 +8,7 @@ metadata:
     aws.cluster.x-k8s.io/external-resource-gc: "true"
   labels:
     {{- include "labels.common" $ | nindent 4 }}
-    app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion | replace "+" "_" | trunc 63 | trimSuffix "-" | trimSuffix "." }}
   name: {{ include "resource.default.name" $ }}
   namespace: {{ .Release.Namespace }}
 spec:

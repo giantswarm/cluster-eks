@@ -3,9 +3,9 @@ global:
   release:
     version: 32.1.0
   metadata:
-    name: "test"
-    organization: "test"
-    description: "test description"
+    name: test
+    organization: giantswarm
+    description: test description
 
   connectivity:
     baseDomain: example.com
