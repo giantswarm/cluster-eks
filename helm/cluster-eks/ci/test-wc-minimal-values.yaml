@@ -4,12 +4,12 @@ global:
     version: 32.1.0
   metadata:
     name: test-wc-minimal
-    organization: test
+    organization: giantswarm
     servicePriority: lowest
   connectivity:
     baseDomain: example.com
   providerSpecific:
-    region: "eu-west-1"
+    region: eu-west-1
     awsAccountId: "1234567890"
 
 cluster:
