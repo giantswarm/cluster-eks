@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enable observabilityBundle app.
 - Make: Align custom Makefile.
 
+### Removed
+
+- Renovate: Do no longer trigger E2E Tests on new PRs.
+
 ## [2.0.0] - 2026-05-11
 
 ### Added
