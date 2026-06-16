@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Enable observabilityBundle app.
 - Make: Align custom Makefile.
+- Chart: Update `cluster` to v6.6.0.
 
 ### Removed
 
