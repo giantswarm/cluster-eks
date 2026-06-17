@@ -1,5 +1,23 @@
-{{/* EKS-specific teleport-kube-agent Helm values*/}}
-{{- define "EKSTeleportKubeAgentHelmValues" }}
+{{- /* EKS-specific Teleport Kube Agent Helm values */}}
+{{- define "EKSTeleportKubeAgentHelmValues" -}}
+
+{{- /* Check if Observability Bundle is not enabled. */}}
+{{- $_ := set $ "appName" "observability-bundle" }}
+{{- if or (not .Values.providerIntegration.apps.observabilityBundle.enable) (and .Values.providerIntegration.useReleases (include "cluster.app.in-release" $ | ne "true")) }}
+
+{{- /* Get Teleport Kube Agent version. */}}
+{{- $_ := set $ "appName" "teleport-kube-agent" }}
+{{- $version := include "cluster.app.version" $ | trim }}
+
+{{- /* Check Teleport Kube Agent version. */}}
+{{- if or (eq $version "N/A") (semverCompare ">=0.11.0" $version) -}}
+teleport-kube-agent:
+  podMonitor:
+    enabled: false
+{{- else -}}
 podMonitor:
   enabled: false
+{{- end }}
+
+{{- end }}
 {{- end }}
