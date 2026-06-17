@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Teleport Kube Agent: Conditionally disable PodMonitors and respect new values schema.
+
 ## [2.1.0] - 2026-06-16
 
 ### Changed
