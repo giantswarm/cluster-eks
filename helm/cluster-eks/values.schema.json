@@ -349,7 +349,9 @@
                                 "templateName": "machine-pool-bootstrap-config"
                             }
                         },
-                        "machinePoolResourcesEnabled": true,
+                        "machinePoolResources": {
+                            "enabled": true
+                        },
                         "nodePoolKind": "MachinePool"
                     },
                     "useReleases": true,
