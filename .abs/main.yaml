@@ -1,6 +1,6 @@
+chart-dir: helm/cluster-eks
 replace-chart-version-with-git: true
 replace-app-version-with-git: true
+helm-template-extra-values: helm/cluster-eks/ci/ci-values.yaml
 generate-metadata: true
-chart-dir: ./helm/cluster-eks
-destination: ./build
-ct-config: ./.circleci/ct-config.yaml
+ct-config: .abs/ct.yaml

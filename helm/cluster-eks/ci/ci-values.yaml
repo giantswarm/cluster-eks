@@ -12,6 +12,7 @@ global:
 
   providerSpecific:
     awsAccountId: "1234567890"
+    region: eu-west1
 
 cluster:
   internal:
