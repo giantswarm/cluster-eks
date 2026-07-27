@@ -1,0 +1,2 @@
+chart-repos:
+- cluster-catalog=https://giantswarm.github.io/cluster-catalog
