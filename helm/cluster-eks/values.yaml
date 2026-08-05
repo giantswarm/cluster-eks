@@ -8,6 +8,8 @@ cluster:
         enable: false
       certManager:
         enable: false
+      certManagerCrossplaneResources:
+        enable: false
       chartOperatorExtensions:
         enable: false
       cilium:
@@ -108,6 +110,7 @@ global:
     awsEbsCsiDriver: {}
     certExporter: {}
     certManager: {}
+    certManagerCrossplaneResources: {}
     chartOperatorExtensions: {}
     cilium: {}
     ciliumServiceMonitors: {}

@@ -240,6 +240,9 @@
                         "certManager": {
                             "enable": false
                         },
+                        "certManagerCrossplaneResources": {
+                            "enable": false
+                        },
                         "chartOperatorExtensions": {
                             "enable": false
                         },
@@ -408,6 +411,12 @@
                             "type": "object",
                             "title": "cert-manager",
                             "description": "Configuration of cert-manager. For all available values see https://github.com/giantswarm/cert-manager-app."
+                        },
+                        "certManagerCrossplaneResources": {
+                            "$ref": "#/$defs/helmRelease",
+                            "type": "object",
+                            "title": "cert-manager-crossplane-resources",
+                            "description": "Configuration of cert-manager-crossplane-resources. For all available values see https://github.com/giantswarm/cert-manager-crossplane-resources."
                         },
                         "chartOperatorExtensions": {
                             "$ref": "#/$defs/app",
