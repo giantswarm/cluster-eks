@@ -14,6 +14,14 @@ Create chart name and version as used by the chart label.
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" | trimSuffix "." -}}
 {{- end -}}
 
+{{- define "getArchitecture" -}}
+{{- if eq (.architecture | default "") "arm64" -}}
+arm64
+{{- else -}}
+amd64
+{{- end -}}
+{{- end -}}
+
 {{/*
 Common labels
 */}}

@@ -5,3 +5,5 @@
 {{- include "control-plane" . }}
 ---
 {{- include "machine-pools" . }}
+---
+{{- include "karpenter-machine-pools" . }}

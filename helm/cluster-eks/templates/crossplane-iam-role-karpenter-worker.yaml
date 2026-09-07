@@ -1,0 +1,73 @@
+{{- /*
+EKS has no worker instance profile to reuse, so karpenter-launched nodes get their own role here.
+The EKS managed node groups use the roles CAPA creates for them.
+*/ -}}
+---
+apiVersion: iam.aws.upbound.io/v1beta1
+kind: Role
+metadata:
+  name: {{ include "karpenter-node-iam-role" $ }}
+  namespace: {{ $.Release.Namespace }}
+  labels:
+    {{- include "labels.common" $ | nindent 4 }}
+    app.kubernetes.io/version: {{ $.Chart.AppVersion | replace "+" "_" | trunc 63 | trimSuffix "-" | trimSuffix "." }}
+spec:
+  forProvider:
+    assumeRolePolicy: |
+      {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ec2.amazonaws.com{{- if eq (include "aws-partition" $) "aws-cn" }}.cn{{- end }}"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    tags:
+      managed-by: "cluster-eks"
+      giantswarm.io/installation: {{ $.Values.global.managementCluster }}
+      sigs.k8s.io/cluster-api-provider-aws/cluster/{{ include "resource.default.name" $ }}: owned
+      {{- include "resource.default.additionalTags" $ | trim | nindent 6 }}
+  providerConfigRef:
+    name: {{ include "resource.default.name" $ }}
+{{- range $policy := list "AmazonEKSWorkerNodePolicy" "AmazonEKS_CNI_Policy" "AmazonEC2ContainerRegistryReadOnly" }}
+---
+apiVersion: iam.aws.upbound.io/v1beta1
+kind: RolePolicyAttachment
+metadata:
+  name: {{ include "karpenter-node-iam-role" $ }}-{{ $policy | lower | replace "_" "-" }}
+  namespace: {{ $.Release.Namespace }}
+  labels:
+    {{- include "labels.common" $ | nindent 4 }}
+    app.kubernetes.io/version: {{ $.Chart.AppVersion | replace "+" "_" | trunc 63 | trimSuffix "-" | trimSuffix "." }}
+spec:
+  forProvider:
+    policyArn: arn:{{ include "aws-partition" $ }}:iam::aws:policy/{{ $policy }}
+    roleRef:
+      name: {{ include "karpenter-node-iam-role" $ }}
+  providerConfigRef:
+    name: {{ include "resource.default.name" $ }}
+{{- end }}
+---
+apiVersion: iam.aws.upbound.io/v1beta1
+kind: InstanceProfile
+metadata:
+  name: {{ include "karpenter-node-iam-role" $ }}
+  namespace: {{ $.Release.Namespace }}
+  labels:
+    {{- include "labels.common" $ | nindent 4 }}
+    app.kubernetes.io/version: {{ $.Chart.AppVersion | replace "+" "_" | trunc 63 | trimSuffix "-" | trimSuffix "." }}
+spec:
+  forProvider:
+    roleRef:
+      name: {{ include "karpenter-node-iam-role" $ }}
+    tags:
+      managed-by: "cluster-eks"
+      giantswarm.io/installation: {{ $.Values.global.managementCluster }}
+      sigs.k8s.io/cluster-api-provider-aws/cluster/{{ include "resource.default.name" $ }}: owned
+      {{- include "resource.default.additionalTags" $ | trim | nindent 6 }}
+  providerConfigRef:
+    name: {{ include "resource.default.name" $ }}
