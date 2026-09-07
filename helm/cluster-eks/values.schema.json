@@ -55,6 +55,44 @@
             "minLength": 0,
             "pattern": "^[ a-zA-Z0-9\\._:/=+-@]+$"
         },
+        "disruptionBudget": {
+            "type": "object",
+            "title": "Budget",
+            "properties": {
+                "duration": {
+                    "type": "string",
+                    "title": "Duration",
+                    "description": "Determines how long a Budget is active since each Schedule hit. Only minutes and hours are accepted, as cron does not work in seconds. If omitted, the budget is always active.",
+                    "pattern": "^((([0-9]+(h|m))|([0-9]+h[0-9]+m))(0s)?)$"
+                },
+                "nodes": {
+                    "type": "string",
+                    "title": "Nodes",
+                    "description": "Dictates the maximum number of NodeClaims owned by this NodePool that can be terminating at once. This is calculated by counting nodes that have a deletion timestamp set, or are actively being deleted by Karpenter. This field is required when specifying a budget.",
+                    "default": "10%",
+                    "pattern": "^((100|[0-9]{1,2})%|[0-9]+)$"
+                },
+                "reasons": {
+                    "type": "array",
+                    "title": "Disruption reasons",
+                    "description": "List of disruption methods that this budget applies to. If Reasons is not set, this budget applies to all methods.",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "Underutilized",
+                            "Empty",
+                            "Drifted"
+                        ]
+                    }
+                },
+                "schedule": {
+                    "type": "string",
+                    "title": "Schedule",
+                    "description": "Specifies when a budget begins being active, following the upstream cronjob syntax. If omitted, the budget is always active. Timezones are not supported.",
+                    "pattern": "^(@(annually|yearly|monthly|weekly|daily|midnight|hourly))|((.+)\\s(.+)\\s(.+)\\s(.+)\\s(.+))$"
+                }
+            }
+        },
         "helmRelease": {
             "type": "object",
             "title": "App",
@@ -102,121 +140,492 @@
         "machinePool": {
             "type": "object",
             "title": "Node pool",
-            "properties": {
-                "amiType": {
-                    "type": "string",
-                    "title": "AMI type",
-                    "enum": [
-                        "AL2023_x86_64_STANDARD",
-                        "AL2023_ARM_64_STANDARD",
-                        "CUSTOM"
-                    ]
-                },
-                "availabilityZones": {
-                    "type": "array",
-                    "title": "Availability zones",
-                    "items": {
-                        "type": "string",
-                        "title": "Availability zone"
-                    }
-                },
-                "customNodeLabels": {
-                    "type": "array",
-                    "title": "Custom node labels",
-                    "items": {
-                        "type": "string",
-                        "title": "Label"
-                    }
-                },
-                "customNodeTaints": {
-                    "type": "array",
-                    "title": "Custom node taints",
-                    "items": {
-                        "type": "object",
-                        "required": [
-                            "effect",
-                            "key",
-                            "value"
-                        ],
-                        "properties": {
-                            "effect": {
-                                "type": "string",
-                                "title": "Effect",
-                                "enum": [
-                                    "NoSchedule",
-                                    "PreferNoSchedule",
-                                    "NoExecute"
-                                ]
-                            },
-                            "key": {
-                                "type": "string",
-                                "title": "Key"
-                            },
-                            "value": {
-                                "type": "string",
-                                "title": "Value"
+            "oneOf": [
+                {
+                    "allOf": [
+                        {
+                            "required": [
+                                "type"
+                            ],
+                            "properties": {
+                                "type": {
+                                    "type": "string",
+                                    "title": "Node pool type",
+                                    "const": "karpenter"
+                                }
+                            }
+                        },
+                        {
+                            "additionalProperties": false,
+                            "properties": {
+                                "type": {
+                                    "type": "string",
+                                    "title": "Node pool type",
+                                    "description": "Controller that will manage the node pool. Only used to enable karpenter node pools. Karpenter node pools need at least one node pool of type `machinepool` in the cluster, because the karpenter controller cannot run on the nodes it provisions.",
+                                    "const": "karpenter"
+                                },
+                                "additionalSecurityGroups": {
+                                    "type": "array",
+                                    "title": "Machine pool additional security groups",
+                                    "description": "Additional security groups that will be added to the machine pool nodes.",
+                                    "items": {
+                                        "type": "object",
+                                        "title": "security group",
+                                        "required": [
+                                            "id"
+                                        ],
+                                        "properties": {
+                                            "id": {
+                                                "type": "string",
+                                                "title": "Id of the security group",
+                                                "description": "ID of the security group that will be added to the machine pool nodes. The security group must exist."
+                                            }
+                                        }
+                                    }
+                                },
+                                "architecture": {
+                                    "type": "string",
+                                    "title": "CPU architecture",
+                                    "description": "Target CPU architecture for the node pool. Selects the matching CAPI Flatcar AMI: x86_64 nodes use the unsuffixed AMI name, arm64 nodes use the AMI with `arm64-` infix. The instance type must match (e.g. m7g.xlarge / t4g.medium for arm64, m5.xlarge / t3.medium for x86_64). For arm64 pools, also add a `kubernetes.io/arch=arm64:NoSchedule` taint via `customNodeTaints` so amd64-only workloads don't land here.",
+                                    "enum": [
+                                        "x86_64",
+                                        "arm64"
+                                    ],
+                                    "default": "x86_64"
+                                },
+                                "consolidateAfter": {
+                                    "type": "string",
+                                    "title": "Consolidate after",
+                                    "description": "The duration karpenter will wait before attempting to terminate nodes that are underutilized after a pod has been added or removed from the node.",
+                                    "examples": [
+                                        "3m",
+                                        "24h",
+                                        "Never"
+                                    ],
+                                    "pattern": "^(([0-9]+(s|m|h))+|Never)$"
+                                },
+                                "consolidationBudgets": {
+                                    "type": "array",
+                                    "title": "Disruption budgets (deprecated)",
+                                    "description": "Deprecated: Use disruptionBudgets instead.",
+                                    "items": {
+                                        "$ref": "#/$defs/disruptionBudget",
+                                        "type": "object",
+                                        "title": "Karpenter disruption budget"
+                                    }
+                                },
+                                "consolidationPolicy": {
+                                    "type": "string",
+                                    "title": "Consolidation policy",
+                                    "description": "Describes which nodes Karpenter can disrupt through its consolidation algorithm. If using 'WhenEmptyOrUnderutilized', Karpenter will consider all nodes for consolidation and attempt to remove or replace Nodes when it discovers that the Node is empty or underutilized and could be changed to reduce cost. If using `WhenEmpty`, Karpenter will only consider nodes for consolidation that contain no workload pods.",
+                                    "enum": [
+                                        "WhenEmptyOrUnderutilized",
+                                        "WhenEmpty"
+                                    ],
+                                    "default": "WhenEmptyOrUnderutilized"
+                                },
+                                "customNodeLabels": {
+                                    "type": "array",
+                                    "title": "Custom node labels",
+                                    "items": {
+                                        "type": "string",
+                                        "title": "Label"
+                                    }
+                                },
+                                "customNodeTaints": {
+                                    "type": "array",
+                                    "title": "Custom node taints",
+                                    "items": {
+                                        "type": "object",
+                                        "required": [
+                                            "effect",
+                                            "key"
+                                        ],
+                                        "properties": {
+                                            "effect": {
+                                                "type": "string",
+                                                "title": "Effect",
+                                                "enum": [
+                                                    "NoSchedule",
+                                                    "PreferNoSchedule",
+                                                    "NoExecute"
+                                                ]
+                                            },
+                                            "key": {
+                                                "type": "string",
+                                                "title": "Key"
+                                            },
+                                            "value": {
+                                                "type": "string",
+                                                "title": "Value"
+                                            }
+                                        }
+                                    }
+                                },
+                                "disruptionBudgets": {
+                                    "type": "array",
+                                    "title": "Disruption budgets",
+                                    "description": "Budgets control the speed Karpenter can scale down nodes. Karpenter will respect the minimum of the currently active budgets, and will round up when considering percentages. Duration and Schedule must be set together.",
+                                    "items": {
+                                        "$ref": "#/$defs/disruptionBudget",
+                                        "type": "object",
+                                        "title": "Karpenter disruption budget"
+                                    },
+                                    "default": [
+                                        {
+                                            "nodes": "10%"
+                                        }
+                                    ]
+                                },
+                                "expireAfter": {
+                                    "type": "string",
+                                    "title": "Expire after",
+                                    "description": "The duration the controller will wait before terminating a node, measured from when the node is created. Use either 'Never' or specify duration in the format `Xs`, `Xm`, `Xh`.",
+                                    "examples": [
+                                        "1h",
+                                        "30m",
+                                        "1h30m",
+                                        "Never",
+                                        "45s"
+                                    ],
+                                    "default": "720h",
+                                    "pattern": "^(([0-9]+(s|m|h))+|Never)$"
+                                },
+                                "limits": {
+                                    "type": "object",
+                                    "title": "Nodepool limits",
+                                    "description": "These limits constrains the maximum amount of resources that the NodePool can consume",
+                                    "properties": {
+                                        "cpu": {
+                                            "type": [
+                                                "number",
+                                                "string"
+                                            ],
+                                            "description": "CPU limits are described with a DecimalSI value",
+                                            "default": "1000"
+                                        },
+                                        "memory": {
+                                            "type": "string",
+                                            "description": "Memory limits are described with a BinarySI value, such as 1000Gi.",
+                                            "default": "1000Gi"
+                                        }
+                                    }
+                                },
+                                "requirements": {
+                                    "type": "array",
+                                    "title": "Nodepool requirements",
+                                    "description": "Requirements that constrain the parameters of provisioned nodes.",
+                                    "examples": [
+                                        [
+                                            {
+                                                "key": "karpenter.k8s.aws/instance-family",
+                                                "operator": "NotIn",
+                                                "values": [
+                                                    "t3",
+                                                    "t3a",
+                                                    "t2"
+                                                ]
+                                            },
+                                            {
+                                                "key": "karpenter.sh/capacity-type",
+                                                "operator": "In",
+                                                "values": [
+                                                    "spot",
+                                                    "on-demand"
+                                                ]
+                                            }
+                                        ],
+                                        [
+                                            {
+                                                "key": "karpenter.k8s.aws/instance-cpu",
+                                                "operator": "In",
+                                                "values": [
+                                                    "4",
+                                                    "8",
+                                                    "16",
+                                                    "32"
+                                                ]
+                                            },
+                                            {
+                                                "key": "karpenter.k8s.aws/instance-hypervisor",
+                                                "operator": "In",
+                                                "values": [
+                                                    "nitro"
+                                                ]
+                                            },
+                                            {
+                                                "key": "kubernetes.io/arch",
+                                                "operator": "In",
+                                                "values": [
+                                                    "amd64"
+                                                ]
+                                            },
+                                            {
+                                                "key": "kubernetes.io/os",
+                                                "operator": "In",
+                                                "values": [
+                                                    "linux"
+                                                ]
+                                            }
+                                        ]
+                                    ],
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "key": {
+                                                "type": "string",
+                                                "description": "The label key that the selector applies to."
+                                            },
+                                            "operator": {
+                                                "description": "Represents a key's relationship to a set of values.",
+                                                "enum": [
+                                                    "In",
+                                                    "NotIn",
+                                                    "Exists",
+                                                    "DoesNotExist",
+                                                    "Gt",
+                                                    "Lt"
+                                                ]
+                                            },
+                                            "values": {
+                                                "type": "array",
+                                                "description": "If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer.",
+                                                "items": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "default": [
+                                        {
+                                            "key": "karpenter.k8s.aws/instance-family",
+                                            "operator": "NotIn",
+                                            "values": [
+                                                "t3",
+                                                "t3a",
+                                                "t2"
+                                            ]
+                                        },
+                                        {
+                                            "key": "karpenter.sh/capacity-type",
+                                            "operator": "In",
+                                            "values": [
+                                                "spot",
+                                                "on-demand"
+                                            ]
+                                        },
+                                        {
+                                            "key": "karpenter.k8s.aws/instance-cpu",
+                                            "operator": "In",
+                                            "values": [
+                                                "4",
+                                                "8",
+                                                "16",
+                                                "32"
+                                            ]
+                                        },
+                                        {
+                                            "key": "karpenter.k8s.aws/instance-hypervisor",
+                                            "operator": "In",
+                                            "values": [
+                                                "nitro"
+                                            ]
+                                        },
+                                        {
+                                            "key": "kubernetes.io/arch",
+                                            "operator": "In",
+                                            "values": [
+                                                "amd64"
+                                            ]
+                                        },
+                                        {
+                                            "key": "kubernetes.io/os",
+                                            "operator": "In",
+                                            "values": [
+                                                "linux"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "rootVolumeSizeGB": {
+                                    "type": "integer",
+                                    "title": "Root volume size (GB)",
+                                    "description": "A certain minimum may be enforced depending on OS requirements.",
+                                    "default": 25,
+                                    "minimum": 25
+                                },
+                                "subnetTags": {
+                                    "type": "array",
+                                    "title": "Subnet tags",
+                                    "description": "Tags to filter which AWS subnets will be used for this node pool.",
+                                    "items": {
+                                        "type": "object",
+                                        "title": "Subnet tag",
+                                        "additionalProperties": {
+                                            "$ref": "#/$defs/awsResourceTagValue"
+                                        }
+                                    }
+                                },
+                                "terminationGracePeriod": {
+                                    "type": "string",
+                                    "title": "Termination Grace Period",
+                                    "description": "The amount of time a Node can be draining before Karpenter forcibly cleans up the node. Pods blocking eviction like PDBs and do-not-disrupt will be respected during draining until the terminationGracePeriod is reached, where those pods will be forcibly deleted.",
+                                    "examples": [
+                                        "48h"
+                                    ],
+                                    "default": "30m",
+                                    "pattern": "^([0-9]+(s|m|h))+$"
+                                }
                             }
                         }
-                    }
+                    ]
                 },
-                "instanceType": {
-                    "type": "string",
-                    "title": "EC2 instance type"
-                },
-                "maxSize": {
-                    "type": "integer",
-                    "title": "Maximum number of nodes"
-                },
-                "minSize": {
-                    "type": "integer",
-                    "title": "Minimum number of nodes"
-                },
-                "rootVolumeSizeGB": {
-                    "type": "integer",
-                    "title": "Root volume size (GB)"
-                },
-                "subnetIds": {
-                    "type": "array",
-                    "title": "Subnet IDs",
-                    "description": "Subnet IDs to use for this node pool. This field is immutable and cannot be changed.",
-                    "items": {
-                        "type": "string",
-                        "title": "Subnet ID"
-                    }
-                },
-                "subnetTags": {
-                    "type": "array",
-                    "title": "Subnet tags",
-                    "description": "Tags to filter which AWS subnets will be used for this node pool.",
-                    "items": {
-                        "type": "object",
-                        "title": "Subnet tag",
-                        "additionalProperties": {
-                            "$ref": "#/$defs/awsResourceTagValue"
-                        }
-                    }
-                },
-                "updateConfig": {
-                    "type": "object",
-                    "title": "Update configuration of the nodegroup. Only one of maxUnavailable or maxUnavailablePercentage can be set. The maxUnavailable take precedence over maxUnavailablePercentage.",
-                    "properties": {
-                        "maxUnavailable": {
-                            "type": "integer",
-                            "title": "Max unavailable",
-                            "description": "MaxUnavailable is the maximum number of nodes unavailable at once during a version update. Nodes will be updated in parallel. The maximum number is 100.",
-                            "maximum": 100,
-                            "minimum": 1
+                {
+                    "allOf": [
+                        {
+                            "anyOf": [
+                                {
+                                    "not": {
+                                        "required": [
+                                            "type"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "properties": {
+                                        "type": {
+                                            "const": "machinepool"
+                                        }
+                                    }
+                                }
+                            ]
                         },
-                        "maxUnavailablePercentage": {
-                            "type": "integer",
-                            "title": "Max unavailable percentage",
-                            "description": "MaxUnavailablePercentage is the maximum percentage of nodes unavailable during a version update. This percentage of nodes will be updated in parallel, up to 100 nodes at once.",
-                            "maximum": 100,
-                            "minimum": 1
+                        {
+                            "additionalProperties": false,
+                            "properties": {
+                                "type": {
+                                    "type": "string",
+                                    "title": "Node pool type",
+                                    "description": "Controller that will manage the node pool. Only used to enable karpenter node pools. Defaults to `machinepool` if not set.",
+                                    "const": "machinepool"
+                                },
+                                "amiType": {
+                                    "type": "string",
+                                    "title": "AMI type",
+                                    "enum": [
+                                        "AL2023_x86_64_STANDARD",
+                                        "AL2023_ARM_64_STANDARD",
+                                        "CUSTOM"
+                                    ]
+                                },
+                                "availabilityZones": {
+                                    "type": "array",
+                                    "title": "Availability zones",
+                                    "items": {
+                                        "type": "string",
+                                        "title": "Availability zone"
+                                    }
+                                },
+                                "customNodeLabels": {
+                                    "type": "array",
+                                    "title": "Custom node labels",
+                                    "items": {
+                                        "type": "string",
+                                        "title": "Label"
+                                    }
+                                },
+                                "customNodeTaints": {
+                                    "type": "array",
+                                    "title": "Custom node taints",
+                                    "items": {
+                                        "type": "object",
+                                        "required": [
+                                            "effect",
+                                            "key"
+                                        ],
+                                        "properties": {
+                                            "effect": {
+                                                "type": "string",
+                                                "title": "Effect",
+                                                "enum": [
+                                                    "NoSchedule",
+                                                    "PreferNoSchedule",
+                                                    "NoExecute"
+                                                ]
+                                            },
+                                            "key": {
+                                                "type": "string",
+                                                "title": "Key"
+                                            },
+                                            "value": {
+                                                "type": "string",
+                                                "title": "Value"
+                                            }
+                                        }
+                                    }
+                                },
+                                "instanceType": {
+                                    "type": "string",
+                                    "title": "EC2 instance type"
+                                },
+                                "maxSize": {
+                                    "type": "integer",
+                                    "title": "Maximum number of nodes"
+                                },
+                                "minSize": {
+                                    "type": "integer",
+                                    "title": "Minimum number of nodes"
+                                },
+                                "rootVolumeSizeGB": {
+                                    "type": "integer",
+                                    "title": "Root volume size (GB)"
+                                },
+                                "subnetIds": {
+                                    "type": "array",
+                                    "title": "Subnet IDs",
+                                    "description": "Subnet IDs to use for this node pool. This field is immutable and cannot be changed.",
+                                    "items": {
+                                        "type": "string",
+                                        "title": "Subnet ID"
+                                    }
+                                },
+                                "subnetTags": {
+                                    "type": "array",
+                                    "title": "Subnet tags",
+                                    "description": "Tags to filter which AWS subnets will be used for this node pool.",
+                                    "items": {
+                                        "type": "object",
+                                        "title": "Subnet tag",
+                                        "additionalProperties": {
+                                            "$ref": "#/$defs/awsResourceTagValue"
+                                        }
+                                    }
+                                },
+                                "updateConfig": {
+                                    "type": "object",
+                                    "title": "Update configuration of the nodegroup. Only one of maxUnavailable or maxUnavailablePercentage can be set. The maxUnavailable take precedence over maxUnavailablePercentage.",
+                                    "properties": {
+                                        "maxUnavailable": {
+                                            "type": "integer",
+                                            "title": "Max unavailable",
+                                            "description": "MaxUnavailable is the maximum number of nodes unavailable at once during a version update. Nodes will be updated in parallel. The maximum number is 100.",
+                                            "maximum": 100,
+                                            "minimum": 1
+                                        },
+                                        "maxUnavailablePercentage": {
+                                            "type": "integer",
+                                            "title": "Max unavailable percentage",
+                                            "description": "MaxUnavailablePercentage is the maximum percentage of nodes unavailable during a version update. This percentage of nodes will be updated in parallel, up to 100 nodes at once.",
+                                            "maximum": 100,
+                                            "minimum": 1
+                                        }
+                                    }
+                                }
+                            }
                         }
-                    }
+                    ]
                 }
-            }
+            ]
         }
     },
     "type": "object",
@@ -465,6 +874,12 @@
                             "type": "object",
                             "title": "k8s-dns-node-cache",
                             "description": "Configuration of k8s-dns-node-cache. For all available values see https://github.com/giantswarm/k8s-dns-node-cache-app."
+                        },
+                        "karpenter": {
+                            "$ref": "#/$defs/helmRelease",
+                            "type": "object",
+                            "title": "karpenter",
+                            "description": "Configuration of karpenter. For all available values see https://github.com/giantswarm/karpenter-app/blob/main/helm/karpenter-bundle/values.schema.json."
                         },
                         "metricsServer": {
                             "$ref": "#/$defs/app",

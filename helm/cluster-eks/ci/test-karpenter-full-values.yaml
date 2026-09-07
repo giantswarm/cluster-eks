@@ -1,0 +1,68 @@
+global:
+  managementCluster: test
+  release:
+    version: 32.1.0
+  metadata:
+    name: test-karpenter-full
+    organization: giantswarm
+    description: test description
+  connectivity:
+    baseDomain: example.com
+    proxy:
+      enabled: true
+      httpProxy: http://proxy.example.com:3128
+      httpsProxy: http://proxy.example.com:3128
+      noProxy: example.com
+  providerSpecific:
+    region: eu-west-1
+    awsAccountId: "1234567890"
+  nodePools:
+    def00:
+      instanceType: r6i.xlarge
+      minSize: 2
+      maxSize: 3
+    karp00:
+      type: karpenter
+      additionalSecurityGroups:
+        - id: sg-01234567890abcdef
+      consolidateAfter: 3m
+      consolidationPolicy: WhenEmpty
+      customNodeLabels:
+        - my-label=my-value
+      customNodeTaints:
+        - effect: NoSchedule
+          key: kubernetes.io/arch
+          value: arm64
+      disruptionBudgets:
+        - nodes: 20%
+          schedule: "0 9 * * mon-fri"
+          duration: 8h
+          reasons:
+            - Underutilized
+      expireAfter: 168h
+      limits:
+        cpu: "500"
+        memory: 500Gi
+      requirements:
+        - key: karpenter.k8s.aws/instance-family
+          operator: In
+          values:
+            - m7g
+        - key: kubernetes.io/arch
+          operator: In
+          values:
+            - arm64
+        - key: kubernetes.io/os
+          operator: In
+          values:
+            - linux
+      rootVolumeSizeGB: 50
+      subnetTags:
+        - karpenter.sh/discovery: test-karpenter-full
+      terminationGracePeriod: 1h
+
+cluster:
+  internal:
+    ephemeralConfiguration:
+      offlineTesting:
+        renderWithoutReleaseResource: true

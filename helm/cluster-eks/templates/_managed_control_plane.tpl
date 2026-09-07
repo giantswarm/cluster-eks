@@ -67,11 +67,21 @@ spec:
       availabilityZone: "{{ $cidr.availabilityZone }}"
       {{- end }}
       isPublic: {{ $subnet.isPublic | default false }}
-      {{- if or $subnet.tags $cidr.tags }}
+      {{- $isPublic := $subnet.isPublic | default false }}
+      {{- if or $subnet.tags $cidr.tags (not $isPublic) }}
       tags:
-        {{- toYaml $subnet.tags | nindent 8 }}
-        {{- if $cidr.tags }}
-        {{- toYaml $cidr.tags | nindent 8 }}
+        {{- if not $isPublic }}
+        {{- /*
+          CAPA tags the secondary Cilium pod subnets `role: private` as well, so distinguish
+          where karpenter should deploy nodes with this tag
+        */}}
+        karpenter.sh/discovery: {{ include "resource.default.name" $ }}
+        {{- end }}
+        {{- with $subnet.tags }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with $cidr.tags }}
+        {{- toYaml . | nindent 8 }}
         {{- end }}
       {{- end }}
     {{- end }}

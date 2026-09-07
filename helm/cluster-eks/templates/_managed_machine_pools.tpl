@@ -1,6 +1,3 @@
-{{- define "managed-machine-pool-spec-hash" -}}
-{{ $spec := include "managed-machine-pool-spec" $ }}{{ regexReplaceAll `^\s*#.*$` $spec "" | sha256sum | trunc 5 }}
-{{- end -}}
 {{- define "managed-machine-pool-spec" }}
 {{- $_unused := required "nodePoolName must be set" $.nodePoolName -}}
 {{- $_unused := required "nodePoolObject must be set" $.nodePoolObject -}}
@@ -11,6 +8,8 @@ amiType: {{ $.nodePoolObject.amiType | default "AL2023_x86_64_STANDARD" }}
 availabilityZones: {{ include "aws-availability-zones" (dict "mp" $.nodePoolObject "Values" $.Values "Files" $.Files) | nindent 2 }}
 availabilityZoneSubnetType: private
 instanceType: {{ $.nodePoolObject.instanceType | default "r6i.xlarge" }}
+labels:
+  {{- include "karpenter-host-node-selector" $ | nindent 2 }}
 roleName: nodes-{{ include "resource.default.name" $ }}-{{ $.nodePoolName }}
 scaling:
   minSize: {{ $.nodePoolObject.minSize | default 1 }}
@@ -29,6 +28,7 @@ updateConfig:
 {{- end }}
 {{- define "machine-pools" }}
 {{- range $name, $value := .Values.global.nodePools | default .Values.cluster.providerIntegration.workers.defaultNodePools }}
+{{- if or (not $value.type) (eq $value.type "machinepool") }}
 {{- $ := set $ "nodePoolName" $name }}
 {{- $ := set $ "nodePoolObject" $value }}
 apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
@@ -42,6 +42,7 @@ metadata:
 spec: {{- include "managed-machine-pool-spec" $ | nindent 2 }}
   eksNodegroupName: nodes-{{ include "resource.default.name" $ }}-{{ $name }}
 ---
+{{ end }}
 {{ end }}
 {{- end -}}
 {{- define "machine-pool-bootstrap-config" }}

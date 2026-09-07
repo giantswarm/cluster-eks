@@ -1,0 +1,34 @@
+global:
+  managementCluster: test
+  release:
+    version: 32.1.0
+  metadata:
+    name: test-karpenter-mixed
+    organization: giantswarm
+    description: test description
+  connectivity:
+    baseDomain: example.com
+  providerSpecific:
+    region: eu-west-1
+    awsAccountId: "1234567890"
+  nodePools:
+    def00:
+      instanceType: r6i.xlarge
+      minSize: 3
+      maxSize: 6
+    def01:
+      type: machinepool
+      instanceType: m6i.xlarge
+      minSize: 1
+      maxSize: 2
+    karp00:
+      type: karpenter
+    karp01:
+      type: karpenter
+      consolidationPolicy: WhenEmpty
+
+cluster:
+  internal:
+    ephemeralConfiguration:
+      offlineTesting:
+        renderWithoutReleaseResource: true

@@ -119,6 +119,7 @@ global:
     coreDnsExtensions: {}
     externalDns: {}
     k8sDnsNodeCache: {}
+    karpenter: {}
     metricsServer: {}
     netExporter: {}
     networkPolicies: {}
