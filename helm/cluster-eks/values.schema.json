@@ -576,6 +576,12 @@
                                     "type": "integer",
                                     "title": "Minimum number of nodes"
                                 },
+                                "replicas": {
+                                    "type": "integer",
+                                    "title": "Number of nodes",
+                                    "description": "Initial number of nodes. Ignored if `minSize` is set.",
+                                    "minimum": 0
+                                },
                                 "rootVolumeSizeGB": {
                                     "type": "integer",
                                     "title": "Root volume size (GB)"
