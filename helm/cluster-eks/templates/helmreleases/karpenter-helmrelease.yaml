@@ -10,6 +10,9 @@ helmRelease:
   dependsOn:
     {{/* The AWS cloud provider is part of the EKS control plane, so no `cloud-provider-aws` HelmRelease exists to wait for */}}
     cloud-provider-aws: false
+kyverno:
+  {{/* Kyverno comes with the security bundle, so without it there is neither a `kyverno-crds` HelmRelease to wait for nor a CRD for karpenter's `PolicyException` */}}
+  enabled: {{ $.Values.cluster.providerIntegration.apps.securityBundle.enable }}
 {{- if (.Values.global.connectivity.proxy).enabled }}
 proxy:
   noProxy: "{{ include "cluster.connectivity.proxy.noProxy" (dict "global" $.Values.global "providerIntegration" $.Values.cluster.providerIntegration) }}"
@@ -30,10 +33,6 @@ podLogs:
   tenant: "giantswarm"
 serviceMonitor:
   enabled: {{ $.Values.cluster.providerIntegration.apps.observabilityBundle.enable }}
-global:
-  podSecurityStandards:
-    {{/* PolicyException CRD only available with security-bundle installed */}}
-    enforced: {{ and .Values.global.podSecurityStandards.enforced $.Values.cluster.providerIntegration.apps.securityBundle.enable }}
 {{- end }}
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: OCIRepository
