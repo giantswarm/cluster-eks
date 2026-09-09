@@ -12,6 +12,10 @@ proxy:
   http: {{ .Values.global.connectivity.proxy.httpProxy | quote }}
   https: {{ .Values.global.connectivity.proxy.httpsProxy | quote }}
 {{- end }}
+additionalLabels:
+  application.giantswarm.io/team: {{ index .Chart.Annotations "application.giantswarm.io/team" | default "phoenix" | quote }}
+  giantswarm.io/managed-by: {{ .Release.Name | quote }}
+  giantswarm.io/service-type: managed
 controller:
   image:
     repository: {{ include "awsContainerImageRegistry" $ }}/giantswarm/karpenter-controller
@@ -27,6 +31,24 @@ global:
     {{/* PolicyException CRD only available with security-bundle installed */}}
     enforced: {{ and .Values.global.podSecurityStandards.enforced $.Values.cluster.providerIntegration.apps.securityBundle.enable }}
 {{- end }}
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: OCIRepository
+metadata:
+  name: {{ include "resource.default.name" $ }}-karpenter-bundle
+  namespace: {{ $.Release.Namespace }}
+  annotations:
+    cluster.giantswarm.io/description: "{{ .Values.global.metadata.description }}"
+  labels:
+    cluster-apps-operator.giantswarm.io/watching: ""
+    {{- include "labels.common" . | nindent 4 }}
+spec:
+  {{- $_ := set $ "appName" "karpenter" }}
+  url: oci://gsoci.azurecr.io/charts/giantswarm/karpenter-bundle
+  ref:
+    tag: "{{ include "cluster.app.version" $ }}"
+  interval: 24h
+  timeout: 60s
+---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -41,36 +63,84 @@ spec:
   releaseName: {{ include "resource.default.name" $ }}-karpenter-bundle
   targetNamespace: {{ $.Release.Namespace | quote }}
   storageNamespace: {{ $.Release.Namespace | quote }}
-  chart:
-    spec:
-      chart: karpenter-bundle
-      {{- $_ := set $ "appName" "karpenter" }}
-      version: {{ include "cluster.app.version" $ }}
-      sourceRef:
-        kind: HelmRepository
-        name: {{ include "resource.default.name" $ }}-{{ include "cluster.app.catalog" $ }}
+  chartRef:
+    kind: OCIRepository
+    name: {{ include "resource.default.name" $ }}-karpenter-bundle
   serviceAccountName: automation
-  interval: 5m
+  interval: 1m
   install:
     remediation:
       retries: -1
+      remediateLastFailure: false
   upgrade:
     remediation:
       retries: -1
+      remediateLastFailure: false
+  driftDetection:
+    mode: enabled
   {{- $karpenterHelmValues := (include "defaultKarpenterHelmValues" .) | fromYaml -}}
-  {{- $customKarpenterHelmValues := ((($.Values.global).apps).karpenter).values -}}
+  {{- $customKarpenterHelmValues := $.Values.global.apps.karpenter.values -}}
   {{- if $customKarpenterHelmValues }}
   {{- $karpenterHelmValues = merge (deepCopy $customKarpenterHelmValues) $karpenterHelmValues -}}
   {{- end }}
   {{- if $karpenterHelmValues }}
   values: {{- $karpenterHelmValues | toYaml | nindent 4 }}
   {{- end }}
-  {{- if ((($.Values.global).apps).karpenter).extraConfigs }}
+  {{- if $.Values.global.apps.karpenter.extraConfigs }}
   valuesFrom:
-    {{- range $config := ((($.Values.global).apps).karpenter).extraConfigs }}
-    - kind: {{ $config.kind }}
-      name: {{ $config.name }}
+    {{- range $config := $.Values.global.apps.karpenter.extraConfigs }}
+    - kind: {{ $config.kind | quote }}
+      name: {{ $config.name | quote }}
       valuesKey: values
-      optional: {{ $config.optional | default false  }}
+      optional: {{ $config.optional | default false }}
     {{- end }}
   {{- end }}
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: OCIRepository
+metadata:
+  name: {{ include "resource.default.name" $ }}-karpenter-taint-remover
+  namespace: {{ $.Release.Namespace }}
+  annotations:
+    cluster.giantswarm.io/description: "{{ .Values.global.metadata.description }}"
+  labels:
+    cluster-apps-operator.giantswarm.io/watching: ""
+    {{- include "labels.common" . | nindent 4 }}
+spec:
+  {{- $_ := set $ "appName" "karpenter-taint-remover" }}
+  url: oci://gsoci.azurecr.io/charts/giantswarm/capa-karpenter-taint-remover
+  ref:
+    tag: "{{ include "cluster.app.version" $ }}"
+  interval: 24h
+  timeout: 60s
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: {{ include "resource.default.name" $ }}-karpenter-taint-remover
+  namespace: {{ $.Release.Namespace }}
+  annotations:
+    cluster.giantswarm.io/description: "{{ .Values.global.metadata.description }}"
+  labels:
+    cluster-apps-operator.giantswarm.io/watching: ""
+    {{- include "labels.common" . | nindent 4 }}
+spec:
+  releaseName: karpenter-taint-remover
+  targetNamespace: karpenter
+  storageNamespace: karpenter
+  chartRef:
+    kind: OCIRepository
+    name: {{ include "resource.default.name" $ }}-karpenter-taint-remover
+  kubeConfig:
+    secretRef:
+      name: {{ include "resource.default.name" $ }}-kubeconfig
+  interval: 5m
+  install:
+    createNamespace: true
+    remediation:
+      retries: -1
+      remediateLastFailure: false
+  upgrade:
+    remediation:
+      retries: -1
+      remediateLastFailure: false
