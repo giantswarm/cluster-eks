@@ -138,12 +138,6 @@ spec:
         {{- end }}
         terminationGracePeriod: {{ $value.terminationGracePeriod | default "30m" }}
 ---
-apiVersion: bootstrap.cluster.x-k8s.io/v1beta2
-kind: NodeadmConfig
-metadata:
-  name: {{ include "resource.default.name" $ }}-{{ $name }}
-spec: {}
----
 {{ end }}
 {{ end }}
 {{- end -}}
