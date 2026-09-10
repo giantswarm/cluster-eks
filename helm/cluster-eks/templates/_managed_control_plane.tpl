@@ -140,6 +140,14 @@ spec:
       groups:
       - "system:masters"
       username: cluster-admin
+    {{- /* CAPA maps node roles into `aws-auth` on its own, but only for `AWSMachinePool` and
+           `AWSManagedMachinePool`. Karpenter node pools produce neither, so without this entry
+           karpenter-launched nodes boot and then fail to register with the cluster. */}}
+    - rolearn: 'arn:aws:iam::{{ include "aws-account-id" $ }}:role/{{ include "karpenter-node-iam-role" $ }}'
+      groups:
+      - "system:bootstrappers"
+      - "system:nodes"
+      username: 'system:node:{{ "{{EC2PrivateDNSName}}" }}'
 {{- if $.Values.global.controlPlane.roleMapping }}
 {{- toYaml $.Values.global.controlPlane.roleMapping | nindent 4 }}
 {{- end }}

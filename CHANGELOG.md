@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Install the karpenter bundle from an `OCIRepository` and enable drift detection, matching [cluster-aws](https://github.com/giantswarm/cluster-aws)
 - Drop the karpenter bundle's `cloud-provider-aws` dependency, since the AWS cloud provider is part of the EKS control plane and no such HelmRelease exists to wait for
 - Set the karpenter bundle's `kyverno.enabled` from `cluster.providerIntegration.apps.securityBundle.enable`, since the security bundle is what installs Kyverno. Without it, karpenter skips both its `kyverno-crds` dependency and its `PolicyException`, which replaces the `global.podSecurityStandards.enforced` value karpenter-app removed in v2.4.1.
+- Map the karpenter node IAM role into `aws-auth`. CAPA does this on its own only for `AWSMachinePool` and `AWSManagedMachinePool`, so without the entry karpenter-launched nodes boot but never register with the cluster.
 
 ## [3.0.0] - 2026-08-05
 
