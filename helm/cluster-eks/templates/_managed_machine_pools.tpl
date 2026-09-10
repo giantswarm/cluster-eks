@@ -46,5 +46,12 @@ spec: {{- include "managed-machine-pool-spec" $ | nindent 2 }}
 {{ end }}
 {{- end -}}
 {{- define "machine-pool-bootstrap-config" }}
+{{- if eq $.nodePool.config.type "karpenter" }}
+configRef:
+  apiGroup: bootstrap.cluster.x-k8s.io
+  kind: NodeadmConfig
+  name: {{ include "resource.default.name" $ }}-{{ $.nodePool.name | required "node pool name not given" }}
+{{- else }}
 dataSecretName: ""
+{{- end }}
 {{- end }}
