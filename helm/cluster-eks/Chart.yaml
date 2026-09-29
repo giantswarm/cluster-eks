@@ -1,21 +1,25 @@
 apiVersion: v2
 name: cluster-eks
-home: https://github.com/giantswarm/cluster-eks
-sources:
-  - https://github.com/giantswarm/cluster-eks
-description: A helm chart for creating Cluster API EKS clusters with the AWS infrastructure provider (CAPA).
-icon: https://s.giantswarm.io/app-icons/aws/2/dark.svg
-type: application
+description: A helm chart for creating Cluster API EKS clusters with the AWS provider (CAPA).
 version: 3.0.0
 appVersion: 3.0.0
+home: https://github.com/giantswarm/cluster-eks
+icon: https://s.giantswarm.io/app-icons/aws/2/dark.svg
+sources:
+- https://github.com/giantswarm/cluster-eks
+maintainers:
+- name: Team Phoenix
+  email: team-phoenix@giantswarm.io
+keywords:
+- capa
+- aws
 annotations:
-  application.giantswarm.io/team: "phoenix"
-  application.giantswarm.io/app-type: "cluster"
+  application.giantswarm.io/app-type: cluster
+  application.giantswarm.io/team: phoenix
 restrictions:
   compatibleProviders:
-    - aws
-    - capa
+  - aws
 dependencies:
-  - name: cluster
-    version: "7.0.0"
-    repository: https://giantswarm.github.io/cluster-catalog
+- repository: https://giantswarm.github.io/cluster-catalog
+  name: cluster
+  version: 8.0.0

@@ -1,26 +1,33 @@
-{{/* Default Helm values for the app */}}
-{{/* See schema for the appropriate app version here https://github.com/giantswarm/aws-ebs-csi-driver-app/blob/master/helm/aws-ebs-csi-driver-bundle/values.schema.json */}}
-{{- define "defaultAwsEbsCsiDriverHelmValues" }}
-clusterID: {{ include "resource.default.name" $ }}
-clusterName: {{ include "resource.default.name" $ }}
+{{- define "defaultAwsEbsCsiDriverHelmValues" -}}
+clusterID: {{ include "resource.default.name" . }}
+clusterName: {{ include "resource.default.name" . }}
+helmRelease:
+  dependsOn:
+  - cilium
+  {{- if .Values.cluster.providerIntegration.apps.securityBundle.enable }}
+  - kyverno-crds
+  {{- end }}
+  {{- if .Values.cluster.providerIntegration.apps.verticalPodAutoscalerCrd.enable }}
+  - vertical-pod-autoscaler-crd
+  {{- end }}
 extraVolumeTags: {{ include "resource.default.additionalTags" . | nindent 2 }}
 {{- if (.Values.global.connectivity.proxy).enabled }}
 proxy:
-  noProxy: "{{ include "cluster.connectivity.proxy.noProxy" (dict "global" $.Values.global "providerIntegration" $.Values.cluster.providerIntegration) }}"
   http: {{ .Values.global.connectivity.proxy.httpProxy | quote }}
   https: {{ .Values.global.connectivity.proxy.httpsProxy | quote }}
+  noProxy: {{ include "cluster.connectivity.proxy.noProxy" (dict "global" .Values.global "providerIntegration" .Values.cluster.providerIntegration) | quote }}
 {{- end }}
 global:
   image:
-    registry: {{ include "awsContainerImageRegistry" $ }}
+    registry: {{ include "awsContainerImageRegistry" . }}
   podSecurityStandards:
-    {{/* PolicyException CRD only available with security-bundle installed */}}
-    enforced: {{ and .Values.global.podSecurityStandards.enforced $.Values.cluster.providerIntegration.apps.securityBundle.enable }}
-{{- if not $.Values.cluster.providerIntegration.apps.verticalPodAutoscalerCrd.enable }}
+    {{- /* PolicyException CRD only available with security-bundle installed */}}
+    enforced: {{ and .Values.global.podSecurityStandards.enforced .Values.cluster.providerIntegration.apps.securityBundle.enable }}
+{{- if not .Values.cluster.providerIntegration.apps.verticalPodAutoscalerCrd.enable }}
 verticalPodAutoscaler:
   enabled: false
 {{- end }}
-{{- if not $.Values.cluster.providerIntegration.apps.observabilityBundle.enable }}
+{{- if not .Values.cluster.providerIntegration.apps.observabilityBundle.enable }}
 upstream:
   controller:
     enableMetrics: false
@@ -28,28 +35,42 @@ upstream:
       forceEnable: false
 {{- end }}
 {{- end }}
-apiVersion: helm.toolkit.fluxcd.io/v2
-kind: HelmRelease
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: OCIRepository
 metadata:
-  name: {{ include "resource.default.name" $ }}-aws-ebs-csi-driver-bundle
-  namespace: {{ $.Release.Namespace }}
+  name: {{ include "resource.default.name" . }}-aws-ebs-csi-driver-bundle
+  namespace: {{ .Release.Namespace }}
   annotations:
-    cluster.giantswarm.io/description: "{{ .Values.global.metadata.description }}"
+    cluster.giantswarm.io/description: {{ .Values.global.metadata.description | quote }}
   labels:
     cluster-apps-operator.giantswarm.io/watching: ""
     {{- include "labels.common" . | nindent 4 }}
 spec:
-  releaseName: {{ include "resource.default.name" $ }}-aws-ebs-csi-driver-bundle
-  targetNamespace: {{ $.Release.Namespace | quote }}
-  storageNamespace: {{ $.Release.Namespace | quote }}
-  chart:
-    spec:
-      chart: aws-ebs-csi-driver-bundle
-      {{- $_ := set $ "appName" "aws-ebs-csi-driver" }}
-      version: {{ include "cluster.app.version" $ }}
-      sourceRef:
-        kind: HelmRepository
-        name: {{ include "resource.default.name" $ }}-{{ include "cluster.app.catalog" $ }}
+  {{- $_ := set $ "appName" "aws-ebs-csi-driver" }}
+  url: oci://gsoci.azurecr.io/charts/giantswarm/aws-ebs-csi-driver-bundle
+  ref:
+    tag: {{ include "cluster.app.version" . }}
+  interval: 24h
+  timeout: 60s
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: {{ include "resource.default.name" . }}-aws-ebs-csi-driver-bundle
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    cluster.giantswarm.io/description: {{ .Values.global.metadata.description | quote }}
+  labels:
+    cluster-apps-operator.giantswarm.io/watching: ""
+    {{- include "labels.common" . | nindent 4 }}
+spec:
+  releaseName: {{ include "resource.default.name" . }}-aws-ebs-csi-driver-bundle
+  targetNamespace: {{ .Release.Namespace | quote }}
+  storageNamespace: {{ .Release.Namespace | quote }}
+  chartRef:
+    kind: OCIRepository
+    name: {{ include "resource.default.name" . }}-aws-ebs-csi-driver-bundle
   serviceAccountName: automation
   interval: 5m
   install:
@@ -58,20 +79,21 @@ spec:
   upgrade:
     remediation:
       retries: -1
-  {{- $awsEbsCsiDriverHelmValues := (include "defaultAwsEbsCsiDriverHelmValues" .) | fromYaml -}}
-  {{- $customAwsEbsCsiDriverHelmValues := ((($.Values.global).apps).awsEbsCsiDriver).values -}}
+  {{- $awsEbsCsiDriverHelmValues := include "defaultAwsEbsCsiDriverHelmValues" . | fromYaml }}
+  {{- $customAwsEbsCsiDriverHelmValues := (((.Values.global).apps).awsEbsCsiDriver).values }}
   {{- if $customAwsEbsCsiDriverHelmValues }}
-  {{- $awsEbsCsiDriverHelmValues = merge (deepCopy $customAwsEbsCsiDriverHelmValues) $awsEbsCsiDriverHelmValues -}}
+  {{- $awsEbsCsiDriverHelmValues = merge (deepCopy $customAwsEbsCsiDriverHelmValues) $awsEbsCsiDriverHelmValues }}
   {{- end }}
   {{- if $awsEbsCsiDriverHelmValues }}
-  values: {{- $awsEbsCsiDriverHelmValues | toYaml | nindent 4 }}
+  values:
+    {{- $awsEbsCsiDriverHelmValues | toYaml | nindent 4 }}
   {{- end }}
-  {{- if ((($.Values.global).apps).awsEbsCsiDriver).extraConfigs }}
+  {{- if (((.Values.global).apps).awsEbsCsiDriver).extraConfigs }}
   valuesFrom:
-    {{- range $config := ((($.Values.global).apps).awsEbsCsiDriver).extraConfigs }}
-    - kind: {{ $config.kind }}
-      name: {{ $config.name }}
-      valuesKey: values
-      optional: {{ $config.optional | default false  }}
-    {{- end }}
+  {{- range $config := (((.Values.global).apps).awsEbsCsiDriver).extraConfigs }}
+  - kind: {{ $config.kind }}
+    name: {{ $config.name }}
+    valuesKey: values
+    optional: {{ $config.optional | default false }}
+  {{- end }}
   {{- end }}
