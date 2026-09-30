@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Read the EKS node group update configuration from `global.nodePools.<name>.updateConfig`, where the schema has always documented it
+- aws-ebs-csi-driver: Don't wait for a `cloud-provider-aws` HelmRelease, since the AWS cloud provider is part of the EKS control plane
 
 ## [3.0.0] - 2026-08-05
 
