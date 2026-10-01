@@ -1,3 +1,24 @@
+{{- define "cluster-eks.subnetTags" }}
+{{- $addNodesRoleTag := and (not (hasKey (.subnet.tags | default dict) "giantswarm.io/role")) (not (.subnet.isPublic | default false)) }}
+{{- if or .subnet.tags $addNodesRoleTag (.cidr).tags -}}
+tags:
+  {{- if .subnet.tags }}
+  {{- toYaml .subnet.tags | nindent 2 }}
+  {{- end }}
+  {{- /*
+    The `giantswarm.io/role: nodes` tag marks a subnet as available for worker nodes. CAPA tags the
+    secondary Cilium pod subnets `sigs.k8s.io/cluster-api-provider-aws/role: private` as well, so
+    this is what tells the two apart.
+  */}}
+  {{- if $addNodesRoleTag }}
+  giantswarm.io/role: "nodes"
+  {{- end }}
+  {{- if (.cidr).tags }}
+  {{- toYaml .cidr.tags | nindent 2 }}
+  {{- end }}
+{{- end }}
+{{- end }}
+
 {{- define "control-plane" }}
 apiVersion: controlplane.cluster.x-k8s.io/v1beta2
 kind: AWSManagedControlPlane
@@ -56,9 +77,10 @@ spec:
       {{- if $subnet.natGatewayId }}
       natGatewayId: {{ $subnet.natGatewayId }}
       {{- end }}
+      {{- with include "cluster-eks.subnetTags" (dict "subnet" $subnet "cidr" nil) }}{{ . | nindent 6 }}{{- end }}
     {{- else }}
     {{- range $i, $cidr := $subnet.cidrBlocks -}}
-    {{/* CAPA v2.3.0 defaults to using the `id` field as subnet name unless it's an unmanaged one (`id` starts with `subnet-`), so use CAPA's previous standard subnet naming scheme */}}
+    {{- /* CAPA v2.3.0 defaults to using the `id` field as subnet name unless it's an unmanaged one (`id` starts with `subnet-`), so use CAPA's previous standard subnet naming scheme */}}
     - id: "{{ include "resource.default.name" $ }}-subnet-{{ $subnet.isPublic | default false | ternary "public" "private" }}-{{ if eq (len $cidr.availabilityZone) 1 }}{{ include "aws-region" $ }}{{ end }}{{ $cidr.availabilityZone }}"
       cidrBlock: "{{ $cidr.cidr }}"
       {{- if eq (len $cidr.availabilityZone) 1 }}
@@ -67,13 +89,7 @@ spec:
       availabilityZone: "{{ $cidr.availabilityZone }}"
       {{- end }}
       isPublic: {{ $subnet.isPublic | default false }}
-      {{- if or $subnet.tags $cidr.tags }}
-      tags:
-        {{- toYaml $subnet.tags | nindent 8 }}
-        {{- if $cidr.tags }}
-        {{- toYaml $cidr.tags | nindent 8 }}
-        {{- end }}
-      {{- end }}
+      {{- with include "cluster-eks.subnetTags" (dict "subnet" $subnet "cidr" $cidr) }}{{ . | nindent 6 }}{{- end }}
     {{- end }}
     {{- end }}
     {{- end }}
@@ -97,6 +113,9 @@ spec:
       isPublic: false
       {{- if or $subnet.tags $cidr.tags }}
       tags:
+        {{- if $subnet.tags }}
+        {{- toYaml $subnet.tags | nindent 8 }}
+        {{- end }}
         {{- if $cidr.tags }}
         {{- toYaml $cidr.tags | nindent 8 }}
         {{- end }}
@@ -126,10 +145,20 @@ spec:
     controllerManager: {{ $.Values.global.controlPlane.logging.controllerManager }}
   iamAuthenticatorConfig:
     mapRoles:
-    - rolearn: 'arn:aws:iam::{{ include "aws-account-id" $ }}:role/GiantSwarmAdmin'
+    - rolearn: 'arn:{{ include "aws-partition" $ }}:iam::{{ include "aws-account-id" $ }}:role/GiantSwarmAdmin'
       groups:
       - "system:masters"
       username: cluster-admin
+    {{- /*
+        CAPA maps node roles into `aws-auth` on its own, but only for `AWSMachinePool` and
+        `AWSManagedMachinePool`. Karpenter node pools produce neither, so without this entry
+        karpenter-launched nodes boot and then fail to register with the cluster.
+    */}}
+    - rolearn: 'arn:{{ include "aws-partition" $ }}:iam::{{ include "aws-account-id" $ }}:role/{{ include "karpenter-node-iam-role" $ }}'
+      groups:
+      - "system:bootstrappers"
+      - "system:nodes"
+      username: 'system:node:{{ "{{EC2PrivateDNSName}}" }}'
 {{- if $.Values.global.controlPlane.roleMapping }}
 {{- toYaml $.Values.global.controlPlane.roleMapping | nindent 4 }}
 {{- end }}
