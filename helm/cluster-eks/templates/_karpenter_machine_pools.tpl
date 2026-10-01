@@ -38,22 +38,23 @@ spec:
     tags:
       Name: {{ include "resource.default.name" $ }}-{{ $name }}
     subnetSelectorTerms:
-    {{- if not $value.subnetTags }}
-    - tags:
-        aws:eks:cluster-name: {{ include "resource.default.name" $ }}
-        {{- /*
-            CAPA tags the secondary Cilium pod subnets `sigs.k8s.io/cluster-api-provider-aws/role: private`
-            too, so we use a separate selector tag `giantswarm.io/role: nodes`
-        */}}
-        giantswarm.io/role: "nodes"
-    {{- else }}
-    {{- range $value.subnetTags }}
-    - tags:
-        {{- range $key, $val := . }}
-        {{ $key | quote }}: {{ $val | quote }}
-        {{- end }}
-    {{- end }}
-    {{- end }}
+      {{- if not $value.subnetTags }}
+      - tags:
+          {{- /* CAPA sets `owned` in a managed VPC and `shared` in a bring-your-own VPC */}}
+          kubernetes.io/cluster/{{ include "resource.default.name" $ }}: "*"
+          {{- /*
+              CAPA tags the secondary Cilium pod subnets `sigs.k8s.io/cluster-api-provider-aws/role: private`
+              too, so we use a separate selector tag `giantswarm.io/role: nodes`
+          */}}
+          giantswarm.io/role: "nodes"
+      {{- else }}
+      - tags:
+          {{- range $value.subnetTags }}
+          {{- range $key, $val := . }}
+          {{ $key | quote }}: {{ $val | quote }}
+          {{- end }}
+          {{- end }}
+      {{- end }}
   nodePool:
     disruption:
       consolidateAfter: {{ $value.consolidateAfter | default "1h" }}
