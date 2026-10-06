@@ -9,6 +9,7 @@ availabilityZones: {{ include "aws-availability-zones" (dict "mp" $.nodePoolObje
 availabilityZoneSubnetType: private
 instanceType: {{ $.nodePoolObject.instanceType | default "r6i.xlarge" }}
 labels:
+  giantswarm.io/machine-pool: {{ include "resource.default.name" $ }}-{{ $.nodePoolName }}
   {{- include "karpenter-host-node-selector" $ | nindent 2 }}
 roleName: nodes-{{ include "resource.default.name" $ }}-{{ $.nodePoolName }}
 scaling:
