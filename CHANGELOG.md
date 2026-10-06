@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add karpenter support. For a node pool, set `global.nodePools.<name>.type` to `karpenter` to have karpenter manage a pool instead of an EKS managed node group. For now, karpenter can only run on a managed node pool, not on karpenter-provisioned node pools, to ensure it keeps running and doesn't get stopped while doing any provisioning.
 - Deploy the `karpenter-taint-remover` app
 - Add the `giantswarm.io/machine-pool` label to the nodes of each EKS managed node group.
+- Apply `global.nodePools.<name>.customNodeLabels` to the nodes of EKS managed node groups.
 
 ### Changed
 

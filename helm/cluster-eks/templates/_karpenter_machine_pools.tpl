@@ -71,13 +71,7 @@ spec:
       memory: {{ $limits.memory }}
     template:
       metadata:
-        {{- $nodeLabels := dict }}
-        {{- range $value.customNodeLabels }}
-        {{- $parts := splitList "=" . }}
-        {{- if eq (len $parts) 2 }}
-        {{- $_ := set $nodeLabels (index $parts 0) (index $parts 1) }}
-        {{- end }}
-        {{- end }}
+        {{- $nodeLabels := include "custom-node-labels" $value.customNodeLabels | fromYaml }}
         {{- $_ := set $nodeLabels "giantswarm.io/machine-pool" (printf "%s-%s" (include "resource.default.name" $) $name) }}
         labels:
           {{- toYaml $nodeLabels | nindent 10 }}
