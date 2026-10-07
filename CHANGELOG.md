@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.0] - 2026-10-06
+
 ### Added
 
 - CI: Run the full set of E2E test suites automatically on release PRs, via `.github/release-pr-body.md`. Towards https://github.com/giantswarm/roadmap/issues/4334
@@ -341,7 +343,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add EKS templates.
 
-[Unreleased]: https://github.com/giantswarm/cluster-eks/compare/v3.0.0...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-eks/compare/v3.1.0...HEAD
+[3.1.0]: https://github.com/giantswarm/cluster-eks/compare/v3.0.0...v3.1.0
 [3.0.0]: https://github.com/giantswarm/cluster-eks/compare/v2.3.0...v3.0.0
 [2.3.0]: https://github.com/giantswarm/cluster-eks/compare/v2.2.0...v2.3.0
 [2.2.0]: https://github.com/giantswarm/cluster-eks/compare/v2.1.1...v2.2.0
