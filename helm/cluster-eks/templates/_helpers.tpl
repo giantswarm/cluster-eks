@@ -103,3 +103,18 @@ secondaryCidrBlock: {{ $podsCidrBlock }}
   {{- end }}
 {{- end -}}
 {{- end -}}
+
+{{- /*
+Converts a node pool's `customNodeLabels` list of `key=value` strings into a YAML map.
+Entries that are not in `key=value` form are skipped.
+*/ -}}
+{{- define "custom-node-labels" -}}
+{{- $labels := dict }}
+{{- range . }}
+{{- $parts := splitList "=" . }}
+{{- if eq (len $parts) 2 }}
+{{- $_ := set $labels (index $parts 0) (index $parts 1) }}
+{{- end }}
+{{- end }}
+{{- toYaml $labels }}
+{{- end -}}
