@@ -32,7 +32,7 @@ podLogs:
 serviceMonitor:
   enabled: {{ $.Values.cluster.providerIntegration.apps.observabilityBundle.enable }}
 {{- end }}
-apiVersion: source.toolkit.fluxcd.io/v1beta2
+apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
 metadata:
   name: {{ include "resource.default.name" $ }}-karpenter-bundle
@@ -97,7 +97,7 @@ spec:
     {{- end }}
   {{- end }}
 ---
-apiVersion: source.toolkit.fluxcd.io/v1beta2
+apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
 metadata:
   name: {{ include "resource.default.name" $ }}-karpenter-taint-remover
