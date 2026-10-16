@@ -106,7 +106,7 @@ secondaryCidrBlock: {{ $podsCidrBlock }}
 
 {{- /*
 Converts a node pool's `customNodeLabels` list of `key=value` strings into a YAML map.
-Entries that are not in `key=value` form are skipped.
+Fails if an entry is not in `key=value` form.
 */ -}}
 {{- define "custom-node-labels" -}}
 {{- $labels := dict }}
@@ -114,6 +114,8 @@ Entries that are not in `key=value` form are skipped.
 {{- $parts := splitList "=" . }}
 {{- if eq (len $parts) 2 }}
 {{- $_ := set $labels (index $parts 0) (index $parts 1) }}
+{{- else }}
+{{- fail (printf "customNodeLabels entry %q is not in key=value form" .) }}
 {{- end }}
 {{- end }}
 {{- toYaml $labels }}
