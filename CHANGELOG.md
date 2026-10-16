@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Bump `OCIRepository` resources from the `source.toolkit.fluxcd.io/v1beta2` API to `source.toolkit.fluxcd.io/v1`.
 
+### Fixed
+
+- The `helm.sh/chart` label is valid for long chart versions: the 63-character cut trims the whole trailing run of `-`, `.` and `_`.
+
 ## [3.1.0] - 2026-10-06
 
 ### Added
