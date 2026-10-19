@@ -11,6 +11,26 @@ ipam:
 operator:
   extraArgs:
     - "--aws-release-excess-ips=true"
+  tolerations:
+  {{- include "cluster.internal.apps.cilium.operator.tolerations" $ | nindent 2 }}
+  - key: karpenter.sh/unregistered
+    operator: Exists
+hubble:
+  relay:
+    tolerations:
+    {{- include "cluster.internal.apps.cilium.tolerations" $ | nindent 4 }}
+    - key: karpenter.sh/unregistered
+      operator: Exists
+  ui:
+    tolerations:
+    {{- include "cluster.internal.apps.cilium.tolerations" $ | nindent 4 }}
+    - key: karpenter.sh/unregistered
+      operator: Exists
+certgen:
+  tolerations:
+  {{- include "cluster.internal.apps.cilium.tolerations" $ | nindent 2 }}
+  - key: karpenter.sh/unregistered
+    operator: Exists
 enableIPv4Masquerade: false
 egressMasqueradeInterfaces: eth+
 cluster:

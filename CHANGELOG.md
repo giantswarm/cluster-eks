@@ -16,6 +16,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Bump `OCIRepository` resources from the `source.toolkit.fluxcd.io/v1beta2` API to `source.toolkit.fluxcd.io/v1`.
+- Chart: Update `cluster` to v9.2.0.
+- Chart: Migrate Apps to HelmReleases. This skips the App to HelmRelease migration of `cluster` v8.x, since there are no live EKS clusters that would need it.
+- Cilium: Tolerate the `karpenter.sh/unregistered` taint for `cilium-operator`, `hubble-relay`, `hubble-ui` and `certgen`, since `cluster` no longer tolerates all taints for them.
 
 ### Fixed
 
