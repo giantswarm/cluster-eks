@@ -88,7 +88,8 @@ spec:
   {{- if ((($.Values.global).apps).awsEbsCsiDriver).extraConfigs }}
   valuesFrom:
     {{- range $config := ((($.Values.global).apps).awsEbsCsiDriver).extraConfigs }}
-    - kind: {{ $config.kind }}
+    {{- /* The schema also allows lowercase kinds, but Flux only accepts `ConfigMap` and `Secret` */}}
+    - kind: {{ $config.kind | default "ConfigMap" | lower | eq "secret" | ternary "Secret" "ConfigMap" }}
       name: {{ $config.name }}
       valuesKey: values
       optional: {{ $config.optional | default false  }}
