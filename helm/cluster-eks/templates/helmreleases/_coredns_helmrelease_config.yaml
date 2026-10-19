@@ -2,8 +2,6 @@
 {{- define "EKSCoreDNSHelmValues" }}
 controlPlane:
   enabled: false
-mastersInstance:
-  enabled: false
 adopter:
   enabled: true
 cluster:
