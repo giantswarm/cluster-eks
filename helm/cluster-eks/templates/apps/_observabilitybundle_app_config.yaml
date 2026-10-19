@@ -1,0 +1,19 @@
+{{/* EKS-specific observability-bundle Helm values */}}
+{{- define "EKSObservabilityBundleHelmValues" }}
+{{- /* Without the security bundle or the VPA CRD app, there is no `kyverno-crds` or `vertical-pod-autoscaler-crd` HelmRelease to wait for. The alloy chart only creates its Kyverno and VPA resources if their APIs exist. */}}
+{{- $kyvernoCrdsEnabled := $.Values.providerIntegration.apps.securityBundle.enable }}
+{{- $verticalPodAutoscalerCrdEnabled := $.Values.providerIntegration.apps.verticalPodAutoscalerCrd.enable }}
+apps:
+  alloyEvents:
+    dependsOn:
+      kyverno-crds: {{ $kyvernoCrdsEnabled }}
+      vertical-pod-autoscaler-crd: {{ $verticalPodAutoscalerCrdEnabled }}
+  alloyLogs:
+    dependsOn:
+      kyverno-crds: {{ $kyvernoCrdsEnabled }}
+      vertical-pod-autoscaler-crd: {{ $verticalPodAutoscalerCrdEnabled }}
+  alloyMetrics:
+    dependsOn:
+      kyverno-crds: {{ $kyvernoCrdsEnabled }}
+      vertical-pod-autoscaler-crd: {{ $verticalPodAutoscalerCrdEnabled }}
+{{- end }}

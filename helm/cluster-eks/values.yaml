@@ -42,6 +42,7 @@ cluster:
       nodeExporter:
         enable: false
       observabilityBundle:
+        configTemplateName: EKSObservabilityBundleHelmValues
         enable: true
       observabilityPolicies:
         enable: false
