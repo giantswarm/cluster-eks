@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Bump `OCIRepository` resources from the `source.toolkit.fluxcd.io/v1beta2` API to `source.toolkit.fluxcd.io/v1`.
+- CoreDNS: Drop the deprecated network values, the `cluster` chart defaults already set them via the new interface.
 
 ### Fixed
 
