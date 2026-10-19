@@ -1,6 +1,6 @@
 {{/* EKS-specific coreDns Helm values*/}}
 {{- define "EKSCoreDNSHelmValues" }}
-mastersInstance:
+controlPlane:
   enabled: false
 adopter:
   enabled: true
