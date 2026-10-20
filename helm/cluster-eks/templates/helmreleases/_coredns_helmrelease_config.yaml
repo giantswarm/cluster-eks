@@ -1,15 +1,7 @@
 {{/* EKS-specific coreDns Helm values*/}}
 {{- define "EKSCoreDNSHelmValues" }}
-mastersInstance:
+controlPlane:
   enabled: false
 adopter:
   enabled: true
-cluster:
-  calico:
-    CIDR: {{ first .Values.global.connectivity.network.pods.cidrBlocks | quote }}
-  kubernetes:
-    API:
-      clusterIPRange: {{ first .Values.global.connectivity.network.services.cidrBlocks | quote }}
-    DNS:
-      IP: {{ include "clusterDNS" $ | quote }}
 {{- end }}
