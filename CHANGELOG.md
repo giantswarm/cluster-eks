@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - CoreDNS: Don't deploy the `coredns-controlplane` instance, since EKS has no control-plane nodes. `cluster` v7 sets `controlPlane.enabled`, which takes precedence over the deprecated `mastersInstance.enabled` that disabled it before. This requires coredns-app v1.31.0 or newer.
 - The `helm.sh/chart` label is valid for long chart versions: the 63-character cut trims the whole trailing run of `-`, `.` and `_`.
+- Make use of Kyverno and VPA CRDs conditional for Alloy components. This requires a newer version of observability-bundle, which takes `apps.<appName>.dependsOn` as a map.
 
 ## [3.1.0] - 2026-10-06
 
