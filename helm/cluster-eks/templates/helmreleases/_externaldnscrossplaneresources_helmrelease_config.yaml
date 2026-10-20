@@ -2,7 +2,8 @@
 {{- define "EKSExternalDNSCrossplaneResourcesHelmValues" }}
 provider: aws
 clusterName: {{ include "resource.default.name" $ }}
-accountID: "{{ include "aws-account-id" $ }}"
-awsPartition: {{ include "aws-partition" $ | quote }}
-oidcDomain: {{ include "aws-oidc-domain" $ | quote }}
+aws:
+  accountID: "{{ include "aws-account-id" $ }}"
+  awsPartition: {{ include "aws-partition" $ | quote }}
+  oidcDomain: {{ include "aws-oidc-domain" $ | quote }}
 {{- end }}
