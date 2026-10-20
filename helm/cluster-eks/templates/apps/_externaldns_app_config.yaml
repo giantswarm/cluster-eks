@@ -3,7 +3,12 @@
 provider: aws
 serviceAccount:
   annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::{{ include "aws-account-id" $ }}:role/{{ .Values.global.metadata.name }}-Route53Manager-Role
+{{- $crossplaneApp := merge (dict "appName" "external-dns-crossplane-resources") $ }}
+{{- if and .Values.providerIntegration.apps.externalDnsCrossplaneResources.enable (or (not .Values.providerIntegration.useReleases) (include "cluster.app.in-release" $crossplaneApp | eq "true")) }}
+    eks.amazonaws.com/role-arn: arn:{{ include "aws-partition" $ }}:iam::{{ include "aws-account-id" $ }}:role/{{ include "resource.default.name" $ }}-external-dns
+{{- else }}
+    eks.amazonaws.com/role-arn: arn:{{ include "aws-partition" $ }}:iam::{{ include "aws-account-id" $ }}:role/{{ .Values.global.metadata.name }}-Route53Manager-Role
+{{- end }}
 txtOwnerId: giantswarm-io-external-dns
 txtPrefix: "{{ .Values.global.metadata.name }}"
 sources:
