@@ -90,7 +90,7 @@ spec:
   {{- if $.Values.global.apps.karpenter.extraConfigs }}
   valuesFrom:
     {{- range $config := $.Values.global.apps.karpenter.extraConfigs }}
-    - kind: {{ $config.kind | quote }}
+    - kind: {{ include "helmReleaseValuesFromKind" $config.kind | quote }}
       name: {{ $config.name | quote }}
       valuesKey: values
       optional: {{ $config.optional | default false }}

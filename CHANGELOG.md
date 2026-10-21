@@ -22,11 +22,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Karpenter node pools: `customNodeLabels` can no longer override the `giantswarm.io/machine-pool` node label.
 - Fail rendering if a `customNodeLabels` entry is not in `key=value` form.
 - Bump `OCIRepository` resources from the `source.toolkit.fluxcd.io/v1beta2` API to `source.toolkit.fluxcd.io/v1`.
+- Chart: Update `cluster` to v9.2.0.
+- Chart: Migrate Apps to HelmReleases. This skips the App to HelmRelease migration of `cluster` v8.x, since there are no live EKS clusters that would need it.
+- Cilium: Tolerate the `karpenter.sh/unregistered` taint for `cilium-operator`, `hubble-relay`, `hubble-ui` and `certgen`, since `cluster` no longer tolerates all taints for them.
 - CoreDNS: Drop the deprecated network values, the `cluster` chart defaults already set them via the new interface.
 
 ### Fixed
 
 - CoreDNS: Don't deploy the `coredns-controlplane` instance, since EKS has no control-plane nodes. `cluster` v7 sets `controlPlane.enabled`, which takes precedence over the deprecated `mastersInstance.enabled` that disabled it before. This requires coredns-app v1.31.0 or newer.
+- Normalize lowercase `extraConfigs[*].kind` values of `global.apps.awsEbsCsiDriver` and `global.apps.karpenter` to the `ConfigMap` and `Secret` kinds that Flux accepts.
 - The `helm.sh/chart` label is valid for long chart versions: the 63-character cut trims the whole trailing run of `-`, `.` and `_`.
 - Make use of Kyverno and VPA CRDs conditional for Alloy components. This requires a newer version of observability-bundle, which takes `apps.<appName>.dependsOn` as a map.
 
