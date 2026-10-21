@@ -702,10 +702,10 @@
                     "apps": {
                         "certExporter": {
                             "configTemplateName": "EKSCertExporterHelmValues",
-                            "enable": false
+                            "enable": true
                         },
                         "certManager": {
-                            "enable": false
+                            "enable": true
                         },
                         "certManagerCrossplaneResources": {
                             "enable": false
@@ -729,8 +729,7 @@
                             "enable": true
                         },
                         "coreDnsExtensions": {
-                            "configTemplateName": "EKSCoreDNSExtensionsHelmValues",
-                            "enable": false
+                            "enable": true
                         },
                         "externalDns": {
                             "configTemplateName": "EKSExternalDNSHelmValues",
@@ -741,10 +740,10 @@
                             "enable": true
                         },
                         "k8sDnsNodeCache": {
-                            "enable": false
+                            "enable": true
                         },
                         "metricsServer": {
-                            "enable": false
+                            "enable": true
                         },
                         "netExporter": {
                             "configTemplateName": "EKSNetExporterHelmValues",
@@ -755,31 +754,37 @@
                             "enable": true
                         },
                         "nodeExporter": {
-                            "enable": false
+                            "enable": true
                         },
                         "observabilityBundle": {
                             "configTemplateName": "EKSObservabilityBundleHelmValues",
                             "enable": true
                         },
                         "observabilityPolicies": {
-                            "enable": false
+                            "enable": true
+                        },
+                        "priorityClasses": {
+                            "enable": true
+                        },
+                        "prometheusBlackboxExporter": {
+                            "enable": true
                         },
                         "rbacBootstrap": {
                             "enable": false
                         },
                         "securityBundle": {
                             "configTemplateName": "EKSSecurityBundleHelmValues",
-                            "enable": false
+                            "enable": true
                         },
                         "teleportKubeAgent": {
                             "configTemplateName": "EKSTeleportKubeAgentHelmValues",
                             "enable": true
                         },
                         "verticalPodAutoscaler": {
-                            "enable": false
+                            "enable": true
                         },
                         "verticalPodAutoscalerCrd": {
-                            "enable": false
+                            "enable": true
                         }
                     },
                     "controlPlane": {
@@ -985,6 +990,18 @@
                             "type": "object",
                             "title": "observability-policies",
                             "description": "Configuration of observability-policies. For all available values see https://github.com/giantswarm/observability-policies-app."
+                        },
+                        "priorityClasses": {
+                            "$ref": "#/$defs/helmRelease",
+                            "type": "object",
+                            "title": "priority-classes",
+                            "description": "Configuration of priority-classes. For all available values see https://github.com/giantswarm/priority-classes."
+                        },
+                        "prometheusBlackboxExporter": {
+                            "$ref": "#/$defs/helmRelease",
+                            "type": "object",
+                            "title": "prometheus-blackbox-exporter",
+                            "description": "Configuration of prometheus-blackbox-exporter. For all available values see https://github.com/giantswarm/prometheus-blackbox-exporter-app."
                         },
                         "rbacBootstrap": {
                             "$ref": "#/$defs/helmRelease",
