@@ -3,7 +3,7 @@
 provider: aws
 serviceAccount:
   annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::{{ include "aws-account-id" $ }}:role/{{ .Values.global.metadata.name }}-Route53Manager-Role
+    eks.amazonaws.com/role-arn: arn:{{ include "aws-partition" $ }}:iam::{{ include "aws-account-id" $ }}:role/{{ include "resource.default.name" $ }}-external-dns
 txtOwnerId: giantswarm-io-external-dns
 txtPrefix: "{{ .Values.global.metadata.name }}"
 sources:

@@ -16,7 +16,7 @@ cluster:
         configTemplateName: EKSCiliumHelmValues
         enable: true
       ciliumServiceMonitors:
-        enable: false
+        enable: true
       clusterAutoscaler:
         configTemplateName: EKSClusterAutoscalerHelmValues
         enable: false
@@ -28,14 +28,17 @@ cluster:
         enable: false
       externalDns:
         configTemplateName: EKSExternalDNSHelmValues
-        enable: false
+        enable: true
+      externalDnsCrossplaneResources:
+        configTemplateName: EKSExternalDNSCrossplaneResourcesHelmValues
+        enable: true
       k8sDnsNodeCache:
         enable: false
       metricsServer:
         enable: false
       netExporter:
         configTemplateName: EKSNetExporterHelmValues
-        enable: false
+        enable: true
       networkPolicies:
         configTemplateName: EKSNetworkPoliciesHelmValues
         enable: true
@@ -119,6 +122,7 @@ global:
     coreDns: {}
     coreDnsExtensions: {}
     externalDns: {}
+    externalDnsCrossplaneResources: {}
     k8sDnsNodeCache: {}
     karpenter: {}
     metricsServer: {}
