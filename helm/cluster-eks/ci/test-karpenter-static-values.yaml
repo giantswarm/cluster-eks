@@ -1,0 +1,39 @@
+global:
+  managementCluster: test
+  release:
+    version: 32.1.0
+  metadata:
+    name: test-karpenter
+    organization: giantswarm
+    description: test description
+  connectivity:
+    baseDomain: example.com
+  providerSpecific:
+    region: eu-west-1
+    awsAccountId: "1234567890"
+  nodePools:
+    def00:
+      instanceType: r6i.xlarge
+      minSize: 2
+      maxSize: 3
+    dynamic:
+      type: karpenter
+      consolidationPolicy: Balanced
+      limits:
+        nodes: 20
+    static:
+      type: karpenter
+      replicas: 3
+      disruptionBudgets:
+        - nodes: "1"
+      limits:
+        nodes: 4
+    staticnolimits:
+      type: karpenter
+      replicas: 2
+
+cluster:
+  internal:
+    ephemeralConfiguration:
+      offlineTesting:
+        renderWithoutReleaseResource: true
