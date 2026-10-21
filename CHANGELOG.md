@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add the `giantswarm.io/machine-pool` label to the nodes of each EKS managed node group.
 - Apply `global.nodePools.<name>.customNodeLabels` to the nodes of EKS managed node groups.
+- Enable external-dns and external-dns-crossplane-resources, which creates the external-dns IAM role for the EKS OIDC provider.
+- Enable cilium-servicemonitors and net-exporter.
 
 ### Changed
 

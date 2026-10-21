@@ -694,7 +694,7 @@
                             "enable": true
                         },
                         "ciliumServiceMonitors": {
-                            "enable": false
+                            "enable": true
                         },
                         "clusterAutoscaler": {
                             "configTemplateName": "EKSClusterAutoscalerHelmValues",
@@ -710,7 +710,11 @@
                         },
                         "externalDns": {
                             "configTemplateName": "EKSExternalDNSHelmValues",
-                            "enable": false
+                            "enable": true
+                        },
+                        "externalDnsCrossplaneResources": {
+                            "configTemplateName": "EKSExternalDNSCrossplaneResourcesHelmValues",
+                            "enable": true
                         },
                         "k8sDnsNodeCache": {
                             "enable": false
@@ -720,7 +724,7 @@
                         },
                         "netExporter": {
                             "configTemplateName": "EKSNetExporterHelmValues",
-                            "enable": false
+                            "enable": true
                         },
                         "networkPolicies": {
                             "configTemplateName": "EKSNetworkPoliciesHelmValues",
@@ -903,6 +907,12 @@
                             "type": "object",
                             "title": "external-dns",
                             "description": "Configuration of external-dns. For all available values see https://github.com/giantswarm/external-dns-app."
+                        },
+                        "externalDnsCrossplaneResources": {
+                            "$ref": "#/$defs/helmRelease",
+                            "type": "object",
+                            "title": "external-dns-crossplane-resources",
+                            "description": "Configuration of external-dns-crossplane-resources. For all available values see https://github.com/giantswarm/external-dns-crossplane-resources."
                         },
                         "k8sDnsNodeCache": {
                             "$ref": "#/$defs/app",
