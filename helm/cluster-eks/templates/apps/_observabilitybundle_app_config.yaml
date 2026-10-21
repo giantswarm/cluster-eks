@@ -1,0 +1,38 @@
+{{/* EKS-specific observability-bundle Helm values */}}
+{{- define "EKSObservabilityBundleHelmValues" }}
+{{- /* Without the security bundle or the VPA CRD app, there is no `kyverno-crds` or `vertical-pod-autoscaler-crd` HelmRelease to wait for. The alloy chart only creates its Kyverno `PolicyException` if the API exists. */}}
+{{- $kyvernoCrdsEnabled := $.Values.providerIntegration.apps.securityBundle.enable }}
+{{- $verticalPodAutoscalerCrdEnabled := $.Values.providerIntegration.apps.verticalPodAutoscalerCrd.enable }}
+apps:
+  alloyEvents:
+    dependsOn:
+      kyverno-crds: {{ $kyvernoCrdsEnabled }}
+      vertical-pod-autoscaler-crd: {{ $verticalPodAutoscalerCrdEnabled }}
+  alloyLogs:
+    dependsOn:
+      kyverno-crds: {{ $kyvernoCrdsEnabled }}
+      vertical-pod-autoscaler-crd: {{ $verticalPodAutoscalerCrdEnabled }}
+  alloyMetrics:
+    dependsOn:
+      kyverno-crds: {{ $kyvernoCrdsEnabled }}
+      vertical-pod-autoscaler-crd: {{ $verticalPodAutoscalerCrdEnabled }}
+{{- if not $verticalPodAutoscalerCrdEnabled }}
+{{- /* `observability-operator` turns on the alloy VPAs, and the alloy chart fails instead of skipping them if the VPA API is missing. The bundle applies user config after the operator's config. */}}
+userConfig:
+  alloyEvents:
+    configMap:
+      values:
+        verticalPodAutoscaler:
+          enabled: false
+  alloyLogs:
+    configMap:
+      values:
+        verticalPodAutoscaler:
+          enabled: false
+  alloyMetrics:
+    configMap:
+      values:
+        verticalPodAutoscaler:
+          enabled: false
+{{- end }}
+{{- end }}

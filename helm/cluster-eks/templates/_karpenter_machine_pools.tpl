@@ -88,16 +88,10 @@ spec:
     {{- end }}
     template:
       metadata:
+        {{- $nodeLabels := include "custom-node-labels" $value.customNodeLabels | fromYaml }}
+        {{- $_ := set $nodeLabels "giantswarm.io/machine-pool" (printf "%s-%s" (include "resource.default.name" $) $name) }}
         labels:
-          giantswarm.io/machine-pool: {{ include "resource.default.name" $ }}-{{ $name }}
-          {{- with $value.customNodeLabels }}
-          {{- range . }}
-          {{- $parts := splitList "=" . }}
-          {{- if eq (len $parts) 2 }}
-          {{ index $parts 0 | quote }}: {{ index $parts 1 | quote }}
-          {{- end }}
-          {{- end }}
-          {{- end }}
+          {{- toYaml $nodeLabels | nindent 10 }}
       spec:
         {{- with $value.expireAfter }}
         expireAfter: {{ . }}

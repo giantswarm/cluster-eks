@@ -8,8 +8,11 @@ amiType: {{ $.nodePoolObject.amiType | default "AL2023_x86_64_STANDARD" }}
 availabilityZones: {{ include "aws-availability-zones" (dict "mp" $.nodePoolObject "Values" $.Values "Files" $.Files) | nindent 2 }}
 availabilityZoneSubnetType: private
 instanceType: {{ $.nodePoolObject.instanceType | default "r6i.xlarge" }}
+{{- $nodeLabels := include "custom-node-labels" $.nodePoolObject.customNodeLabels | fromYaml }}
+{{- $nodeLabels = merge (include "karpenter-host-node-selector" $ | fromYaml) $nodeLabels }}
+{{- $_ := set $nodeLabels "giantswarm.io/machine-pool" (printf "%s-%s" (include "resource.default.name" $) $.nodePoolName) }}
 labels:
-  {{- include "karpenter-host-node-selector" $ | nindent 2 }}
+  {{- toYaml $nodeLabels | nindent 2 }}
 roleName: nodes-{{ include "resource.default.name" $ }}-{{ $.nodePoolName }}
 scaling:
   minSize: {{ $.nodePoolObject.minSize | default 1 }}

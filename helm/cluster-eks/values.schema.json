@@ -754,6 +754,7 @@
                             "enable": false
                         },
                         "observabilityBundle": {
+                            "configTemplateName": "EKSObservabilityBundleHelmValues",
                             "enable": true
                         },
                         "observabilityPolicies": {
