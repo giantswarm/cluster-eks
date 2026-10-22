@@ -11,7 +11,7 @@ cluster:
       certManagerCrossplaneResources:
         enable: false
       chartOperatorExtensions:
-        enable: false
+        enable: true
       cilium:
         configTemplateName: EKSCiliumHelmValues
         enable: true
