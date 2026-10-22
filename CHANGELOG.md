@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enable cilium-servicemonitors and net-exporter.
 - Enable the remaining default apps from `cluster-aws` that work on EKS: cert-exporter, cert-manager, chart-operator-extensions, cluster-autoscaler, coredns-extensions, k8s-dns-node-cache, metrics-server, node-exporter, observability-policies, priority-classes, prometheus-blackbox-exporter, security-bundle, vertical-pod-autoscaler, and vertical-pod-autoscaler-crd.
 - Enable cluster-autoscaler-crossplane-resources, which creates the cluster-autoscaler IAM role for the EKS OIDC provider.
+- Enable cert-manager-crossplane-resources, which creates the cert-manager IAM role for the EKS OIDC provider, and let cert-manager solve ACME challenges with Route53 DNS-01.
 - Add `global.nodePools.<pool>.replicas` for Karpenter node pools to keep a fixed number of nodes (static node pool). This is a tech preview of the alpha Karpenter `StaticCapacity` feature and requires a release with Karpenter v1.14.1 and the matching `aws-resolver-rules-operator`.
 - Add `global.nodePools.<pool>.limits.nodes` to cap the number of nodes of a Karpenter node pool.
 - Add the `Balanced` consolidation policy for Karpenter node pools.
