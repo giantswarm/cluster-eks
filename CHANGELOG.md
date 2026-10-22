@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add the `giantswarm.io/machine-pool` label to the nodes of each EKS managed node group.
 - Apply `global.nodePools.<name>.customNodeLabels` to the nodes of EKS managed node groups.
-- Enable external-dns and external-dns-crossplane-resources, which creates the external-dns IAM role for the EKS OIDC provider.
+- Enable external-dns and external-dns-crossplane-resources, which creates the external-dns IAM role for the EKS OIDC provider. The OIDC domain is read from the `<cluster>-crossplane-config` ConfigMap.
 - Enable cilium-servicemonitors and net-exporter.
 - Add `global.nodePools.<pool>.replicas` for Karpenter node pools to keep a fixed number of nodes (static node pool). This is a tech preview of the alpha Karpenter `StaticCapacity` feature and requires a release with Karpenter v1.14.1 and the matching `aws-resolver-rules-operator`.
 - Add `global.nodePools.<pool>.limits.nodes` to cap the number of nodes of a Karpenter node pool.

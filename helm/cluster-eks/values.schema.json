@@ -738,7 +738,14 @@
                         },
                         "externalDnsCrossplaneResources": {
                             "configTemplateName": "EKSExternalDNSCrossplaneResourcesHelmValues",
-                            "enable": true
+                            "enable": true,
+                            "extraConfigs": [
+                                {
+                                    "kind": "ConfigMap",
+                                    "name": "{{ include \"cluster.resource.name\" $ }}-crossplane-config",
+                                    "optional": false
+                                }
+                            ]
                         },
                         "k8sDnsNodeCache": {
                             "enable": false
