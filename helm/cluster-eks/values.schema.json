@@ -702,16 +702,16 @@
                     "apps": {
                         "certExporter": {
                             "configTemplateName": "EKSCertExporterHelmValues",
-                            "enable": false
+                            "enable": true
                         },
                         "certManager": {
-                            "enable": false
+                            "enable": true
                         },
                         "certManagerCrossplaneResources": {
                             "enable": false
                         },
                         "chartOperatorExtensions": {
-                            "enable": false
+                            "enable": true
                         },
                         "cilium": {
                             "configTemplateName": "EKSCiliumHelmValues",
@@ -722,15 +722,18 @@
                         },
                         "clusterAutoscaler": {
                             "configTemplateName": "EKSClusterAutoscalerHelmValues",
-                            "enable": false
+                            "enable": true
+                        },
+                        "clusterAutoscalerCrossplaneResources": {
+                            "configTemplateName": "EKSClusterAutoscalerCrossplaneResourcesHelmValues",
+                            "enable": true
                         },
                         "coreDns": {
                             "configTemplateName": "EKSCoreDNSHelmValues",
                             "enable": true
                         },
                         "coreDnsExtensions": {
-                            "configTemplateName": "EKSCoreDNSExtensionsHelmValues",
-                            "enable": false
+                            "enable": true
                         },
                         "externalDns": {
                             "configTemplateName": "EKSExternalDNSHelmValues",
@@ -741,10 +744,10 @@
                             "enable": true
                         },
                         "k8sDnsNodeCache": {
-                            "enable": false
+                            "enable": true
                         },
                         "metricsServer": {
-                            "enable": false
+                            "enable": true
                         },
                         "netExporter": {
                             "configTemplateName": "EKSNetExporterHelmValues",
@@ -755,31 +758,37 @@
                             "enable": true
                         },
                         "nodeExporter": {
-                            "enable": false
+                            "enable": true
                         },
                         "observabilityBundle": {
                             "configTemplateName": "EKSObservabilityBundleHelmValues",
                             "enable": true
                         },
                         "observabilityPolicies": {
-                            "enable": false
+                            "enable": true
+                        },
+                        "priorityClasses": {
+                            "enable": true
+                        },
+                        "prometheusBlackboxExporter": {
+                            "enable": true
                         },
                         "rbacBootstrap": {
                             "enable": false
                         },
                         "securityBundle": {
                             "configTemplateName": "EKSSecurityBundleHelmValues",
-                            "enable": false
+                            "enable": true
                         },
                         "teleportKubeAgent": {
                             "configTemplateName": "EKSTeleportKubeAgentHelmValues",
                             "enable": true
                         },
                         "verticalPodAutoscaler": {
-                            "enable": false
+                            "enable": true
                         },
                         "verticalPodAutoscalerCrd": {
-                            "enable": false
+                            "enable": true
                         }
                     },
                     "controlPlane": {
@@ -914,6 +923,12 @@
                             "title": "cluster-autoscaler",
                             "description": "Configuration of cluster-autoscaler. For all available values see https://github.com/giantswarm/cluster-autoscaler-app."
                         },
+                        "clusterAutoscalerCrossplaneResources": {
+                            "$ref": "#/$defs/helmRelease",
+                            "type": "object",
+                            "title": "cluster-autoscaler-crossplane-resources",
+                            "description": "Configuration of cluster-autoscaler-crossplane-resources. For all available values see https://github.com/giantswarm/cluster-autoscaler-crossplane-resources."
+                        },
                         "coreDns": {
                             "$ref": "#/$defs/helmRelease",
                             "type": "object",
@@ -985,6 +1000,18 @@
                             "type": "object",
                             "title": "observability-policies",
                             "description": "Configuration of observability-policies. For all available values see https://github.com/giantswarm/observability-policies-app."
+                        },
+                        "priorityClasses": {
+                            "$ref": "#/$defs/helmRelease",
+                            "type": "object",
+                            "title": "priority-classes",
+                            "description": "Configuration of priority-classes. For all available values see https://github.com/giantswarm/priority-classes."
+                        },
+                        "prometheusBlackboxExporter": {
+                            "$ref": "#/$defs/helmRelease",
+                            "type": "object",
+                            "title": "prometheus-blackbox-exporter",
+                            "description": "Configuration of prometheus-blackbox-exporter. For all available values see https://github.com/giantswarm/prometheus-blackbox-exporter-app."
                         },
                         "rbacBootstrap": {
                             "$ref": "#/$defs/helmRelease",
