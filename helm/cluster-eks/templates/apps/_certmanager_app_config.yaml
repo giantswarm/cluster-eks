@@ -1,0 +1,13 @@
+{{/* EKS-specific cert-manager Helm values */}}
+{{- define "EKSCertManagerHelmValues" }}
+cert-manager:
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:{{ include "aws-partition" $ }}:iam::{{ include "aws-account-id" $ }}:role/{{ include "resource.default.name" $ }}-cert-manager
+giantSwarmClusterIssuer:
+  acme:
+    dns01:
+      route53:
+        enabled: true
+        region: {{ include "aws-region" $ }}
+{{- end }}

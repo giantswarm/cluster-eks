@@ -7,9 +7,11 @@ cluster:
         configTemplateName: EKSCertExporterHelmValues
         enable: true
       certManager:
+        configTemplateName: EKSCertManagerHelmValues
         enable: true
       certManagerCrossplaneResources:
-        enable: false
+        configTemplateName: EKSCertManagerCrossplaneResourcesHelmValues
+        enable: true
       chartOperatorExtensions:
         enable: true
       cilium:
