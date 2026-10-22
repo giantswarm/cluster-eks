@@ -19,7 +19,10 @@ cluster:
         enable: true
       clusterAutoscaler:
         configTemplateName: EKSClusterAutoscalerHelmValues
-        enable: false
+        enable: true
+      clusterAutoscalerCrossplaneResources:
+        configTemplateName: EKSClusterAutoscalerCrossplaneResourcesHelmValues
+        enable: true
       coreDns:
         configTemplateName: EKSCoreDNSHelmValues
         enable: true
@@ -122,6 +125,7 @@ global:
     cilium: {}
     ciliumServiceMonitors: {}
     clusterAutoscaler: {}
+    clusterAutoscalerCrossplaneResources: {}
     coreDns: {}
     coreDnsExtensions: {}
     externalDns: {}

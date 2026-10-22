@@ -1,10 +1,17 @@
 {{/* EKS-specific cluster-autoscaler Helm values*/}}
 {{- define "EKSClusterAutoscalerHelmValues" }}
+{{- /* The app doesn't support the `eks` provider. With `aws`, it discovers the managed node groups by the `k8s.io/cluster-autoscaler/<cluster>` tag that EKS puts on their auto scaling groups. */}}
+provider: aws
 serviceAccount:
   annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::{{ include "aws-account-id" $ }}:role/{{ .Values.global.metadata.name }}-cluster-autoscaler-role
+    eks.amazonaws.com/role-arn: arn:{{ include "aws-partition" $ }}:iam::{{ include "aws-account-id" $ }}:role/{{ include "resource.default.name" $ }}-cluster-autoscaler
 node:
   nodeSelector:
     node-role.kubernetes.io/control-plane: null
   caBundlePath: "/etc/ssl/certs/ca-bundle.crt"
+{{- /* Delay scale-up so that cluster-autoscaler and karpenter don't fight each other */}}
+{{- if eq (include "hasKarpenterNodePool" .) "true" }}
+configmap:
+  newPodScaleUpDelay: 300s
+{{- end }}
 {{- end }}

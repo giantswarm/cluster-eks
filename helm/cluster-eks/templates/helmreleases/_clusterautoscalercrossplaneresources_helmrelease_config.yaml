@@ -1,0 +1,6 @@
+{{/* EKS-specific cluster-autoscaler-crossplane-resources Helm values */}}
+{{- define "EKSClusterAutoscalerCrossplaneResourcesHelmValues" }}
+{{- /* The chart only creates the IAM role for the `aws` provider. It reads the EKS OIDC domain from the `<cluster>-crossplane-config` ConfigMap. */}}
+provider:
+  name: aws
+{{- end }}
