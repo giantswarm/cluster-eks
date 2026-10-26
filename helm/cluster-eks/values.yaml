@@ -5,13 +5,13 @@ cluster:
     apps:
       certExporter:
         configTemplateName: EKSCertExporterHelmValues
-        enable: false
+        enable: true
       certManager:
-        enable: false
+        enable: true
       certManagerCrossplaneResources:
         enable: false
       chartOperatorExtensions:
-        enable: false
+        enable: true
       cilium:
         configTemplateName: EKSCiliumHelmValues
         enable: true
@@ -19,13 +19,15 @@ cluster:
         enable: true
       clusterAutoscaler:
         configTemplateName: EKSClusterAutoscalerHelmValues
-        enable: false
+        enable: true
+      clusterAutoscalerCrossplaneResources:
+        configTemplateName: EKSClusterAutoscalerCrossplaneResourcesHelmValues
+        enable: true
       coreDns:
         configTemplateName: EKSCoreDNSHelmValues
         enable: true
       coreDnsExtensions:
-        configTemplateName: EKSCoreDNSExtensionsHelmValues
-        enable: false
+        enable: true
       externalDns:
         configTemplateName: EKSExternalDNSHelmValues
         enable: true
@@ -33,9 +35,9 @@ cluster:
         configTemplateName: EKSExternalDNSCrossplaneResourcesHelmValues
         enable: true
       k8sDnsNodeCache:
-        enable: false
+        enable: true
       metricsServer:
-        enable: false
+        enable: true
       netExporter:
         configTemplateName: EKSNetExporterHelmValues
         enable: true
@@ -43,24 +45,28 @@ cluster:
         configTemplateName: EKSNetworkPoliciesHelmValues
         enable: true
       nodeExporter:
-        enable: false
+        enable: true
       observabilityBundle:
         configTemplateName: EKSObservabilityBundleHelmValues
         enable: true
       observabilityPolicies:
-        enable: false
+        enable: true
+      priorityClasses:
+        enable: true
+      prometheusBlackboxExporter:
+        enable: true
       rbacBootstrap:
         enable: false
       securityBundle:
         configTemplateName: EKSSecurityBundleHelmValues
-        enable: false
+        enable: true
       teleportKubeAgent:
         configTemplateName: EKSTeleportKubeAgentHelmValues
         enable: true
       verticalPodAutoscaler:
-        enable: false
+        enable: true
       verticalPodAutoscalerCrd:
-        enable: false
+        enable: true
     controlPlane:
       resources:
         controlPlane:
@@ -119,6 +125,7 @@ global:
     cilium: {}
     ciliumServiceMonitors: {}
     clusterAutoscaler: {}
+    clusterAutoscalerCrossplaneResources: {}
     coreDns: {}
     coreDnsExtensions: {}
     externalDns: {}
@@ -131,6 +138,8 @@ global:
     nodeExporter: {}
     observabilityBundle: {}
     observabilityPolicies: {}
+    priorityClasses: {}
+    prometheusBlackboxExporter: {}
     rbacBootstrap: {}
     securityBundle: {}
     teleportKubeAgent: {}
