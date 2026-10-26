@@ -1,0 +1,7 @@
+{{/* EKS-specific cert-manager-crossplane-resources Helm values */}}
+{{- define "EKSCertManagerCrossplaneResourcesHelmValues" }}
+{{- /* The chart reads the account ID and EKS OIDC domain from the `<cluster>-crossplane-config` ConfigMap. */}}
+providers:
+  aws:
+    enabled: true
+{{- end }}
