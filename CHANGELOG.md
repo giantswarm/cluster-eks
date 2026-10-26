@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add the `giantswarm.io/machine-pool` label to the nodes of each EKS managed node group.
 - Apply `global.nodePools.<name>.customNodeLabels` to the nodes of EKS managed node groups.
-- Enable external-dns and external-dns-crossplane-resources, which creates the external-dns IAM role for the EKS OIDC provider.
+- Enable external-dns and external-dns-crossplane-resources, which creates the external-dns IAM role for the EKS OIDC provider. The OIDC domain is read from the `<cluster>-crossplane-config` ConfigMap.
 - Enable cilium-servicemonitors and net-exporter.
 - Enable the remaining default apps from `cluster-aws` that work on EKS: cert-exporter, cert-manager, chart-operator-extensions, cluster-autoscaler, coredns-extensions, k8s-dns-node-cache, metrics-server, node-exporter, observability-policies, priority-classes, prometheus-blackbox-exporter, security-bundle, vertical-pod-autoscaler, and vertical-pod-autoscaler-crd.
 - Enable cluster-autoscaler-crossplane-resources, which creates the cluster-autoscaler IAM role for the EKS OIDC provider.

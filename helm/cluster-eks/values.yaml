@@ -36,6 +36,10 @@ cluster:
       externalDnsCrossplaneResources:
         configTemplateName: EKSExternalDNSCrossplaneResourcesHelmValues
         enable: true
+        extraConfigs:
+          - kind: ConfigMap
+            name: '{{ include "cluster.resource.name" $ }}-crossplane-config'
+            optional: false
       k8sDnsNodeCache:
         enable: true
       metricsServer:
