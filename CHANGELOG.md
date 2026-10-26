@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.0.0] - 2026-10-26
+
 ### Added
 
 - Add the `giantswarm.io/machine-pool` label to the nodes of each EKS managed node group.
@@ -373,7 +375,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add EKS templates.
 
-[Unreleased]: https://github.com/giantswarm/cluster-eks/compare/v3.1.0...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-eks/compare/v4.0.0...HEAD
+[4.0.0]: https://github.com/giantswarm/cluster-eks/compare/v3.1.0...v4.0.0
 [3.1.0]: https://github.com/giantswarm/cluster-eks/compare/v3.0.0...v3.1.0
 [3.0.0]: https://github.com/giantswarm/cluster-eks/compare/v2.3.0...v3.0.0
 [2.3.0]: https://github.com/giantswarm/cluster-eks/compare/v2.2.0...v2.3.0
