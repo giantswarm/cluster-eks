@@ -153,6 +153,8 @@ global:
     verticalPodAutoscalerCrd: {}
   connectivity:
     availabilityZoneUsageLimit: 3
+    cni:
+      managed: true
     network:
       pods:
         cidrBlocks:
