@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Create the ServiceAccount and RBAC of the Cilium values jobs as pre-install hooks so that the install job can start while Helm waits for the release's resources.
+
 ## [4.1.0] - 2026-11-04
 
 ### Changed
