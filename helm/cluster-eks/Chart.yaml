@@ -6,8 +6,8 @@ sources:
 description: A helm chart for creating Cluster API EKS clusters with the AWS infrastructure provider (CAPA).
 icon: https://s.giantswarm.io/app-icons/aws/2/dark.svg
 type: application
-version: 4.1.0
-appVersion: 4.1.0
+version: 4.2.0
+appVersion: 4.2.0
 annotations:
   application.giantswarm.io/team: "phoenix"
   application.giantswarm.io/app-type: "cluster"
@@ -17,5 +17,5 @@ restrictions:
     - capa
 dependencies:
   - name: cluster
-    version: "9.5.0"
+    version: "9.6.0"
     repository: https://giantswarm.github.io/cluster-catalog
