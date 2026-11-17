@@ -5,12 +5,8 @@
 {{- $_ := set $ "appName" "observability-bundle" }}
 {{- if or (not .Values.providerIntegration.apps.observabilityBundle.enable) (and .Values.providerIntegration.useReleases (include "cluster.app.in-release" $ | ne "true")) }}
 
-{{- /* Get Teleport Kube Agent version. */}}
-{{- $_ := set $ "appName" "teleport-kube-agent" }}
-{{- $version := include "cluster.app.version" $ | trim }}
-
 {{- /* Check Teleport Kube Agent version. */}}
-{{- if or (eq $version "N/A") (semverCompare ">=0.11.0" $version) -}}
+{{- if eq (include "cluster.app.version.satisfies" (dict "root" $ "appName" "teleport-kube-agent" "constraint" ">=0.11.0")) "true" }}
 teleport-kube-agent:
   podMonitor:
     enabled: false
