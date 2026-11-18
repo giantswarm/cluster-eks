@@ -1,4 +1,7 @@
 {{- if .Values.cluster.providerIntegration.apps.cilium.enable }}
+# Create these before the release's resources because the non-hook
+# `install-cilium-values-update-job` needs them. Post-hooks must not recreate
+# them, as that would invalidate the token of a still running install job.
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -6,7 +9,7 @@ metadata:
   name: "{{- include "ciliumJobServiceAccount" . }}"
   namespace: "{{ .Release.Namespace }}"
   annotations:
-    "helm.sh/hook": "post-install,pre-upgrade,post-upgrade,pre-rollback,post-rollback"
+    "helm.sh/hook": "pre-install,pre-upgrade,pre-rollback"
     "helm.sh/hook-delete-policy": "before-hook-creation"
     "helm.sh/hook-weight": "-2"
   labels:
@@ -18,7 +21,7 @@ metadata:
   name: "{{- include "ciliumJobServiceAccount" . }}"
   namespace: "{{ .Release.Namespace }}"
   annotations:
-    "helm.sh/hook": "post-install,pre-upgrade,post-upgrade,pre-rollback,post-rollback"
+    "helm.sh/hook": "pre-install,pre-upgrade,pre-rollback"
     "helm.sh/hook-delete-policy": "before-hook-creation"
     "helm.sh/hook-weight": "-2"
   labels:
@@ -39,7 +42,7 @@ metadata:
   name: "{{- include "ciliumJobServiceAccount" . }}"
   namespace: "{{ .Release.Namespace }}"
   annotations:
-    "helm.sh/hook": "post-install,pre-upgrade,post-upgrade,pre-rollback,post-rollback"
+    "helm.sh/hook": "pre-install,pre-upgrade,pre-rollback"
     "helm.sh/hook-delete-policy": "before-hook-creation"
     "helm.sh/hook-weight": "-1"
   labels:
