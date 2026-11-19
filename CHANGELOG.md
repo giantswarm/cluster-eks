@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.2.1] - 2026-11-19
+
 ### Fixed
 
 - Create the ServiceAccount and RBAC of the Cilium values jobs as pre-install hooks so that the install job can start while Helm waits for the release's resources.
@@ -391,7 +393,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add EKS templates.
 
-[Unreleased]: https://github.com/giantswarm/cluster-eks/compare/v4.2.0...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-eks/compare/v4.2.1...HEAD
+[4.2.1]: https://github.com/giantswarm/cluster-eks/compare/v4.2.0...v4.2.1
 [4.2.0]: https://github.com/giantswarm/cluster-eks/compare/v4.1.0...v4.2.0
 [4.1.0]: https://github.com/giantswarm/cluster-eks/compare/v4.0.0...v4.1.0
 [4.0.0]: https://github.com/giantswarm/cluster-eks/compare/v3.1.0...v4.0.0
