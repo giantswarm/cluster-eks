@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add `global.nodePools.<name>.maxPods` for Karpenter node pools, rendered into the `EC2NodeClass` kubelet configuration. Defaults to 110, the same as on CAPA clusters, and allows 1 to 250. Needs aws-resolver-rules-operator with giantswarm/aws-resolver-rules-operator#544 on the management cluster. The `EC2NodeClass` changes once, so Karpenter replaces the existing nodes as drifted.
+- Enable `cilium-extensions` with the Cilium IP pre-allocation per node size (`cluster.providerIntegration.apps.ciliumExtensions.enable`, values in `global.apps.ciliumExtensions`). Karpenter waits for it, so new nodes start with their `CiliumNodeConfig`, but only when the cluster's Release contains `cilium-extensions` and the app is rendered.
+
+### Changed
+
+- Cilium: Enable ENI prefix delegation (`eni.awsEnablePrefixDelegation`). Without it, xlarge and 2xlarge nodes can only run 42 pods. It only applies to nodes that join after the `cilium-operator` restarted with the new flag.
+- Chart: Test `cluster` dev version `9.6.1-r36e32501t20261123104402h0e4e45d`, which contains giantswarm/cluster#1162. To be replaced with the next `cluster` release before merging.
+
 ## [4.2.1] - 2026-11-19
 
 ### Fixed
