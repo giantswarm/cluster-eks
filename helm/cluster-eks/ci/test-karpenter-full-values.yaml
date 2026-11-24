@@ -43,7 +43,6 @@ global:
       limits:
         cpu: "500"
         memory: 500Gi
-      maxPods: 200
       requirements:
         - key: karpenter.k8s.aws/instance-family
           operator: In
