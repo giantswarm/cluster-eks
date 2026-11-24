@@ -284,6 +284,14 @@
                                         }
                                     }
                                 },
+                                "maxPods": {
+                                    "type": "integer",
+                                    "title": "Maximum pods per node",
+                                    "description": "Kubelet `maxPods` for nodes in this Karpenter node pool. Cilium allocates ENI prefixes, so this is the real per-node limit rather than the number of ENI IPs.",
+                                    "default": 110,
+                                    "maximum": 250,
+                                    "minimum": 1
+                                },
                                 "replicas": {
                                     "type": "integer",
                                     "title": "Number of nodes",
@@ -804,6 +812,10 @@
                             "configTemplateName": "EKSCiliumHelmValues",
                             "enable": true
                         },
+                        "ciliumExtensions": {
+                            "configTemplateName": "EKSCiliumExtensionsHelmValues",
+                            "enable": true
+                        },
                         "ciliumServiceMonitors": {
                             "enable": true
                         },
@@ -1004,6 +1016,12 @@
                             "type": "object",
                             "title": "Cilium",
                             "description": "Configuration of cilium-app. For all available values see https://github.com/giantswarm/cilium-app."
+                        },
+                        "ciliumExtensions": {
+                            "$ref": "#/$defs/helmRelease",
+                            "type": "object",
+                            "title": "Cilium extensions",
+                            "description": "Configuration of cilium-extensions. For all available values see https://github.com/giantswarm/cilium-extensions."
                         },
                         "ciliumServiceMonitors": {
                             "$ref": "#/$defs/helmRelease",

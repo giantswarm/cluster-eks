@@ -24,6 +24,10 @@ spec:
         encrypted: true
         deleteOnTermination: true
     instanceProfile: {{ include "karpenter-node-iam-role" $ }}
+    kubelet:
+      {{- /* Cilium allocates ENI prefixes, so the kubelet's `maxPods` is the real per-node limit.
+             Without it, Karpenter uses the VPC CNI's ENI formula, which doesn't match Cilium's ENI IPAM. */}}
+      maxPods: {{ $value.maxPods | default 110 }}
     metadataOptions:
       {{- /* Cilium runs in ENI IPAM mode with `firstInterfaceIndex: 1`, so pods reach IMDS one hop away */}}
       httpPutResponseHopLimit: 2

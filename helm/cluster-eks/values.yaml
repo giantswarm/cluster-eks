@@ -17,6 +17,9 @@ cluster:
       cilium:
         configTemplateName: EKSCiliumHelmValues
         enable: true
+      ciliumExtensions:
+        configTemplateName: EKSCiliumExtensionsHelmValues
+        enable: true
       ciliumServiceMonitors:
         enable: true
       clusterAutoscaler:
@@ -129,6 +132,7 @@ global:
     certManagerCrossplaneResources: {}
     chartOperatorExtensions: {}
     cilium: {}
+    ciliumExtensions: {}
     ciliumServiceMonitors: {}
     clusterAutoscaler: {}
     clusterAutoscalerCrossplaneResources: {}

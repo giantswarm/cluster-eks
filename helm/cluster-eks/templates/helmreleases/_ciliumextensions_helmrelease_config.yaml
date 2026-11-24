@@ -1,0 +1,8 @@
+{{/* EKS-specific cilium-extensions Helm values*/}}
+{{/* https://github.com/giantswarm/cilium-extensions/blob/main/helm/cilium-extensions/values.yaml */}}
+{{- define "EKSCiliumExtensionsHelmValues" }}
+ipam:
+  {{- /* IP pre-allocation per node size: with prefix delegation, a new node starts with a single /28 */}}
+  nodeConfigs:
+    enabled: true
+{{- end }}

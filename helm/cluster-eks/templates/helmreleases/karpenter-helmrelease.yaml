@@ -8,6 +8,8 @@ helmRelease:
   dependsOn:
     {{/* The AWS cloud provider is part of the EKS control plane, so no `cloud-provider-aws` HelmRelease exists to wait for */}}
     cloud-provider-aws: false
+    {{/* New nodes have to start with their Cilium IP pre-allocation, so Karpenter waits for the CiliumNodeConfigs */}}
+    cilium-extensions: {{ include "karpenter-waits-for-cilium-extensions" $ }}
 kyverno:
   {{/* Kyverno comes with the security bundle, so without it there is neither a `kyverno-crds` HelmRelease to wait for nor a CRD for karpenter's `PolicyException` */}}
   enabled: {{ $.Values.cluster.providerIntegration.apps.securityBundle.enable }}

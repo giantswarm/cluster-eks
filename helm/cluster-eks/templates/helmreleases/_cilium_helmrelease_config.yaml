@@ -6,6 +6,10 @@ global:
     enforced: {{ .Values.global.podSecurityStandards.enforced }}
 eni:
   enabled: true
+  {{- /* Without prefix delegation, xlarge and 2xlarge nodes only get (4-1)*(15-1) = 42 pod IPs.
+         It only applies to nodes that join after the cilium-operator restarted with the flag,
+         which cilium-app does on config changes since 1.8.0. */}}
+  awsEnablePrefixDelegation: true
 ipam:
   mode: eni
 operator:
