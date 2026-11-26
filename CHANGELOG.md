@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Chart: Pull the `cluster` dependency from `oci://gsoci.azurecr.io/charts/giantswarm` instead of the HTTP `cluster-catalog`.
+
 ## [4.2.1] - 2026-11-19
 
 ### Fixed

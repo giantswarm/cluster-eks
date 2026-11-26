@@ -3,4 +3,3 @@ replace-chart-version-with-git: true
 replace-app-version-with-git: true
 helm-template-extra-values: helm/cluster-eks/ci/ci-values.yaml
 generate-metadata: true
-ct-config: .abs/ct.yaml
